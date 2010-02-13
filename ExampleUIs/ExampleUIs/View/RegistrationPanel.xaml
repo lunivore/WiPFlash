@@ -1,0 +1,25 @@
+<StackPanel x:Class="ExampleUIs.View.RegistrationPanel"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:domain="clr-namespace:ExampleUIs.Domain"
+            Orientation="Vertical">   
+
+    <StackPanel Orientation="Horizontal">
+        <Label Margin="10,5,10,5" Name="petNameLabel" Width="50">Name:</Label>
+        <TextBox Margin="10,5,10,0" Name="petNameInput" Width="200"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label Margin="10,5,10,5" Name="petTypeLabel" Width="50">Type:</Label>
+        <ComboBox Margin="10,5,10,0" Name="petTypeInput" ItemsSource="{Binding Source={x:Static domain:PetType.ALL}}" DisplayMemberPath="Name" Width="200"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label Margin="10,5,10,5" Name="petPriceLabel" Width="50">Price:</Label>
+            <Label Width="20" HorizontalAlignment="Left" Margin="10, 5, 0, 5" Name="petPoundSign">&#163;</Label>
+            <TextBox Width="180" HorizontalAlignment="Right" Margin="0, 5, 0, 0" Name="petPriceInput" />
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label Margin="10,5,10,5" Name="petRulesLabel" Width="50">Rules:</Label>
+        <ListBox Width="200" Margin="10,5,10,5" ItemsSource="{Binding Source={x:Static domain:Rule.ALL}}" DisplayMemberPath="Name"></ListBox>
+    </StackPanel>
+    <Button HorizontalAlignment="Right" Name="petSaveButton" Margin="10, 5, 10, 5">Save</Button>
+</StackPanel>
