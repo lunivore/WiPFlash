@@ -1,0 +1,13 @@
+﻿<Window x:Class="ExampleUIs.View.PetShopWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:ExampleUIs.View"
+    Name="petShopWindow"
+    Title="Pet Shop Window"
+    SizeToContent="WidthAndHeight">
+    <Grid>
+        <TabControl Name="registrationTab">
+            <TabItem Header="Registry"><local:RegistrationPanel /></TabItem>            
+        </TabControl>
+    </Grid>
+</Window>
