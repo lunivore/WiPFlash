@@ -1,9 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
+﻿#region
+
 using System.Windows;
+
+#endregion
 
 namespace ExampleUIs
 {
