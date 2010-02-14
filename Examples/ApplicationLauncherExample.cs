@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Diagnostics;
+using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash;
 using WiPFlash.Exceptions;
@@ -10,13 +11,8 @@ using WiPFlash.Exceptions;
 namespace Examples
 {
     [TestFixture]
-    public class ApplicationLauncherExample
+    public class ApplicationLauncherExample : UIBasedExample
     {
-        private const string EXAMPLE_APP_NAME = "ExampleUIs";
-
-        private const string EXAMPLE_APP_PATH =
-            @"..\..\..\" + EXAMPLE_APP_NAME + @"\bin\debug\" + EXAMPLE_APP_NAME + ".exe";
-
         [Test]
         public void ShouldStartUpApplicationOnRequest()
         {
@@ -82,14 +78,17 @@ namespace Examples
             catch (WiPFlashException) { }
         }
 
-        [TearDown]
-        public void CloseAllExampleApplications()
+
+        [Test]
+        public void ShouldComplainIfTheApplicationCantBeRecycled()
         {
-            Process[] processes = Process.GetProcessesByName(EXAMPLE_APP_NAME);
-            foreach (var process in processes)
+            var launcher = new ApplicationLauncher();
+            try
             {
-                process.CloseMainWindow();
+                launcher.Recycle("Wibble.exe");
+                Assert.Fail("Launcher should have complained");
             }
+            catch (WiPFlashException) { }
         }
     }
 }
