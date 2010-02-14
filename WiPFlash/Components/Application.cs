@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Automation;
+using WiPFlash.Components;
 using WiPFlash.Exceptions;
 
 namespace WiPFlash.Component
@@ -20,7 +21,7 @@ namespace WiPFlash.Component
             get { return _process; }
         }
 
-        public Window GetWindow(string windowName)
+        public Window FindWindow(string windowName)
         {
             AutomationElement windowElement = AutomationElement.RootElement.FindFirst(TreeScope.Children,
                                                     new PropertyCondition(AutomationElement.AutomationIdProperty, windowName));

@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using WiPFlash.Component;
 using WiPFlash.Exceptions;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -17,12 +18,21 @@ namespace WiPFlash
 
         public ApplicationLauncher() : this(500) {}
 
-        public ApplicationLauncher(int timeToLaunchInMillis)
+        public ApplicationLauncher(int timeToLaunchInMillis) : this(timeToLaunchInMillis, new NameBasedFinder(new WrapperFactory()))
         {
+        }
+
+        public ApplicationLauncher(int timeToLaunchInMillis, IFindAutomationElements finder) {
             TimeToLaunchInMillis = timeToLaunchInMillis;
+            Finder = finder;
         }
 
         public int TimeToLaunchInMillis
+        {
+            get; set;
+        }
+
+        public IFindAutomationElements Finder
         {
             get; set;
         }
