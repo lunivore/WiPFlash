@@ -1,9 +1,10 @@
-using System;
+#region
+
 using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
-using WiPFlash;
-using WiPFlash.Component;
+
+#endregion
 
 namespace Examples.ExampleUtils
 {

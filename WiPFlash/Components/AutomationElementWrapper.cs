@@ -1,6 +1,9 @@
+#region
+
 using System;
 using System.Windows.Automation;
-using WiPFlash.Framework;
+
+#endregion
 
 namespace WiPFlash.Components
 {

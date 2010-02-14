@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region
+
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash;
 using WiPFlash.Component;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
+
+#endregion
 
 namespace Examples.Component
 {

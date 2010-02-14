@@ -1,7 +1,11 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Components;
+
+#endregion
 
 namespace WiPFlash.Framework
 {
