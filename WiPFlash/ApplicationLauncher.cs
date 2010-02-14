@@ -13,9 +13,11 @@ namespace WiPFlash
 {
     public class ApplicationLauncher
     {
+        private delegate Application HandlerForNoMatchingProcesses();
+
         public ApplicationLauncher() : this(500) {}
 
-        private ApplicationLauncher(int timeToLaunchInMillis)
+        public ApplicationLauncher(int timeToLaunchInMillis)
         {
             TimeToLaunchInMillis = timeToLaunchInMillis;
         }
@@ -42,28 +44,30 @@ namespace WiPFlash
 
         public Application Recycle(string name)
         {
-            Process[] processes = Process.GetProcessesByName(name);
-            if (processes.Length > 1)
-            {
-                throw new FailureToLaunchException("Cannot choose between two or more processes called " + name);                
-            }
-            return new Application(processes[0]);
+            return RecycleOrHandleHavingNone(name, () => {
+                 throw new FailureToFindException(
+                     "Could not find an existing application with name " + name +
+                     " to recycle"); });
+
         }
 
         public Application LaunchOrRecycle(string name, string path)
         {
+            return RecycleOrHandleHavingNone(name, () => Launch(path));
+        }
+
+        private Application RecycleOrHandleHavingNone(string name, HandlerForNoMatchingProcesses handleNoMatchingProcesses)
+        {
             Process[] processes = Process.GetProcessesByName(name);
-            if (processes.Length == 0)
-            {
-                Launch(path);
-            } else if (processes.Length > 1)
+            if (processes.Length > 1)
             {
                 throw new FailureToLaunchException("Cannot choose between two or more processes called " + name);
-            } else
-            {
-                return new Application(processes[0]);
             }
-            return null; // Um, VS, why do you need this here?!
+            if (processes.Length < 1)
+            {
+                return handleNoMatchingProcesses();
+            }
+            return new Application(processes[0]);
         }
     }
 }

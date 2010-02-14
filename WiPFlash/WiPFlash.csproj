@@ -39,14 +39,14 @@
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationClient">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -54,6 +54,8 @@
   <ItemGroup>
     <Compile Include="ApplicationLauncher.cs" />
     <Compile Include="Component\Application.cs" />
+    <Compile Include="Component\Window.cs" />
+    <Compile Include="Exceptions\FailureToFindException.cs" />
     <Compile Include="Exceptions\FailureToLaunchException.cs" />
     <Compile Include="Exceptions\WiPFlashException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
