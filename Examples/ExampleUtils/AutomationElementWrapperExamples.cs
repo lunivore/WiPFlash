@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region
+
+using System;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
+
+#endregion
 
 namespace Examples.ExampleUtils
 {

@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Diagnostics;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash;

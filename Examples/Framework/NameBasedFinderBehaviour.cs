@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region
+
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using Moq;
@@ -9,6 +7,8 @@ using NUnit.Framework;
 using WiPFlash;
 using WiPFlash.Components;
 using WiPFlash.Framework;
+
+#endregion
 
 namespace Examples.Framework
 {
