@@ -11,7 +11,7 @@ using WiPFlash.Exceptions;
 namespace Examples
 {
     [TestFixture]
-    public class ApplicationLauncherExample : UIBasedExample
+    public class ApplicationLauncherBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldStartUpApplicationOnRequest()

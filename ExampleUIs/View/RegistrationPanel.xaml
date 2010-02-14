@@ -10,7 +10,11 @@
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label Margin="10,5,10,5" Name="petTypeLabel" Width="50">Type:</Label>
-        <ComboBox Margin="10,5,10,0" Name="petTypeInput" ItemsSource="{Binding Source={x:Static domain:PetType.ALL}}" DisplayMemberPath="Name" Width="200"/>
+        <ComboBox Margin="10,5,10,0" IsEditable="True" Name="petTypeInput" ItemsSource="{Binding Source={x:Static domain:PetType.ALL}}" DisplayMemberPath="Name" Width="200"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label Margin="10,5,10,5" Name="petFoodLabel" Width="50">Eats:</Label>
+        <ComboBox Margin="10,5,10,0" IsEditable="False" Name="petFoodInput" ItemsSource="{Binding Source={x:Static domain:PetFood.ALL}}" DisplayMemberPath="FoodType" Width="200"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label Margin="10,5,10,5" Name="petPriceLabel" Width="50">Price:</Label>
@@ -19,7 +23,7 @@
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label Margin="10,5,10,5" Name="petRulesLabel" Width="50">Rules:</Label>
-        <ListBox Width="200" Margin="10,5,10,5" ItemsSource="{Binding Source={x:Static domain:Rule.ALL}}" DisplayMemberPath="Name"></ListBox>
+        <ListBox Width="200" Margin="10,5,10,5" Name="petRulesInput" ItemsSource="{Binding Source={x:Static domain:Rule.ALL}}" DisplayMemberPath="Name"></ListBox>
     </StackPanel>
     <Button HorizontalAlignment="Right" Name="petSaveButton" Margin="10, 5, 10, 5">Save</Button>
 </StackPanel>

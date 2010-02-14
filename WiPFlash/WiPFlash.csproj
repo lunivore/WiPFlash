@@ -35,6 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -47,17 +53,23 @@
     <Reference Include="UIAutomationTypes">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationLauncher.cs" />
-    <Compile Include="Component\Application.cs" />
-    <Compile Include="Component\Window.cs" />
+    <Compile Include="Components\Application.cs" />
+    <Compile Include="Components\AutomationElementWrapper.cs" />
+    <Compile Include="Components\Button.cs" />
+    <Compile Include="Components\ComboBox.cs" />
+    <Compile Include="Components\Container.cs" />
+    <Compile Include="Framework\NameBasedFinder.cs" />
+    <Compile Include="Framework\IWrapAutomationElements.cs" />
+    <Compile Include="Components\ListBox.cs" />
+    <Compile Include="Components\TextBox.cs" />
+    <Compile Include="Components\Window.cs" />
     <Compile Include="Exceptions\FailureToFindException.cs" />
     <Compile Include="Exceptions\FailureToLaunchException.cs" />
     <Compile Include="Exceptions\WiPFlashException.cs" />
+    <Compile Include="Framework\IFindAutomationElements.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -71,6 +83,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Framework\WrapperFactory.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -1,14 +1,19 @@
+using System;
 using System.Diagnostics;
+using System.Threading;
 using NUnit.Framework;
+using WiPFlash;
+using WiPFlash.Component;
 
 namespace Examples.ExampleUtils
 {
-    public class UIBasedExample
+    public abstract class UIBasedExamples
     {
-        protected const string EXAMPLE_APP_NAME = "ExampleUIs";
-
-        protected const string EXAMPLE_APP_PATH =
+        public const string EXAMPLE_APP_PATH =
             @"..\..\..\" + EXAMPLE_APP_NAME + @"\bin\debug\" + EXAMPLE_APP_NAME + ".exe";
+
+        public const string EXAMPLE_APP_NAME = "ExampleUIs";
+        public const string EXAMPLE_APP_WINDOW_NAME = "petShopWindow";
 
         [TearDown]
         public void CloseAllExampleApplications()
@@ -18,6 +23,7 @@ namespace Examples.ExampleUtils
             {
                 process.CloseMainWindow();
             }
+            Thread.Sleep(500);
         }
     }
 }

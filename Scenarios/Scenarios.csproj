@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}</ProjectGuid>
+    <ProjectGuid>{A1EFE966-DCCC-467E-AE23-9FF30A444EF0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Examples</RootNamespace>
-    <AssemblyName>Examples</AssemblyName>
+    <RootNamespace>Scenarios</RootNamespace>
+    <AssemblyName>Scenarios</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,43 +35,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Moq, Version=4.0.812.4, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\lib\build\Moq.dll</HintPath>
-    </Reference>
     <Reference Include="nunit.framework, Version=2.5.2.9222, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Xml.Linq">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data.DataSetExtensions">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationClient">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="UIAutomationTypes">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApplicationLauncherBehaviour.cs" />
-    <Compile Include="Component\ApplicationBehaviour.cs" />
-    <Compile Include="Component\ButtonBehaviour.cs" />
-    <Compile Include="Component\ComboBoxBehaviour.cs" />
-    <Compile Include="Component\TextBoxBehaviour.cs" />
-    <Compile Include="Component\WindowBehaviour.cs" />
-    <Compile Include="ExampleUtils\AutomationElementWrapperExamples.cs" />
-    <Compile Include="Framework\NameBasedFinderBehaviour.cs" />
-    <Compile Include="Framework\WrapperFactoryBehaviour.cs" />
+    <Compile Include="PetRegistryScenarios.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -85,7 +58,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="ExampleUtils\UIBasedExamples.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -97,6 +69,10 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Examples\Examples.csproj">
+      <Project>{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}</Project>
+      <Name>Examples</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ExampleUIs\ExampleUIs.csproj">
       <Project>{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}</Project>
       <Name>ExampleUIs</Name>
