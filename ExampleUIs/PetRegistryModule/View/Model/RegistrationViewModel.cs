@@ -6,7 +6,7 @@ using Microsoft.Practices.Unity;
 
 #endregion
 
-namespace ExampleUIs.PetModule.View.Model
+namespace ExampleUIs.PetRegistryModule.View.Model
 {
     public class RegistrationViewModel
     {
@@ -30,6 +30,11 @@ namespace ExampleUIs.PetModule.View.Model
             {
                 return PetFood.ALL;
             }
+        }
+
+        public List<Rule> Rules
+        {
+            get { return Rule.ALL;  }
         }
 
         public string Name

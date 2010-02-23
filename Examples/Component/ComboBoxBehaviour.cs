@@ -18,22 +18,22 @@ namespace Examples.Component
         {
             ComboBox editableBox = CreateWrapper();
             editableBox.Select("");
-            Assert.AreEqual("", editableBox.Text);
+            Assert.AreEqual("", editableBox.Selection);
             editableBox.Select("Rabbit");
-            Assert.AreEqual("Rabbit", editableBox.Text);
+            Assert.AreEqual("Rabbit", editableBox.Selection);
             editableBox.Select("WibbleBeast");
-            Assert.AreEqual("WibbleBeast", editableBox.Text);
+            Assert.AreEqual("WibbleBeast", editableBox.Selection);
         }
 
         [Test]
-        public void ShouldAllowValuesToBeSetWhenNotEditable()
+        public void ShouldAllowValuesToBeSetUsingToStringWhenNotEditable()
         {
-            Window window = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            Window window = LaunchPetShopWindow();
             ComboBox nonEditableBox = window.Find<ComboBox>("petFoodInput");
             nonEditableBox.Select("");
-            Assert.AreEqual("", nonEditableBox.Text);
-            nonEditableBox.Select("Carnivorous");
-            Assert.AreEqual("Carnivorous", nonEditableBox.Text);
+            Assert.AreEqual("", nonEditableBox.Selection);
+            nonEditableBox.Select("PetFood[Carnivorous]");
+            Assert.AreEqual("PetFood[Carnivorous]", nonEditableBox.Selection);
         }
 
         protected override ComboBox CreateWrapperWith(AutomationElement element)
@@ -43,7 +43,7 @@ namespace Examples.Component
 
         protected override ComboBox CreateWrapper()
         {
-            Window window = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            Window window = LaunchPetShopWindow();
             return window.Find<ComboBox>("petTypeInput");
         }
     }

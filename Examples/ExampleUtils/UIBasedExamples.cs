@@ -1,8 +1,12 @@
 #region
 
+using System;
 using System.Diagnostics;
 using System.Threading;
 using NUnit.Framework;
+using WiPFlash;
+using WiPFlash.Component;
+using WiPFlash.Components;
 
 #endregion
 
@@ -25,6 +29,12 @@ namespace Examples.ExampleUtils
                 process.CloseMainWindow();
             }
             Thread.Sleep(500);
+        }
+
+        protected Window LaunchPetShopWindow()
+        {
+            Application application = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            return application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
         }
     }
 }

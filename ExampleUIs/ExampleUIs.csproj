@@ -93,7 +93,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="PetRegistryModule\View\HistoryPanel.xaml">
+    <Page Include="HistoryModule\View\HistoryPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -113,7 +113,8 @@
     <Compile Include="Domain\Rule.cs" />
     <Compile Include="Domain\PetRepository.cs" />
     <Compile Include="Domain\History.cs" />
-    <Compile Include="PetHistoryModule\PetHistoryModule.cs" />
+    <Compile Include="HistoryModule\HistoryModule.cs" />
+    <Compile Include="HistoryModule\View\Model\HistoryViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -131,7 +132,7 @@
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
     <Compile Include="PetRegistryModule\View\Model\RegistrationViewModel.cs" />
-    <Compile Include="PetRegistryModule\View\HistoryPanel.xaml.cs">
+    <Compile Include="HistoryModule\View\HistoryPanel.xaml.cs">
       <DependentUpon>HistoryPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="PetRegistryModule\View\RegistrationPanel.xaml.cs">

@@ -16,12 +16,12 @@ namespace Scenarios
         [Test]
         public void ICanRegisterAPet()
         {
-            Application application = new ApplicationLauncher().Launch(EXAMPLE_APP_PATH);
-            Window window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            Window window = LaunchPetShopWindow();
             window.Find<TextBox>("petNameInput").Text = "Snowdrop";
             window.Find<ComboBox>("petTypeInput").Select("Rabbit");
+            window.Find<ComboBox>("petTypeInput").Select("PetFood[Carnivorous]");
             window.Find<TextBox>("petPriceInput").Text = "100.00";
-            window.Find<ListBox>("petRulesInput").Select("Dangerous", "No Children");
+            window.Find<ListBox>("petRulesInput").Select("Rule[Dangerous]", "Rule[No Children]");
             window.Find<Button>("petSaveButton").Click();
         }
 

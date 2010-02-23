@@ -56,7 +56,7 @@ namespace WiPFlash.Components
             }
         }
 
-        public string Text
+        public string Selection
         {
             get
             {

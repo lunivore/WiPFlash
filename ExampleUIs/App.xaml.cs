@@ -2,8 +2,6 @@
 
 using System.Windows;
 using ExampleUIs.PetModule.Domain;
-using ExampleUIs.PetModule.View;
-using ExampleUIs.PetModule.View.Model;
 using Microsoft.Practices.Unity;
 
 #endregion

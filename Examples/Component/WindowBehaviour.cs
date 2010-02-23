@@ -1,5 +1,7 @@
 ﻿#region
 
+using System;
+using System.Diagnostics;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using Moq;
@@ -30,6 +32,20 @@ namespace Examples.Component
 
             Assert.AreEqual(textBox, window.Find<TextBox>("aTextInput"));
             Assert.AreEqual(comboBox, window.Find<ComboBox>("aComboInput"));
+        }
+
+        [Test]
+        public void ShouldAllowItselfToBeClosed()
+        {
+            CloseAllExampleApplications();
+
+            Window window = LaunchPetShopWindow();
+            window.Close();
+
+            var windows = AutomationElement.RootElement.FindAll(TreeScope.Descendants,
+                                                  new PropertyCondition(AutomationElement.AutomationIdProperty,
+                                                                        EXAMPLE_APP_WINDOW_NAME));
+            Assert.AreEqual(0, windows.Count);
         }
     }
 }
