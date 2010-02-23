@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace ExampleUIs.Domain
+namespace ExampleUIs.PetModule.Domain
 {
     public class Rule
     {

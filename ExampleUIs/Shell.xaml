@@ -1,0 +1,18 @@
+﻿<Window x:Class="ExampleUIs.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.codeplex.com/CompositeWPF"
+    Title="WiPFlash"
+    SizeToContent="WidthAndHeight"
+    Name="petShopWindow">
+    <Grid>
+        <TabControl>
+            <TabItem Name="petRegistryTab" Header="Registry">
+                <ItemsControl Name="RegistryRegion" cal:RegionManager.RegionName="RegistryRegion"/>
+            </TabItem>
+            <TabItem Name="historyTab" Header="History">
+                <ItemsControl Name="HistoryRegion" cal:RegionManager.RegionName="HistoryRegion"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

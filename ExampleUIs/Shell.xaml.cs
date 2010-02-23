@@ -4,14 +4,14 @@ using System.Windows;
 
 #endregion
 
-namespace ExampleUIs.View
+namespace ExampleUIs
 {
     /// <summary>
-    /// Interaction logic for PetShopWindow.xaml
+    /// Interaction logic for Shell.xaml
     /// </summary>
-    public partial class PetShopWindow : Window
+    public partial class Shell : Window
     {
-        public PetShopWindow()
+        public Shell()
         {
             InitializeComponent();
         }

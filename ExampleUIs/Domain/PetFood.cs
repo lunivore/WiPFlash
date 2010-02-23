@@ -1,16 +1,22 @@
-﻿namespace ExampleUIs.Domain
+﻿#region
+
+using System.Collections.Generic;
+
+#endregion
+
+namespace ExampleUIs.PetModule.Domain
 {
     public class PetFood
     {
-        public static readonly PetFood[] ALL = new PetFood[]
-            {
-                new PetFood("Herbivorous"), 
-                new PetFood("Carnivorous"), 
-                new PetFood("Omnivorous"),
-                new PetFood("Insectivorous"),
-                new PetFood("Lunivorous"),                
-                new PetFood("Eats People"), 
-            };
+        public static readonly List<PetFood> ALL = new List<PetFood>(new[]
+                                                                         {
+                                                                             new PetFood("Herbivorous"), 
+                                                                             new PetFood("Carnivorous"), 
+                                                                             new PetFood("Omnivorous"),
+                                                                             new PetFood("Insectivorous"),
+                                                                             new PetFood("Lunivorous"),                
+                                                                             new PetFood("Eats People"), 
+                                                                         });
 
         private readonly string _foodType;
 
