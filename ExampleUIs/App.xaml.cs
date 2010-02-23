@@ -1,6 +1,10 @@
 ﻿#region
 
 using System.Windows;
+using ExampleUIs.PetModule.Domain;
+using ExampleUIs.PetModule.View;
+using ExampleUIs.PetModule.View.Model;
+using Microsoft.Practices.Unity;
 
 #endregion
 
@@ -11,5 +15,12 @@ namespace ExampleUIs
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            var bootstrapper = new BootStrapper();
+            bootstrapper.Run();
+        }
     }
 }

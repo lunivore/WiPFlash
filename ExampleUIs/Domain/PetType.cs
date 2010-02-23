@@ -4,21 +4,21 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace ExampleUIs.Domain
+namespace ExampleUIs.PetModule.Domain
 {
     public class PetType
     {
         public static List<PetType> ALL = new List<PetType>
-                                           {
-                                               new PetType("Cat"),
-                                               new PetType("Dog"),
-                                               new PetType("Rabbit"),
-                                               new PetType("Rodent"),
-                                               new PetType("Large Bird"),
-                                               new PetType("Small Bird"),
-                                               new PetType("Reptile"),
-                                               new PetType("Fish")
-                                           };
+                                              {
+                                                  new PetType("Cat"),
+                                                  new PetType("Dog"),
+                                                  new PetType("Rabbit"),
+                                                  new PetType("Rodent"),
+                                                  new PetType("Large Bird"),
+                                                  new PetType("Small Bird"),
+                                                  new PetType("Reptile"),
+                                                  new PetType("Fish")
+                                              };
 
         private string _typeName;
 
