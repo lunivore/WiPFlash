@@ -1,10 +1,10 @@
 #region
 
-using ExampleUIs.PetModule.View.Model;
+using ExampleUIs.PetRegistryModule.View.Model;
 
 #endregion
 
-namespace ExampleUIs.PetModule.View
+namespace ExampleUIs.PetRegistryModule.View
 {
     public partial class RegistrationPanel
     {

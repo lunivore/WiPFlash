@@ -16,7 +16,7 @@ namespace WiPFlash
     {
         private delegate Application HandlerForNoMatchingProcesses();
 
-        public ApplicationLauncher() : this(500) {}
+        public ApplicationLauncher() : this(3000) {}
 
         public ApplicationLauncher(int timeToLaunchInMillis) : this(timeToLaunchInMillis, new NameBasedFinder(new WrapperFactory()))
         {

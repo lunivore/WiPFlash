@@ -41,5 +41,10 @@ namespace ExampleUIs.PetModule.Domain
         {
             get { return _text; }
         }
+
+        public override string ToString()
+        {
+            return "Rule[" + Name + "]";
+        }
     }
 }

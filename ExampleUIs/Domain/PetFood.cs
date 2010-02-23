@@ -8,15 +8,16 @@ namespace ExampleUIs.PetModule.Domain
 {
     public class PetFood
     {
-        public static readonly List<PetFood> ALL = new List<PetFood>(new[]
-                                                                         {
-                                                                             new PetFood("Herbivorous"), 
-                                                                             new PetFood("Carnivorous"), 
-                                                                             new PetFood("Omnivorous"),
-                                                                             new PetFood("Insectivorous"),
-                                                                             new PetFood("Lunivorous"),                
-                                                                             new PetFood("Eats People"), 
-                                                                         });
+        public static readonly List<PetFood> ALL = new List<PetFood>(
+            new[]
+             {
+                 new PetFood("Herbivorous"), 
+                 new PetFood("Carnivorous"), 
+                 new PetFood("Omnivorous"),
+                 new PetFood("Insectivorous"),
+                 new PetFood("Lunivorous"),                
+                 new PetFood("Eats People"), 
+             });
 
         private readonly string _foodType;
 
@@ -36,7 +37,7 @@ namespace ExampleUIs.PetModule.Domain
          */
         public override string ToString()
         {
-            return FoodType;
+            return "PetFood[" + FoodType + "]";
         }
     }
 }
