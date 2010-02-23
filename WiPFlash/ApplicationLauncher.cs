@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading;
+using System.Windows.Automation;
 using WiPFlash.Component;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;
