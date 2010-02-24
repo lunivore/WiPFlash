@@ -18,7 +18,7 @@ namespace Examples.Framework
         [Test]
         public void ShouldFindAComponentFromTheGivenRootAndWrapUsingWrapper()
         {
-            Window window = new ApplicationLauncher(2000).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            Window window = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
             AutomationElement comboBoxElement = window.Element.FindFirst(TreeScope.Descendants,
                new PropertyCondition(AutomationElement.ClassNameProperty,
                typeof(ComboBox).Name));

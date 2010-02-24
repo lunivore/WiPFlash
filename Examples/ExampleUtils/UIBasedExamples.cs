@@ -26,9 +26,12 @@ namespace Examples.ExampleUtils
             Process[] processes = Process.GetProcessesByName(EXAMPLE_APP_NAME);
             foreach (var process in processes)
             {
+                Console.WriteLine("Tearing down process {0{ at {1}", process.Id, DateTime.Now);
+                process.WaitForInputIdle(Window.DEFAULT_TIMEOUT_IN_MILLIS);
                 process.CloseMainWindow();
+                process.WaitForExit(Window.DEFAULT_TIMEOUT_IN_MILLIS);
+                Console.WriteLine("Process {0} torn down at {1}", process.Id, DateTime.Now);
             }
-            Thread.Sleep(500);
         }
 
         protected Window LaunchPetShopWindow()

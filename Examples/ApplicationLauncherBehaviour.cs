@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash;
@@ -17,7 +18,10 @@ namespace Examples
         {
             var launcher = new ApplicationLauncher();
             var app = launcher.Launch(EXAMPLE_APP_PATH);
+            Console.WriteLine("Launched app at {0}, finding window", DateTime.Now);
+            app.FindWindow(EXAMPLE_APP_WINDOW_NAME);
             Assert.IsNotNull(app.Process);
+            Console.WriteLine("Example finished at {0}", DateTime.Now);
         }
 
         [Test]
@@ -25,7 +29,11 @@ namespace Examples
         {
             var launcher = new ApplicationLauncher();
             var originalApp = launcher.Launch(EXAMPLE_APP_PATH);
+            originalApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+
             var newApp = launcher.Recycle(EXAMPLE_APP_NAME);
+            newApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+
             Assert.AreEqual(originalApp.Process.Id, newApp.Process.Id);
         }
 
@@ -43,8 +51,8 @@ namespace Examples
         public void ShouldComplainIfMoreThanOneProcessExistsToRecycle()
         {
             var launcher = new ApplicationLauncher();
-            launcher.Launch(EXAMPLE_APP_PATH);
-            launcher.Launch(EXAMPLE_APP_PATH);
+            launcher.Launch(EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            launcher.Launch(EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
 
             try
             {
