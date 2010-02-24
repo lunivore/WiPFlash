@@ -1,10 +1,13 @@
-﻿using System;
+﻿#region
+
 using ExampleUIs.PetModule.Domain;
 using ExampleUIs.PetRegistryModule.View;
 using ExampleUIs.PetRegistryModule.View.Model;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;
+
+#endregion
 
 namespace ExampleUIs.PetRegistryModule
 {

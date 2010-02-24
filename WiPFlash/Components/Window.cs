@@ -26,10 +26,5 @@ namespace WiPFlash.Components
             ((WindowPattern)Element.GetCurrentPattern(WindowPattern.Pattern))
                 .Close();
         }
-
-        public static Window FindFromDesktop(string windowName)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

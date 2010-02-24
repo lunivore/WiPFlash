@@ -1,11 +1,9 @@
 #region
 
-using System;
-using System.Diagnostics;
 using System.Threading;
+using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash;
-using WiPFlash.Component;
 using WiPFlash.Components;
 
 #endregion
@@ -23,15 +21,21 @@ namespace Examples.ExampleUtils
         [TearDown]
         public void CloseAllExampleApplications()
         {
-            Process[] processes = Process.GetProcessesByName(EXAMPLE_APP_NAME);
-            foreach (var process in processes)
+            AutomationElementCollection windows = FindAllOpenWindows();
+            foreach (AutomationElement window in windows)
             {
-                Console.WriteLine("Tearing down process {0{ at {1}", process.Id, DateTime.Now);
-                process.WaitForInputIdle(Window.DEFAULT_TIMEOUT_IN_MILLIS);
-                process.CloseMainWindow();
-                process.WaitForExit(Window.DEFAULT_TIMEOUT_IN_MILLIS);
-                Console.WriteLine("Process {0} torn down at {1}", process.Id, DateTime.Now);
+                ((WindowPattern)window.GetCurrentPattern(WindowPattern.Pattern)).Close();                
             }
+            Thread.Sleep(200);
+        }
+
+        private AutomationElementCollection FindAllOpenWindows()
+        {
+            return AutomationElement.RootElement.FindAll(TreeScope.Children,
+                                                         new PropertyCondition(
+                                                             AutomationElement.
+                                                                 AutomationIdProperty,
+                                                             EXAMPLE_APP_WINDOW_NAME));
         }
 
         protected Window LaunchPetShopWindow()

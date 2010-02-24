@@ -1,4 +1,8 @@
+#region
+
 using ExampleUIs.HistoryModule.View.Model;
+
+#endregion
 
 namespace ExampleUIs.HistoryModule.View
 {

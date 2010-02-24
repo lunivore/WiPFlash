@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash;
@@ -18,10 +17,8 @@ namespace Examples
         {
             var launcher = new ApplicationLauncher();
             var app = launcher.Launch(EXAMPLE_APP_PATH);
-            Console.WriteLine("Launched app at {0}, finding window", DateTime.Now);
             app.FindWindow(EXAMPLE_APP_WINDOW_NAME);
             Assert.IsNotNull(app.Process);
-            Console.WriteLine("Example finished at {0}", DateTime.Now);
         }
 
         [Test]
@@ -42,8 +39,9 @@ namespace Examples
         {
             var launcher = new ApplicationLauncher();
             var originalApp = launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
-            Assert.IsNotNull(originalApp.Process);
+            originalApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
             var newApp = launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            newApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
             Assert.AreEqual(originalApp.Process.Id, newApp.Process.Id);
         }
 

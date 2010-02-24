@@ -4,3 +4,4 @@ syntax: regexp
 .*/bin/.*
 .*\.resharper\.user
 .*\.suo$
+.*\.csproj\.user
