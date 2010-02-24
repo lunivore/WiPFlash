@@ -4,7 +4,6 @@ using System;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash;
-using WiPFlash.Component;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
 
@@ -28,7 +27,7 @@ namespace Examples.Component
         {
             try
             {
-                new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(
+                new ApplicationLauncher(TimeSpan.Parse("00:00:01")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(
                     "wibbleWindow");
                 Assert.Fail("Application should have complained when failing to find window");
             } catch (FailureToFindException) {}

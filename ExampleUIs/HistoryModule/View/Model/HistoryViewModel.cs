@@ -1,5 +1,8 @@
-using System;
+#region
+
 using ExampleUIs.PetModule.Domain;
+
+#endregion
 
 namespace ExampleUIs.HistoryModule.View.Model
 {

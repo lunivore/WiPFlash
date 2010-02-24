@@ -1,10 +1,13 @@
-﻿using ExampleUIs.HistoryModule.View;
+﻿#region
+
+using ExampleUIs.HistoryModule.View;
 using ExampleUIs.HistoryModule.View.Model;
 using ExampleUIs.PetModule.Domain;
-using ExampleUIs.PetRegistryModule.View.Model;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;
+
+#endregion
 
 namespace ExampleUIs.HistoryModule
 {

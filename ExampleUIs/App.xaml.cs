@@ -1,8 +1,6 @@
 ﻿#region
 
 using System.Windows;
-using ExampleUIs.PetModule.Domain;
-using Microsoft.Practices.Unity;
 
 #endregion
 

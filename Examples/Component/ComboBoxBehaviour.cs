@@ -3,7 +3,6 @@
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
-using WiPFlash;
 using WiPFlash.Components;
 
 #endregion

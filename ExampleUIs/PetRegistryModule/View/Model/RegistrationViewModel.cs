@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using ExampleUIs.PetModule.Domain;
-using Microsoft.Practices.Unity;
 
 #endregion
 

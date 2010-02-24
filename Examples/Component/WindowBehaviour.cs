@@ -1,7 +1,5 @@
 ﻿#region
 
-using System;
-using System.Diagnostics;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using Moq;

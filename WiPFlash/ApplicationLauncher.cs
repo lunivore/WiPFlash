@@ -1,11 +1,10 @@
 #region
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Threading;
 using System.Windows.Automation;
-using WiPFlash.Component;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;
@@ -44,8 +43,8 @@ namespace WiPFlash
             try
             {
                 Process process = Process.Start(new ProcessStartInfo(path));
-                Console.WriteLine("Started process {0} at {1}", process.Id, DateTime.Now);
-                return new Application(process);
+                process.WaitForInputIdle(100);
+                return new Application(process, Timeout);
             } catch (Win32Exception e)
             {
                 string message = "Could not find the process to start on path \"" + path + "\". Current directory is \"" +
@@ -71,15 +70,39 @@ namespace WiPFlash
         private Application RecycleOrHandleHavingNone(string name, HandlerForNoMatchingProcesses handleNoMatchingProcesses)
         {
             Process[] processes = Process.GetProcessesByName(name);
-            if (processes.Length > 1)
+
+            List<Process> viableProcesses = FilterForViableProcesses(processes);
+
+            if (viableProcesses.Count > 1)
             {
                 throw new FailureToLaunchException("Cannot choose between two or more processes called " + name);
             }
-            if (processes.Length < 1)
+            if (viableProcesses.Count < 1)
             {
                 return handleNoMatchingProcesses();
             }
-            return new Application(processes[0], Timeout);
+            return new Application(viableProcesses[0], Timeout);
+        }
+
+        private List<Process> FilterForViableProcesses(Process[] processes)
+        {
+            var viableProcesses = new List<Process>();
+
+            foreach (var process in processes)
+            {
+                var windowWithProcess = AutomationElement.RootElement.FindFirst(TreeScope.Children,
+                        new AndCondition(
+                            new PropertyCondition(AutomationElement.ProcessIdProperty,
+                                                  process.Id),
+                            new PropertyCondition(
+                                AutomationElement.ControlTypeProperty,
+                                ControlType.Window)));
+                if (windowWithProcess != null)
+                {
+                    viableProcesses.Add(process);
+                }
+            }
+            return viableProcesses;
         }
     }
 }
