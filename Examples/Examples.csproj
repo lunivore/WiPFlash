@@ -70,7 +70,7 @@
     <Compile Include="Component\ListBoxBehaviour.cs" />
     <Compile Include="Component\TextBoxBehaviour.cs" />
     <Compile Include="Component\WindowBehaviour.cs" />
-    <Compile Include="ExampleUtils\AutomationElementWrapperExamples.cs" />
+    <Compile Include="Component\AutomationElementWrapperExamples.cs" />
     <Compile Include="Framework\NameBasedFinderBehaviour.cs" />
     <Compile Include="Framework\WrapperFactoryBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">

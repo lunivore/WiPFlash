@@ -37,8 +37,8 @@ namespace Examples.Component
         [Test]
         public void ShouldWaitForTheSpecifiedTimeoutAndStopAsSoonAsTheWindowIsFound()
         {
-            int farFarTooLong = 10000;
-            TimeSpan longEnough = System.TimeSpan.Parse("00:00:03");
+            TimeSpan farFarTooLong = TimeSpan.Parse("00:01:00");
+            TimeSpan longEnough = System.TimeSpan.Parse("00:00:10");
 
             
             var started = System.DateTime.Now;

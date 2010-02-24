@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Automation;
 using WiPFlash.Component;
+using WiPFlash.Components;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 
@@ -17,18 +18,18 @@ namespace WiPFlash
     {
         private delegate Application HandlerForNoMatchingProcesses();
 
-        public ApplicationLauncher() : this(3000) {}
+        public ApplicationLauncher() : this(Window.DEFAULT_TIMEOUT) {}
 
-        public ApplicationLauncher(int timeToLaunchInMillis) : this(timeToLaunchInMillis, new NameBasedFinder(new WrapperFactory()))
+        public ApplicationLauncher(TimeSpan timeout) : this(timeout, new NameBasedFinder(new WrapperFactory()))
         {
         }
 
-        public ApplicationLauncher(int timeToLaunchInMillis, IFindAutomationElements finder) {
-            TimeToLaunchInMillis = timeToLaunchInMillis;
+        public ApplicationLauncher(TimeSpan timeout, IFindAutomationElements finder) {
+            Timeout = timeout;
             Finder = finder;
         }
 
-        public int TimeToLaunchInMillis
+        public TimeSpan Timeout
         {
             get; set;
         }
@@ -43,7 +44,7 @@ namespace WiPFlash
             try
             {
                 Process process = Process.Start(new ProcessStartInfo(path));
-                Thread.Sleep(TimeToLaunchInMillis);
+                Console.WriteLine("Started process {0} at {1}", process.Id, DateTime.Now);
                 return new Application(process);
             } catch (Win32Exception e)
             {
@@ -78,7 +79,7 @@ namespace WiPFlash
             {
                 return handleNoMatchingProcesses();
             }
-            return new Application(processes[0]);
+            return new Application(processes[0], Timeout);
         }
     }
 }
