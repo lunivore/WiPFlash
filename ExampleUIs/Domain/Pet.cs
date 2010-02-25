@@ -25,5 +25,10 @@ namespace ExampleUIs.Domain
         {
             get; set;
         }
+
+        public PetFood FoodType
+        {
+            get; set;
+        }
     }
 }

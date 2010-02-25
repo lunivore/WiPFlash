@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 #endregion
 
-namespace ExampleUIs.PetModule.Domain
+namespace ExampleUIs.Domain
 {
     public class PetType
     {
@@ -30,6 +30,11 @@ namespace ExampleUIs.PetModule.Domain
         public string Name
         {
             get { return _typeName; }
+        }
+
+        public override string ToString()
+        {
+            return "PetType[" + Name + "]";
         }
     }
 }

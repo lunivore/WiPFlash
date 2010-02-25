@@ -1,5 +1,7 @@
 #region
 
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Documents;
 using ExampleUIs.Domain;
 
@@ -7,8 +9,10 @@ using ExampleUIs.Domain;
 
 namespace ExampleUIs.HistoryModule.View.Model
 {
-    public class HistoryViewModel
+    public class HistoryViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+
         private readonly PetRepository _repository;
         private History _history;
 
@@ -16,20 +20,14 @@ namespace ExampleUIs.HistoryModule.View.Model
         {
             _repository = repository;
             _history = repository.History;
-        }
+            _history.PropertyChanged +=
+                delegate { PropertyChanged(this, new PropertyChangedEventArgs("HistorySoFar")); };
+        }    
 
-        public FlowDocument HistorySoFar
+        public string HistorySoFar
         {
-            get
-            {
-                var doc = new FlowDocument();
-                var container = new InlineUIContainer();
-                doc.Blocks.Add(new Paragraph(container));
-
-                // TODO work out how to get the history in here                
-
-                return doc;
-            }
+            get { return _history.Text; }
         }
+
     }
 }

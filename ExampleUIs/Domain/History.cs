@@ -8,7 +8,7 @@ namespace ExampleUIs.Domain
     {        
         public event PropertyChangedEventHandler PropertyChanged = delegate {};
 
-        private string _text = "";
+        private string _text = "History so far:" + Environment.NewLine;
 
         public void AddText(string addition)
         {

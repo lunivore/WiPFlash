@@ -18,7 +18,9 @@ namespace ExampleUIs.Domain
 
         public void Save(Pet pet)
         {
-            _history.AddText(string.Format("{0} the {1} registered at a price of £{2}", pet.Name, pet.Type, pet.Price));
+            string petType = (pet.Type == null) ? string.Empty : pet.Type.Name;
+            string petFood = (pet.FoodType == null) ? string.Empty : pet.FoodType.Text;
+            _history.AddText(string.Format("{0} the {1} registered at a price of £{2}. Food: {3}", pet.Name, petType, pet.Price, petFood));
         }
     }
 }

@@ -1,40 +1,19 @@
 ﻿#region
 
+using System;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Exceptions;
 
 #endregion
 
 namespace Examples.Component
 {
     [TestFixture]
-    public class ComboBoxBehaviour : AutomationElementWrapperExamples<ComboBox>
+    public class NonEditableComboBoxBehaviour : ComboBoxBehaviour<ComboBox>
     {
-        [Test]
-        public void ShouldAllowValuesToBeSetWhenEditable()
-        {
-            ComboBox editableBox = CreateWrapper();
-            editableBox.Select("");
-            Assert.AreEqual("", editableBox.Selection);
-            editableBox.Select("Rabbit");
-            Assert.AreEqual("Rabbit", editableBox.Selection);
-            editableBox.Select("WibbleBeast");
-            Assert.AreEqual("WibbleBeast", editableBox.Selection);
-        }
-
-        [Test]
-        public void ShouldAllowValuesToBeSetUsingToStringWhenNotEditable()
-        {
-            Window window = LaunchPetShopWindow();
-            ComboBox nonEditableBox = window.Find<ComboBox>("petFoodInput");
-            nonEditableBox.Select("");
-            Assert.AreEqual("", nonEditableBox.Selection);
-            nonEditableBox.Select("PetFood[Carnivorous]");
-            Assert.AreEqual("PetFood[Carnivorous]", nonEditableBox.Selection);
-        }
-
         protected override ComboBox CreateWrapperWith(AutomationElement element)
         {
             return new ComboBox(element);
@@ -43,7 +22,51 @@ namespace Examples.Component
         protected override ComboBox CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            return window.Find<ComboBox>("petTypeInput");
+            return window.Find<ComboBox>(ComboBoxName);
         }
+
+        protected override string SelectableValue
+        {
+            get { return "PetFood[Carnivorous]"; }
+        }
+
+        protected override string ComboBoxName
+        {
+            get { return "petFoodInput"; }
+        }
+    }
+
+    [TestFixture]
+    public abstract class ComboBoxBehaviour<T> : AutomationElementWrapperExamples<T> where T : ComboBox
+    {
+        [Test]
+        public void ShouldAllowValuesToBeSetUsingToStringWhenNotEditable()
+        {
+            var window = LaunchPetShopWindow();
+            var nonEditableBox = window.Find<ComboBox>(ComboBoxName);
+            nonEditableBox.Select("");
+            Assert.AreEqual("", nonEditableBox.Selection);
+            nonEditableBox.Select(SelectableValue);
+            Assert.AreEqual(SelectableValue, nonEditableBox.Selection);
+        }
+
+        [Test]
+        public void ShouldComplainIfValueSelectedWhichIsntInTheList()
+        {
+            var window = LaunchPetShopWindow();
+            var nonEditableBox = window.Find<ComboBox>(ComboBoxName);
+            try
+            {
+                nonEditableBox.Select("Wibble");
+                Assert.Fail("Should have complained that it couldn't find the element Wibble");
+            } 
+            catch (FailureToFindException)
+            {
+                
+            }
+        }
+
+        protected virtual string ComboBoxName { get{ return string.Empty; } }
+        protected virtual string SelectableValue { get { return string.Empty; } }
     }
 }

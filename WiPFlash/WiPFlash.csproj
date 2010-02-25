@@ -54,6 +54,9 @@
     <Reference Include="UIAutomationTypes">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationLauncher.cs" />
@@ -62,8 +65,10 @@
     <Compile Include="Components\Button.cs" />
     <Compile Include="Components\ComboBox.cs" />
     <Compile Include="Components\Container.cs" />
+    <Compile Include="Components\EditableComboBox.cs" />
     <Compile Include="Components\Tab.cs" />
     <Compile Include="Components\RichTextBox.cs" />
+    <Compile Include="Components\TextBlock.cs" />
     <Compile Include="Framework\NameBasedFinder.cs" />
     <Compile Include="Framework\IWrapAutomationElements.cs" />
     <Compile Include="Components\ListBox.cs" />

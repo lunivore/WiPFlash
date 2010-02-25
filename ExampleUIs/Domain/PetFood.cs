@@ -19,16 +19,16 @@ namespace ExampleUIs.PetModule.Domain
                  new PetFood("Eats People"), 
              });
 
-        private readonly string _foodType;
+        private readonly string _text;
 
-        private PetFood(string foodType)
+        private PetFood(string Text)
         {
-            _foodType = foodType;            
+            _text = Text;            
         }
 
-        public string FoodType
+        public string Text
         {
-            get { return _foodType; }
+            get { return _text; }
         }
 
         /**
@@ -37,7 +37,7 @@ namespace ExampleUIs.PetModule.Domain
          */
         public override string ToString()
         {
-            return "PetFood[" + FoodType + "]";
+            return "PetFood[" + Text + "]";
         }
     }
 }

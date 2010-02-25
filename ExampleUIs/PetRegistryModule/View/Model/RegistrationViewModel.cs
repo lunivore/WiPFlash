@@ -57,12 +57,14 @@ namespace ExampleUIs.PetRegistryModule.View.Model
 
         public PetType PetType
         {
-            get; set;
+            get { return _pet.Type; } 
+            set { _pet.Type = value; }
         }
 
         public PetFood FoodType
         {
-            get; set;
+            get { return _pet.FoodType; }
+            set { _pet.FoodType = value; }
         }
 
         public ObservableCollection<Rule> Rules

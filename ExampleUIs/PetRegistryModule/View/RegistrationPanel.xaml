@@ -18,11 +18,11 @@
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Type:</Label>
-        <ComboBox IsEditable="True" Name="petTypeInput" SelectedItem="{Binding Path=PetType}" ItemsSource="{Binding Path=PetTypes}" DisplayMemberPath="Name"/>
+        <ComboBox IsEditable="True" Name="petTypeInput" SelectedItem="{Binding Path=PetType}" ItemsSource="{Binding Path=PetTypes}" SelectedValuePath="Name" DisplayMemberPath="Name"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Eats:</Label>
-        <ComboBox IsEditable="False" Name="petFoodInput" SelectedItem="{Binding Path=FoodType}" ItemsSource="{Binding Path=FoodTypes}" DisplayMemberPath="FoodType"/>
+        <ComboBox IsEditable="False" Name="petFoodInput" SelectedItem="{Binding Path=FoodType}" ItemsSource="{Binding Path=FoodTypes}" SelectedValuePath="Text" DisplayMemberPath="Text"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Price:</Label>
