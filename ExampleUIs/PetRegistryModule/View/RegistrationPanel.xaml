@@ -1,6 +1,8 @@
 <StackPanel x:Class="ExampleUIs.PetRegistryModule.View.RegistrationPanel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:utils="clr-namespace:ExampleUIs.Utils"
+    xmlns:vm="clr-namespace:ExampleUIs.PetRegistryModule.View.Model"
             Orientation="Vertical">   
     <StackPanel.Resources>
         <ResourceDictionary>
@@ -12,7 +14,7 @@
 
     <StackPanel Orientation="Horizontal">
         <Label>Name:</Label>
-        <TextBox Name="petNameInput"/>
+        <TextBox Name="petNameInput" Text="{Binding Path=Name}" />
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Type:</Label>
@@ -24,11 +26,11 @@
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Price:</Label>
-        <TextBox Name="petPriceInput" Text="{Binding Path=Name}"/>
+        <TextBox Name="petPriceInput" Text="{Binding Path=Price}"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Rules:</Label>
-        <ListBox Name="petRulesInput" ItemsSource="{Binding Path=Rules}" DisplayMemberPath="Name" SelectionMode="Multiple" />
+        <ListBox Name="petRulesInput" ItemsSource="{Binding Path=AllRules}" DisplayMemberPath="Name" SelectionMode="Multiple" />
     </StackPanel>
-    <Button HorizontalAlignment="Right" Name="petSaveButton" Margin="10, 5, 10, 5">Save</Button>
+    <Button HorizontalAlignment="Right" Name="petSaveButton" Margin="10, 5, 10, 5" Command="{Binding SaveCommand}">Save</Button>
 </StackPanel>

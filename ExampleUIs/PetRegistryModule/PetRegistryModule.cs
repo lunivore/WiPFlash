@@ -1,6 +1,6 @@
 ﻿#region
 
-using ExampleUIs.PetModule.Domain;
+using ExampleUIs.Domain;
 using ExampleUIs.PetRegistryModule.View;
 using ExampleUIs.PetRegistryModule.View.Model;
 using Microsoft.Practices.Composite.Modularity;

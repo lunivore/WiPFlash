@@ -16,10 +16,12 @@ namespace WiPFlash.Framework
         private static readonly IDictionary<Type, CreatesWrapperForType> creatorsByType 
             = new Dictionary<Type, CreatesWrapperForType>
             {
+                {typeof(RichTextBox), (element) => new RichTextBox(element)},
                 {typeof(TextBox), (element) => new TextBox(element)},
                 {typeof(ComboBox), (element) => new ComboBox(element)},
                 {typeof(ListBox), (element) => new ListBox(element)},
-                {typeof(Button), (element) => new Button(element)}
+                {typeof(Button), (element) => new Button(element)},
+                {typeof(Tab), (element) => new Tab(element)}
             };
 
         public T Wrap<T>(AutomationElement element) where T : AutomationElementWrapper

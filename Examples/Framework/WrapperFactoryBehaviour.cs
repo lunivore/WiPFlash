@@ -19,9 +19,11 @@ namespace Examples.Framework
             var anElement = AutomationElement.RootElement;
 
             Assert.IsAssignableFrom(typeof(TextBox), wrapperFactory.Wrap<TextBox>(anElement));
+            Assert.IsAssignableFrom(typeof(RichTextBox), wrapperFactory.Wrap<RichTextBox>(anElement));
             Assert.IsAssignableFrom(typeof(ComboBox), wrapperFactory.Wrap<ComboBox>(anElement));
             Assert.IsAssignableFrom(typeof(ListBox), wrapperFactory.Wrap<ListBox>(anElement));
             Assert.IsAssignableFrom(typeof(Button), wrapperFactory.Wrap<Button>(anElement));
+            Assert.IsAssignableFrom(typeof(Tab), wrapperFactory.Wrap<Tab>(anElement));
         }
     }
 }

@@ -31,5 +31,11 @@ namespace Examples.ExampleUtils
         protected abstract T CreateWrapperWith(AutomationElement element);
 
         protected abstract T CreateWrapper();
+
+        protected T FindPetShopElement(string name)
+        {
+            Window window = LaunchPetShopWindow();
+            return window.Find<T>(name);
+        }
     }
 }

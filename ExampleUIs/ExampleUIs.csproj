@@ -114,7 +114,9 @@
     <Compile Include="Domain\PetRepository.cs" />
     <Compile Include="Domain\History.cs" />
     <Compile Include="HistoryModule\HistoryModule.cs" />
+    <Compile Include="HistoryModule\View\BindableRichTextBox.cs" />
     <Compile Include="HistoryModule\View\Model\HistoryViewModel.cs" />
+    <Compile Include="Domain\Pet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -144,6 +146,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="PetRegistryModule\PetRegistryModule.cs" />
+    <Compile Include="Utils\DelegateCommand.cs" />
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

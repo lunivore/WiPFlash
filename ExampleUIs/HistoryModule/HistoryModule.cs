@@ -1,8 +1,8 @@
 ﻿#region
 
+using ExampleUIs.Domain;
 using ExampleUIs.HistoryModule.View;
 using ExampleUIs.HistoryModule.View.Model;
-using ExampleUIs.PetModule.Domain;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;
