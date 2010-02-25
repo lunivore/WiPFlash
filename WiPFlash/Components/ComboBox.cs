@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
+using WiPFlash.Exceptions;
 
 #endregion
 
@@ -16,43 +17,34 @@ namespace WiPFlash.Components
 
         public void Select(string selection)
         {
-            if (Editable)
+            if (selection.Equals(string.Empty))
             {
-                ((ValuePattern)Element.GetCurrentPattern(ValuePattern.Pattern)).SetValue(selection);
-            } else
-            {
-                if (selection.Equals(string.Empty))
+                foreach (var element in ((SelectionPattern)Element.GetCurrentPattern(SelectionPattern.Pattern)).Current.GetSelection())
                 {
-                    foreach (var element in ((SelectionPattern)Element.GetCurrentPattern(SelectionPattern.Pattern)).Current.GetSelection())
-                    {
-                        ((SelectionItemPattern)element.GetCurrentPattern(SelectionItemPattern.Pattern)).RemoveFromSelection();
-                    }
-                }
-                else
-                {
-                    ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Expand();
-                    /********************************************************************************************/
-                    /* Non-editable combo boxes require you to override "toString" in their underlying objects. */
-                    /********************************************************************************************/
-                    foreach (AutomationElement listItem in (Element.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem))))
-                    {
-                        if (listItem.GetCurrentPropertyValue(AutomationElement.NameProperty).Equals(selection))
-                        {
-                            ((SelectionItemPattern)listItem.GetCurrentPattern(SelectionItemPattern.Pattern)).Select();
-                            Thread.Sleep(100);
-                            break;
-                        }
-                    }                    
-                    ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
+                    ((SelectionItemPattern)element.GetCurrentPattern(SelectionItemPattern.Pattern)).RemoveFromSelection();
                 }
             }
-        }
-
-        protected bool Editable
-        {
-            get
+            else
             {
-                return new List<AutomationPattern>(Element.GetSupportedPatterns()).Contains(ValuePattern.Pattern);
+                bool found = false;
+                ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Expand();
+
+                foreach (AutomationElement listItem in (Element.FindAll(TreeScope.Children, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem))))
+                {
+                    if (listItem.GetCurrentPropertyValue(AutomationElement.NameProperty).Equals(selection))
+                    {
+                        ((SelectionItemPattern)listItem.GetCurrentPattern(SelectionItemPattern.Pattern)).Select();                        
+                        found = true;
+                        break;
+                    }
+                }
+                ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
+                if (!found)
+                {
+                    throw new FailureToFindException("Failed to find an element in this ComboBox with a value of " + selection + 
+                        ". Please use the ToString() value of the element for selection, or string.Empty to clear the selection. If you want " +
+                        "to select arbitrary text in an editable ComboBox, please use the EditableComboBox.Text method.");
+                }
             }
         }
 
@@ -60,10 +52,6 @@ namespace WiPFlash.Components
         {
             get
             {
-                if (Editable)
-                {
-                    return ((ValuePattern) Element.GetCurrentPattern(ValuePattern.Pattern)).Current.Value;
-                }
                 AutomationElement[] selections =
                     ((SelectionPattern) Element.GetCurrentPattern(SelectionPattern.Pattern)).Current.GetSelection();
                 if (selections.Length < 1) 

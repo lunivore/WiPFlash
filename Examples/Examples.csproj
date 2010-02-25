@@ -64,9 +64,11 @@
     <Compile Include="Component\ApplicationBehaviour.cs" />
     <Compile Include="Component\ButtonBehaviour.cs" />
     <Compile Include="Component\ComboBoxBehaviour.cs" />
+    <Compile Include="Component\EditableComboBoxBehaviour.cs" />
     <Compile Include="Component\ListBoxBehaviour.cs" />
     <Compile Include="Component\TabBehaviour.cs" />
     <Compile Include="Component\RichTextBoxBehaviour.cs" />
+    <Compile Include="Component\TextBlockBehaviour.cs" />
     <Compile Include="Component\TextBoxBehaviour.cs" />
     <Compile Include="Component\WindowBehaviour.cs" />
     <Compile Include="ExampleUtils\AutomationElementWrapperExamples.cs" />
