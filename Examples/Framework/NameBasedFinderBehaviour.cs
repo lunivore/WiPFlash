@@ -6,6 +6,7 @@ using Moq;
 using NUnit.Framework;
 using WiPFlash;
 using WiPFlash.Components;
+using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 
 #endregion
@@ -16,21 +17,35 @@ namespace Examples.Framework
     public class NameBasedFinderBehaviour : UIBasedExamples
     {
         [Test]
-        public void ShouldFindAComponentFromTheGivenRootAndWrapUsingWrapper()
+        public void ShouldFindAnElementFromTheGivenRootAndWrapUsingWrapper()
         {
-            Window window = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            Window window = LaunchPetShopWindow();
             AutomationElement comboBoxElement = window.Element.FindFirst(TreeScope.Descendants,
                new PropertyCondition(AutomationElement.ClassNameProperty,
                typeof(ComboBox).Name));
             string comboBoxName = comboBoxElement.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty).ToString();
 
-            var wrapper = new Mock<IWrapAutomationElements>();
+            var wrapperFactory = new Mock<IWrapAutomationElements>();
             var comboBox = new ComboBox(comboBoxElement);
-            wrapper.Setup(x => x.Wrap<ComboBox>(comboBoxElement)).Returns(comboBox);
+            wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement)).Returns(comboBox);
 
-            var finder = new NameBasedFinder(wrapper.Object);
+            var finder = new NameBasedFinder(wrapperFactory.Object);
             Assert.AreEqual(comboBox, finder.Find<ComboBox>(window, comboBoxName));
-
         }
+
+        [Test]
+        public void ShouldComplainIfElementNotFound()
+        {
+            Window window = LaunchPetShopWindow();
+            var finder = new NameBasedFinder(new Mock<IWrapAutomationElements>().Object);
+            try
+            {
+                finder.Find<ComboBox>(window, "wibbleInput");
+                Assert.Fail("Should have complained about the non-existent element");
+            }
+            catch(FailureToFindException) {}
+        }
+
+
     }
 }

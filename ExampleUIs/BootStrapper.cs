@@ -1,7 +1,7 @@
 ﻿#region
 
 using System.Windows;
-using ExampleUIs.PetModule.Domain;
+using ExampleUIs.Domain;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.UnityExtensions;
 

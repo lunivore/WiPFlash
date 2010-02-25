@@ -38,11 +38,15 @@ namespace Examples.Component
             CloseAllExampleApplications();
 
             Window window = LaunchPetShopWindow();
+            int processId = int.Parse(window.Element.GetCurrentPropertyValue(AutomationElement.ProcessIdProperty).ToString());
             window.Close();
 
             var windows = AutomationElement.RootElement.FindAll(TreeScope.Descendants,
-                                                  new PropertyCondition(AutomationElement.AutomationIdProperty,
-                                                                        EXAMPLE_APP_WINDOW_NAME));
+                                                  new AndCondition(
+                                                      new PropertyCondition(AutomationElement.AutomationIdProperty,
+                                                                        EXAMPLE_APP_WINDOW_NAME),
+                                                      new PropertyCondition(AutomationElement.ProcessIdProperty,
+                                                          processId)));
             Assert.AreEqual(0, windows.Count);
         }
     }

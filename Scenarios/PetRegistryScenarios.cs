@@ -21,6 +21,10 @@ namespace Scenarios
             window.Find<TextBox>("petPriceInput").Text = "100.00";
             window.Find<ListBox>("petRulesInput").Select("Rule[Dangerous]", "Rule[No Children]");
             window.Find<Button>("petSaveButton").Click();
+
+            window.Find<Tab>("historyTab").Select();
+
+            Assert.True(window.Find<RichTextBox>("historyInput").Text.Contains("Snowdrop the Rabbit registered at a price of £100"));
         }
 
     }

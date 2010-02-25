@@ -28,9 +28,7 @@ namespace Examples.Component
 
         protected override TextBox CreateWrapper()
         {
-            Window window = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(
-                EXAMPLE_APP_WINDOW_NAME);
-            return window.Find<TextBox>("petNameInput");
+            return FindPetShopElement("petNameInput");
         }
     }
 }

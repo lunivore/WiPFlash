@@ -49,7 +49,7 @@ namespace WiPFlash.Components
         public void ClearSelection()
         {
             var selection = GetSelectedElements();
-            foreach (var element in selection)
+            foreach (AutomationElement element in selection)
             {
                 ((SelectionItemPattern)element.GetCurrentPattern(SelectionItemPattern.Pattern))
                     .RemoveFromSelection();
