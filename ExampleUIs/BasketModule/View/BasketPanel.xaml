@@ -1,0 +1,36 @@
+﻿<StackPanel x:Class="ExampleUIs.BasketModule.View.BasketPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Orientation="Vertical">
+    <StackPanel.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/BasketStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </StackPanel.Resources>
+    <StackPanel Orientation="Horizontal">
+        <Label Width="100">Select purchases:</Label>
+        <ComboBox Name="basketInput" ItemsSource="{Binding AllGoods}" SelectedItem="{Binding Purchase}" Width="200"/>
+    </StackPanel>
+    <Label>Purchases so far</Label>
+    <ScrollViewer Width="300">
+        <ListBox Name="basketOutput" ItemsSource="{Binding Basket}" Height="300"/>
+    </ScrollViewer>
+    <WrapPanel FlowDirection="RightToLeft">
+        <Label Name="totalOutput" Content="{Binding Total}" Width="100"/>
+        <Label>:Total</Label>
+    </WrapPanel>
+    <Separator />
+    <StackPanel Orientation="Horizontal">
+        <RadioButton GroupName="payment" Name="cashPaymentInput" IsChecked="{Binding Cash}">Cash</RadioButton>
+        <RadioButton GroupName="payment" Name="chequePaymentInput" IsChecked="{Binding Cheque}">Cheque</RadioButton>
+        <RadioButton GroupName="payment" Name="cardPaymentInput" IsChecked="{Binding Card}">Card</RadioButton>
+    </StackPanel>
+    <DockPanel Width="300">
+        <CheckBox Name="vatReceiptInput" IsChecked="{Binding VatReceipt}" DockPanel.Dock="Left">VAT Receipt</CheckBox>
+        <WrapPanel FlowDirection="RightToLeft" DockPanel.Dock="Right">
+            <Button Name="purchaseButton" Command="{Binding Purchase}">Purchase</Button>
+        </WrapPanel>
+    </DockPanel>
+</StackPanel>

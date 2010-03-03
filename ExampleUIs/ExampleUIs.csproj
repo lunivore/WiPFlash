@@ -85,6 +85,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="BasketModule\Styles\BasketStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="BasketModule\View\BasketPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -107,6 +115,11 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasketModule\BasketModule.cs" />
+    <Compile Include="BasketModule\View\BasketPanel.xaml.cs">
+      <DependentUpon>BasketPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="BasketModule\View\Model\BasketViewModel.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Domain\PetFood.cs" />
     <Compile Include="Domain\PetType.cs" />

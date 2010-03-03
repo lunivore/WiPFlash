@@ -5,14 +5,19 @@
     Title="WiPFlash"
     SizeToContent="WidthAndHeight"
     Name="petShopWindow">
-    <Grid>
-        <TabControl>
+    <StackPanel Orientation="Horizontal">
+        <TabControl Margin="10, 10, 10, 10">
             <TabItem Name="petRegistryTab" Header="Registry">
-                <ItemsControl Name="RegistryRegion" cal:RegionManager.RegionName="RegistryRegion"/>
+                <ItemsControl cal:RegionManager.RegionName="RegistryRegion"/>
             </TabItem>
             <TabItem Name="historyTab" Header="History">
-                <ItemsControl Name="HistoryRegion" cal:RegionManager.RegionName="HistoryRegion"/>
+                <ItemsControl cal:RegionManager.RegionName="HistoryRegion"/>
             </TabItem>
         </TabControl>
-    </Grid>
+        <TabControl Margin="10, 10, 10, 10">
+            <TabItem Header="Basket">
+                <ItemsControl cal:RegionManager.RegionName="BasketRegion" />
+            </TabItem>
+        </TabControl>
+    </StackPanel>
 </Window>

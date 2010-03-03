@@ -1,8 +1,6 @@
 <StackPanel x:Class="ExampleUIs.PetRegistryModule.View.RegistrationPanel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:utils="clr-namespace:ExampleUIs.Utils"
-    xmlns:vm="clr-namespace:ExampleUIs.PetRegistryModule.View.Model"
             Orientation="Vertical">   
     <StackPanel.Resources>
         <ResourceDictionary>
