@@ -1,5 +1,8 @@
 ﻿#region
 
+using System;
+using System.Collections.Generic;
+using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -9,7 +12,7 @@ using WiPFlash.Components;
 namespace Examples.Component
 {
     [TestFixture]
-    public class ListBoxBehaviour : UIBasedExamples
+    public class ListBoxBehaviour : AutomationElementWrapperExamples<ListBox>
     {
         [Test]
         public void ShouldAllowItemsToBeSelected()
@@ -32,6 +35,30 @@ namespace Examples.Component
             listBox.Select("Rule[Dangerous]");
             listBox.ClearSelection();
             Assert.AreEqual(0, listBox.Selection.Length);
+        }
+
+        [Test]
+        public void ShouldProvideCurrentItems()
+        {
+            ListBox listBox = CreateWrapper();
+            var items = new List<string>(listBox.Items);
+            foreach (var list in items)
+            {
+                Console.WriteLine(list);
+            }
+            Assert.True(items.Contains("Rule[Dangerous]"));
+            Assert.True(items.Contains("Rule[No Children]"));
+
+        }
+
+        protected override ListBox CreateWrapperWith(AutomationElement element)
+        {
+            return new ListBox(element);
+        }
+
+        protected override ListBox CreateWrapper()
+        {
+            return LaunchPetShopWindow().Find<ListBox>("petRulesInput");
         }
     }
 }

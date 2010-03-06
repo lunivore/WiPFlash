@@ -4,7 +4,6 @@ using System.Windows.Automation;
 using Examples.ExampleUtils;
 using Moq;
 using NUnit.Framework;
-using WiPFlash;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;

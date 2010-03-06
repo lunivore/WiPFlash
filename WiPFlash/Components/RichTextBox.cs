@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region
+
 using System.Linq;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
 using System.Windows.Forms;
+
+#endregion
 
 namespace WiPFlash.Components
 {

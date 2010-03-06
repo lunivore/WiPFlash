@@ -1,8 +1,10 @@
-using System;
+#region
+
 using System.Collections.Generic;
 using System.ComponentModel;
-using ExampleUIs.BasketModule.View.Model;
 using ExampleUIs.PetModule.Domain;
+
+#endregion
 
 namespace ExampleUIs.Domain
 {
@@ -52,6 +54,12 @@ namespace ExampleUIs.Domain
             string petType = (pet.Type == null) ? string.Empty : pet.Type.Name;
             string petFood = (pet.FoodType == null) ? string.Empty : pet.FoodType.Text;
             _history.AddText(string.Format("{0} the {1} registered at a price of £{2}. Food: {3}", pet.Name, petType, pet.Price, petFood));
+            PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
+        }
+
+        public void PetWasPutInBasket(Pet pet)
+        {
+            _pets.Remove(pet);
             PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
         }
     }
