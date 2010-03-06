@@ -8,27 +8,45 @@ namespace ExampleUIs.Domain
     {
         public string Name
         {
-            get; set;
+            get;
+            set;
         }
 
         public string Price
         {
-            get; set;
+            get;
+            set;
+        }
+
+        public int PriceInPence
+        {
+            get
+            {
+                return int.Parse((double.Parse(Price)*100).ToString());
+            }
         }
 
         public List<Rule> Rules
         {
-            get; set;
+            get;
+            set;
         }
 
         public PetType Type
         {
-            get; set;
+            get;
+            set;
         }
 
         public PetFood FoodType
         {
-            get; set;
+            get;
+            set;
+        }
+
+        public override string ToString()
+        {
+            return "Pet[" + Name + "]";
         }
     }
 }

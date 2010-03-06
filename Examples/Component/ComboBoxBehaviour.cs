@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
@@ -14,6 +15,20 @@ namespace Examples.Component
     [TestFixture]
     public class NonEditableComboBoxBehaviour : ComboBoxBehaviour<ComboBox>
     {
+        [Test]
+        public void ShouldProvideCurrentItems()
+        {
+            ComboBox comboBox = CreateWrapper();
+            var items = new List<string>(comboBox.Items);
+            foreach (var list in items)
+            {
+                Console.WriteLine(list);
+            }
+            Assert.True(items.Contains("PetFood[Carnivorous]"));
+            Assert.True(items.Contains("PetFood[Eats People]"));
+            
+        }
+
         protected override ComboBox CreateWrapperWith(AutomationElement element)
         {
             return new ComboBox(element);

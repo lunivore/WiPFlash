@@ -24,7 +24,10 @@ namespace Examples.Framework
             Assert.IsAssignableFrom(typeof(ListBox), wrapperFactory.Wrap<ListBox>(anElement));
             Assert.IsAssignableFrom(typeof(Button), wrapperFactory.Wrap<Button>(anElement));
             Assert.IsAssignableFrom(typeof(TextBlock), wrapperFactory.Wrap<TextBlock>(anElement));
+            Assert.IsAssignableFrom(typeof(Label), wrapperFactory.Wrap<Label>(anElement));
             Assert.IsAssignableFrom(typeof(Tab), wrapperFactory.Wrap<Tab>(anElement));
+            Assert.IsAssignableFrom(typeof(CheckBox), wrapperFactory.Wrap<CheckBox>(anElement));
+            Assert.IsAssignableFrom(typeof(RadioButton), wrapperFactory.Wrap<RadioButton>(anElement));
         }
 
         [Test]

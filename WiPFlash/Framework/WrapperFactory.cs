@@ -21,8 +21,11 @@ namespace WiPFlash.Framework
                 {typeof(TextBlock), (element) => new TextBlock(element)},
                 {typeof(ListBox), (element) => new ListBox(element)},
                 {typeof(Button), (element) => new Button(element)},
+                {typeof(CheckBox), (element) => new CheckBox(element)},
+                {typeof(RadioButton), (element) => new RadioButton(element)},
                 {typeof(Tab), (element) => new Tab(element)},
                 {typeof(EditableComboBox), (element) => new EditableComboBox(element)},
+                {typeof(Label), (element) => new Label(element)},
                 {typeof(ComboBox), (element) =>
                                        {
                                            var patterns = new List<AutomationPattern>(element.GetSupportedPatterns());
