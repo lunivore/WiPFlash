@@ -1,7 +1,12 @@
-using System;
+#region
+
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Windows.Input;
 using ExampleUIs.Domain;
+using ExampleUIs.Utils;
+
+#endregion
 
 namespace ExampleUIs.BasketModule.View.Model
 {
@@ -43,12 +48,40 @@ namespace ExampleUIs.BasketModule.View.Model
             }
             set
             {
-                _basket.Add(value);
-                PropertyChanged(this, new PropertyChangedEventArgs("AllGoods"));
-                PropertyChanged(this, new PropertyChangedEventArgs("Purchase"));
-                PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
-                PropertyChanged(this, new PropertyChangedEventArgs("Total"));
+                if (value != null && !_basket.Contains(value)){
+                    _basket.Add(value);
+                    PropertyChanged(this, new PropertyChangedEventArgs("Purchase"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("Total"));
+                }
             }           
+        }
+
+        public string[] Basket
+        {
+            get
+            {
+                List<string> basketContents = new List<string>();
+                foreach (var pet in _basket)
+                {
+                    basketContents.Add(pet.Name + "\t" + pet.Price);
+                }
+                return basketContents.ToArray();
+            }
+        }
+
+        public ICommand Pay
+        {
+            get { return new DelegateCommand(
+                delegate
+                    {
+                        foreach (var pet in _basket)
+                        {
+                            _repository.PetWasPutInBasket(pet);    
+                        }
+                        _basket.Clear();
+                        PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
+                    }); }
         }
 
         public string Total

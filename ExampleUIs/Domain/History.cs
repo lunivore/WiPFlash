@@ -1,6 +1,9 @@
+#region
+
 using System;
 using System.ComponentModel;
-using System.Net.Mime;
+
+#endregion
 
 namespace ExampleUIs.Domain
 {

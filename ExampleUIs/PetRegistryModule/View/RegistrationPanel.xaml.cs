@@ -1,6 +1,5 @@
 #region
 
-using System;
 using ExampleUIs.PetRegistryModule.View.Model;
 
 #endregion

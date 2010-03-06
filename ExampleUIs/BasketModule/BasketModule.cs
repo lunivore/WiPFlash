@@ -1,11 +1,8 @@
 ﻿#region
 
-using System;
 using ExampleUIs.BasketModule.View;
 using ExampleUIs.BasketModule.View.Model;
 using ExampleUIs.Domain;
-using ExampleUIs.PetRegistryModule.View;
-using ExampleUIs.PetRegistryModule.View.Model;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;

@@ -57,7 +57,7 @@ namespace WiPFlash.Components
 
         private AutomationElement FindOrWaitForOpenWindow(string windowName)
         {
-
+            DateTime startedAt = DateTime.Now;
             Monitor.Enter(_waitingRoom);
             AutomationElement windowElement;
 
@@ -66,24 +66,30 @@ namespace WiPFlash.Components
                                                  delegate { windowElement = WindowOpened(windowName); });
 
             windowElement = FindOpenWindow(windowName);
-            if (windowElement == null)
+            while (windowElement == null && (DateTime.Now.Subtract(startedAt)).CompareTo(_timeout) < 0)
             {
-                Monitor.Wait(_waitingRoom, _timeout);
+                // We are polling because sometimes the event handler doesn't fire 
+                // quickly enough for my liking - the system is too busy. This lets 
+                // us check every second, while still taking advantage of the event handling
+                // if it does decide to fire.
+                Monitor.Wait(_waitingRoom, 1000);
             }
+
             Monitor.Exit(_waitingRoom);
             return windowElement;
         }
 
         private AutomationElement FindOpenWindow(string windowName)
         {
-            Condition condition = new PropertyCondition(AutomationElement.AutomationIdProperty, windowName);
+            Condition ourWindow = new PropertyCondition(AutomationElement.AutomationIdProperty, windowName);
+            Condition ourProcess = Condition.TrueCondition;
             if (_process != null)
             {
-                condition = new AndCondition(new PropertyCondition(AutomationElement.ProcessIdProperty, _process.Id),
-                                             condition);
+                ourProcess = new PropertyCondition(AutomationElement.ProcessIdProperty, _process.Id);
             }
-            return AutomationElement.RootElement.FindFirst(TreeScope.Children,
-                                                           condition);
+            return AutomationElement.RootElement.FindFirst(
+                TreeScope.Children,
+                new AndCondition(ourWindow, ourProcess));
         }
 
         private AutomationElement WindowOpened(string windowName)
@@ -98,6 +104,18 @@ namespace WiPFlash.Components
             }
             Monitor.Exit(_waitingRoom);
             return null;
+        }
+
+
+
+        private void WindowActive(AutomationElement element)
+        {
+            Monitor.Enter(_waitingRoom);
+            if (element.GetCurrentPropertyValue(WindowPattern.WindowInteractionStateProperty).Equals(WindowInteractionState.ReadyForUserInteraction))
+            {
+                Monitor.Pulse(_waitingRoom);
+            }
+            Monitor.Exit(_waitingRoom);
         }
     }
 }

@@ -1,19 +1,9 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
-using System.Windows.Controls;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
-using Button=WiPFlash.Components.Button;
-using CheckBox=WiPFlash.Components.CheckBox;
-using ComboBox=WiPFlash.Components.ComboBox;
-using Label=WiPFlash.Components.Label;
-using ListBox=WiPFlash.Components.ListBox;
-using RadioButton=WiPFlash.Components.RadioButton;
-using RichTextBox=WiPFlash.Components.RichTextBox;
-using TextBox=WiPFlash.Components.TextBox;
 
 #endregion
 
@@ -43,12 +33,15 @@ namespace Scenarios
             window.Find<ComboBox>("basketInput").Select("Pet[Snowdrop]");
             string actualTotal = window.Find<Label>("totalOutput").Text;
             Assert.AreEqual("100.00", actualTotal);
+            string[] basketContents = window.Find<ListBox>("basketOutput").Items;
+            Assert.Contains("Snowdrop\t100.00", basketContents);
+
             window.Find<RadioButton>("cardPaymentInput").Select();
             window.Find<CheckBox>("vatReceiptInput").Toggle();
             window.Find<Button>("purchaseButton").Click();
 
-            string[] basketItems = window.Find<ComboBox>("basketInput").Items;
-            Assert.False(new List<string>(basketItems).Contains("Pet[Snowdrop]"));
+            string[] goodsAvailable = window.Find<ComboBox>("basketInput").Items;
+            Assert.False(new List<string>(goodsAvailable).Contains("Pet[Snowdrop]"));
         }
 
     }

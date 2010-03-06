@@ -1,8 +1,6 @@
 #region
 
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Windows.Documents;
 using ExampleUIs.Domain;
 
 #endregion

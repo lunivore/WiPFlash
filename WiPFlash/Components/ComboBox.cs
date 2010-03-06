@@ -1,8 +1,6 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
-using System.Threading;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
 

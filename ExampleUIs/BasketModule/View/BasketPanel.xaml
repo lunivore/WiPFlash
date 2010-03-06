@@ -15,7 +15,7 @@
     </StackPanel>
     <Label>Purchases so far</Label>
     <ScrollViewer Width="300">
-        <ListBox Name="basketOutput" ItemsSource="{Binding Basket}" Height="300"/>
+        <ListBox Name="basketOutput" ItemsSource="{Binding Basket}" Height="300" IsEnabled="False"/>
     </ScrollViewer>
     <WrapPanel FlowDirection="RightToLeft">
         <Label Name="totalOutput" Content="{Binding Total}" Width="100"/>
@@ -30,7 +30,7 @@
     <DockPanel Width="300">
         <CheckBox Name="vatReceiptInput" IsChecked="{Binding VatReceipt}" DockPanel.Dock="Left">VAT Receipt</CheckBox>
         <WrapPanel FlowDirection="RightToLeft" DockPanel.Dock="Right">
-            <Button Name="purchaseButton" Command="{Binding Purchase}">Purchase</Button>
+            <Button Name="purchaseButton" Command="{Binding Pay}">Purchase</Button>
         </WrapPanel>
     </DockPanel>
 </StackPanel>

@@ -1,6 +1,9 @@
-using System;
+#region
+
 using System.Collections.Generic;
 using ExampleUIs.PetModule.Domain;
+
+#endregion
 
 namespace ExampleUIs.Domain
 {
