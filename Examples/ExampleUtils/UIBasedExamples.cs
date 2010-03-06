@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
@@ -40,7 +41,7 @@ namespace Examples.ExampleUtils
 
         protected Window LaunchPetShopWindow()
         {
-            Application application = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
             return application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
         }
     }

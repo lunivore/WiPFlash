@@ -51,6 +51,8 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="UIAutomationClient">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -63,9 +65,12 @@
     <Compile Include="ApplicationLauncherBehaviour.cs" />
     <Compile Include="Component\ApplicationBehaviour.cs" />
     <Compile Include="Component\ButtonBehaviour.cs" />
+    <Compile Include="Component\CheckBoxBehaviour.cs" />
     <Compile Include="Component\ComboBoxBehaviour.cs" />
     <Compile Include="Component\EditableComboBoxBehaviour.cs" />
+    <Compile Include="Component\LabelBehaviour.cs" />
     <Compile Include="Component\ListBoxBehaviour.cs" />
+    <Compile Include="Component\RadioButtonBehaviour.cs" />
     <Compile Include="Component\TabBehaviour.cs" />
     <Compile Include="Component\RichTextBoxBehaviour.cs" />
     <Compile Include="Component\TextBlockBehaviour.cs" />

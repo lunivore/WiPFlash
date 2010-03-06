@@ -23,6 +23,7 @@ namespace ExampleUIs.BasketModule.View
         public BasketPanel(BasketViewModel model)
         {
             InitializeComponent();
+            DataContext = model;
         }
     }
 }
