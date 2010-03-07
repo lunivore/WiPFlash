@@ -23,9 +23,16 @@ namespace Examples.Component
             Assert.True(tab.HasFocus());
         }
 
-        protected override Tab CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldWaitForTheTabToGetFocus()
         {
-            return new Tab(element);
+            GivenThisWillHappenAtSomePoint(tab => tab.Select());
+            ThenWeShouldBeAbleToWaitFor(tab => tab.HasFocus());
+        }
+
+        protected override Tab CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new Tab(element, name);
         }
 
         protected override Tab CreateWrapper()

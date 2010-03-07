@@ -12,14 +12,14 @@ using WiPFlash.Framework;
 namespace Examples.Component
 {
     [TestFixture]
-    public class WindowBehaviour : UIBasedExamples
+    public class WindowBehaviour : AutomationElementWrapperExamples<Container>
     {
         [Test]
         public void ShouldFindTheComponentUsingTheFinderWithItselfAsRoot()
         {
             var anElement = AutomationElement.RootElement;
-            var textBox = new TextBox(anElement);
-            var comboBox = new ComboBox(anElement);
+            var textBox = new TextBox(anElement, "aTextInput");
+            var comboBox = new ComboBox(anElement, "aComboInput");
 
             var finder = new Mock<IFindAutomationElements>();
 
@@ -30,6 +30,13 @@ namespace Examples.Component
 
             Assert.AreEqual(textBox, window.Find<TextBox>("aTextInput"));
             Assert.AreEqual(comboBox, window.Find<ComboBox>("aComboInput"));
+        }
+
+        [Test]
+        public void ShouldBeAbleToWaitForWindowEvents()
+        {
+            GivenThisWillHappenAtSomePoint(window => ((Window)window).Close());
+            ThenWeShouldBeAbleToWaitFor(window => ((Window)window).IsClosed());
         }
 
         [Test]
@@ -48,6 +55,16 @@ namespace Examples.Component
                                                       new PropertyCondition(AutomationElement.ProcessIdProperty,
                                                           processId)));
             Assert.AreEqual(0, windows.Count);
+        }
+
+        protected override Container CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new Window(element, name);
+        }
+
+        protected override Container CreateWrapper()
+        {
+            return LaunchPetShopWindow();
         }
     }
 }

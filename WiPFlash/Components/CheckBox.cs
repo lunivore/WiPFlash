@@ -1,14 +1,16 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Windows.Automation;
+using WiPFlash.Framework.Events;
 
 #endregion
 
 namespace WiPFlash.Components
 {
-    public class CheckBox : AutomationElementWrapper
+    public class CheckBox : AutomationElementWrapper<CheckBox>
     {
-        public CheckBox(AutomationElement element) : base(element)
+        public CheckBox(AutomationElement element, string name) : base(element, name)
         {
         }
 
@@ -31,6 +33,11 @@ namespace WiPFlash.Components
         public void Toggle()
         {
             ((TogglePattern)Element.GetCurrentPattern(TogglePattern.Pattern)).Toggle();
+        }
+
+        protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
+        {
+            get { return new AutomationEventWrapper[] {new PropertyChangeEvent(TreeScope.Element, TogglePattern.ToggleStateProperty) }; }
         }
     }
 }

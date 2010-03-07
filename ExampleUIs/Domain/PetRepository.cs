@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using ExampleUIs.PetModule.Domain;
 
 #endregion
@@ -49,12 +50,18 @@ namespace ExampleUIs.Domain
 
         public void Save(Pet pet)
         {
-            System.Console.WriteLine("Got a new pet in the repository");
-            _pets.Add(pet);
             string petType = (pet.Type == null) ? string.Empty : pet.Type.Name;
             string petFood = (pet.FoodType == null) ? string.Empty : pet.FoodType.Text;
             _history.AddText(string.Format("{0} the {1} registered at a price of £{2}. Food: {3}", pet.Name, petType, pet.Price, petFood));
-            PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
+            new Thread(() =>
+                           {
+                               // Mimics talking to a real repository
+                               Thread.Sleep(400);
+                               System.Console.WriteLine("Got a new pet in the repository");
+                               _pets.Add(pet);
+                               PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
+                           }).Start();
+
         }
 
         public void PetWasPutInBasket(Pet pet)

@@ -33,9 +33,16 @@ namespace Examples.Component
             Assert.False(checkBox.Selected);
         }
 
-        protected override CheckBox CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldBeAbleToWaitForSelection()
         {
-            return new CheckBox(element);
+            GivenThisWillHappenAtSomePoint(cb => cb.Selected = true);
+            ThenWeShouldBeAbleToWaitFor(cb => cb.Selected.Equals(true));
+        }
+
+        protected override CheckBox CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new CheckBox(element, name);
         }
 
         protected override CheckBox CreateWrapper()

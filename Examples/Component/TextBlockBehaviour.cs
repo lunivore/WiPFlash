@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
@@ -20,9 +21,25 @@ namespace Examples.Component
             Assert.AreEqual("History so far:" + Environment.NewLine, block.Text);
         }
 
-        protected override TextBlock CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldWaitForContentsOfBlockToChange()
         {
-            return new TextBlock(element);
+            Window window = LaunchPetShopWindow();
+            window.Find<Tab>("historyTab").Select();
+            new Thread(() =>
+                           {                               
+                               var box = window.Find<RichTextBox>("historyInput");
+                               box.Text = string.Empty;
+                           }).Start();
+
+            var block = window.Find<TextBlock>("historyOutput");
+            block.WaitFor(b => b.Text.Equals(string.Empty));
+            Assert.AreEqual(string.Empty, block.Text);
+        }
+
+        protected override TextBlock CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new TextBlock(element, name);
         }
 
         protected override TextBlock CreateWrapper()

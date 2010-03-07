@@ -8,6 +8,7 @@ namespace WiPFlash.Framework
 {
     public interface IFindAutomationElements
     {
-        T Find<T>(AutomationElementWrapper wrapper, string automationId) where T : AutomationElementWrapper;        
+        T Find<T>(Container root, string automationId)
+            where T : AutomationElementWrapper<T>;
     }
 }

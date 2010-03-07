@@ -25,7 +25,7 @@ namespace ExampleUIs.Domain
         {
             get
             {
-                return int.Parse((double.Parse(Price)*100).ToString());
+                return int.Parse((double.Parse(Price)*100.00).ToString());
             }
         }
 
