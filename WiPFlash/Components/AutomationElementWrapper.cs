@@ -55,12 +55,18 @@ namespace WiPFlash.Components
         {
             WaitFor(check, DEFAULT_WAIT_TIMEOUT);            
         }
-        
-        private void WaitFor(SomethingToWaitFor check, TimeSpan timeout)
+
+        public void WaitFor(SomethingToWaitFor check, TimeSpan timeout)
+        {
+            WaitFor(check, timeout, SensibleEventsToWaitFor);
+        }
+
+        public void WaitFor(SomethingToWaitFor check, TimeSpan timeout, IEnumerable<AutomationEventWrapper> events)
         {
             Monitor.Enter(_waitingRoom);
+
             DateTime started = DateTime.Now;
-            var handlerRemovers = AddPulsingHandlers();
+            var handlerRemovers = AddPulsingHandlers(events);
 
             while(!check((T)this) && DateTime.Now.Subtract(started).CompareTo(timeout) < 0)
             {
@@ -73,7 +79,7 @@ namespace WiPFlash.Components
             {
                 throw new FailureToHappenException(
                     String.Format("Element {0} of type {1} failed to meet your criteria in time",
-                    _name, GetType().Name));
+                                  _name, GetType().Name));
             }
         }
 
@@ -85,14 +91,13 @@ namespace WiPFlash.Components
             }
         }
 
-        private IEnumerable<AutomationEventWrapper> AddPulsingHandlers()
+        private IEnumerable<AutomationEventWrapper> AddPulsingHandlers(IEnumerable<AutomationEventWrapper> eventWrappers)
         {
-            var wirers = SensibleEventsToWaitFor;
-            foreach (var wirer in wirers)
+            foreach (var wrapper in eventWrappers)
             {
-                wirer.Add(PulseTheWaitingRoom, Element);
+                wrapper.Add(PulseTheWaitingRoom, Element);
             }
-            return wirers;
+            return eventWrappers;
         }
 
         protected abstract IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor { get; }
