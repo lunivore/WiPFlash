@@ -9,12 +9,12 @@ using WiPFlash.Components;
 namespace Examples.Component
 {
     [TestFixture]
-    public class EditableComboBoxBehaviour : ComboBoxBehaviour<EditableComboBox>
+    public class EditableComboBoxBehaviour : ComboBoxBehaviour
     {
         [Test]
         public void ShouldAllowValuesToBeSetWhenEditable()
         {
-            EditableComboBox editableBox = CreateWrapper();
+            var editableBox = (EditableComboBox)CreateWrapper();
             editableBox.Select("");
             Assert.AreEqual("", editableBox.Selection);
             editableBox.Select("PetType[Rabbit]");
@@ -23,15 +23,22 @@ namespace Examples.Component
             Assert.AreEqual("WibbleBeast", editableBox.Text);
         }
 
-        protected override EditableComboBox CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldAllowMeToWaitUntilTheSelectionOrTheItemsChange()
         {
-            return new EditableComboBox(element);
+            GivenThisWillHappenAtSomePoint(combo => combo.Select("PetType[Rabbit]"));
+            ThenWeShouldBeAbleToWaitFor((cb) => cb.Selection.Equals("PetType[Rabbit]"));
         }
 
-        protected override EditableComboBox CreateWrapper()
+        protected override ComboBox CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new EditableComboBox(element, name);
+        }
+
+        protected override ComboBox CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            return window.Find<EditableComboBox>(ComboBoxName);
+            return window.Find<ComboBox>(ComboBoxName);
         }
 
         protected override string SelectableValue

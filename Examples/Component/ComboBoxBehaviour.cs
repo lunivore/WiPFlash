@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
@@ -13,25 +12,31 @@ using WiPFlash.Exceptions;
 namespace Examples.Component
 {
     [TestFixture]
-    public class NonEditableComboBoxBehaviour : ComboBoxBehaviour<ComboBox>
+    public class NonEditableComboBoxBehaviour : ComboBoxBehaviour
     {
+
+
         [Test]
         public void ShouldProvideCurrentItems()
         {
             ComboBox comboBox = CreateWrapper();
             var items = new List<string>(comboBox.Items);
-            foreach (var list in items)
-            {
-                Console.WriteLine(list);
-            }
             Assert.True(items.Contains("PetFood[Carnivorous]"));
-            Assert.True(items.Contains("PetFood[Eats People]"));
-            
+            Assert.True(items.Contains("PetFood[Eats People]"));            
         }
 
-        protected override ComboBox CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldAllowMeToWaitUntilTheSelectionOrTheItemsChange()
         {
-            return new ComboBox(element);
+            // For an example of waiting until the items change, see the scenarios.
+
+            GivenThisWillHappenAtSomePoint(combo => combo.Select("PetFood[Carnivorous]"));
+            ThenWeShouldBeAbleToWaitFor((cb) => cb.Selection.Equals("PetFood[Carnivorous]"));
+        }
+
+        protected override ComboBox CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new ComboBox(element, name);
         }
 
         protected override ComboBox CreateWrapper()
@@ -52,7 +57,7 @@ namespace Examples.Component
     }
 
     [TestFixture]
-    public abstract class ComboBoxBehaviour<T> : AutomationElementWrapperExamples<T> where T : ComboBox
+    public abstract class ComboBoxBehaviour : AutomationElementWrapperExamples<ComboBox>
     {
         [Test]
         public void ShouldAllowValuesToBeSetUsingToStringWhenNotEditable()

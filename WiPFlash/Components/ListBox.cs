@@ -2,14 +2,15 @@
 
 using System.Collections.Generic;
 using System.Windows.Automation;
+using WiPFlash.Framework.Events;
 
 #endregion
 
 namespace WiPFlash.Components
 {
-    public class ListBox : AutomationElementWrapper
+    public class ListBox : AutomationElementWrapper<ListBox>
     {
-        public ListBox(AutomationElement element) : base(element)
+        public ListBox(AutomationElement element, string name) : base(element, name)
         {
         }
 
@@ -71,6 +72,20 @@ namespace WiPFlash.Components
             {
                 ((SelectionItemPattern)element.GetCurrentPattern(SelectionItemPattern.Pattern))
                     .RemoveFromSelection();
+            }
+        }
+
+        protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
+        {
+            get 
+            {
+                return new AutomationEventWrapper[]
+                   {
+                       new StructureChangeEvent(TreeScope.Element),
+                       new OrdinaryEvent(SelectionItemPattern.ElementAddedToSelectionEvent, TreeScope.Descendants),
+                       new OrdinaryEvent(SelectionItemPattern.ElementSelectedEvent, TreeScope.Descendants),
+                       new OrdinaryEvent(SelectionItemPattern.ElementRemovedFromSelectionEvent, TreeScope.Descendants)
+                   };
             }
         }
     }

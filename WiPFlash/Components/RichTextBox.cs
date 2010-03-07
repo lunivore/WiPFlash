@@ -1,17 +1,19 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
 using System.Windows.Forms;
+using WiPFlash.Framework.Events;
 
 #endregion
 
 namespace WiPFlash.Components
 {
-    public class RichTextBox : AutomationElementWrapper
+    public class RichTextBox : AutomationElementWrapper<RichTextBox>
     {
-        public RichTextBox(AutomationElement element) : base(element)
+        public RichTextBox(AutomationElement element, string name) : base(element, name)
         {
         }
 
@@ -51,6 +53,21 @@ namespace WiPFlash.Components
                 text = element.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString();
             }
             return text;
+        }
+
+        protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
+        {
+            get
+            {
+                return new AutomationEventWrapper[]
+                           {
+                                new StructureChangeEvent(TreeScope.Subtree),
+                                new PropertyChangeEvent(TreeScope.Subtree, 
+                                    AutomationElement.NameProperty,
+                                    ValuePattern.ValueProperty),
+                                new OrdinaryEvent(TextPattern.TextChangedEvent, TreeScope.Subtree)
+                           };
+            }
         }
     }
 }

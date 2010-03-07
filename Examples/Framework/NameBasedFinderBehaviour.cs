@@ -25,8 +25,8 @@ namespace Examples.Framework
             string comboBoxName = comboBoxElement.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty).ToString();
 
             var wrapperFactory = new Mock<IWrapAutomationElements>();
-            var comboBox = new ComboBox(comboBoxElement);
-            wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement)).Returns(comboBox);
+            var comboBox = new ComboBox(comboBoxElement, "aComboBox");
+            wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement, comboBoxName)).Returns(comboBox);
 
             var finder = new NameBasedFinder(wrapperFactory.Object);
             Assert.AreEqual(comboBox, finder.Find<ComboBox>(window, comboBoxName));

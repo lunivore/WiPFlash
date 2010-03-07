@@ -1,14 +1,16 @@
 ﻿#region
 
+using System.Collections.Generic;
 using System.Windows.Automation;
+using WiPFlash.Framework.Events;
 
 #endregion
 
 namespace WiPFlash.Components
 {
-    public class Tab : AutomationElementWrapper
+    public class Tab : AutomationElementWrapper<Tab>
     {
-        public Tab(AutomationElement element) : base(element)
+        public Tab(AutomationElement element, string name) : base(element, name)
         {
         }
 
@@ -20,6 +22,13 @@ namespace WiPFlash.Components
         public bool HasFocus()
         {
             return bool.Parse(Element.GetCurrentPropertyValue(AutomationElement.HasKeyboardFocusProperty).ToString());
+        }
+
+        protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
+        {
+            get {
+                return new AutomationEventWrapper[] {new FocusEvent()};
+            }
         }
     }
 }

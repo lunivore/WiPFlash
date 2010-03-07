@@ -52,7 +52,7 @@ namespace WiPFlash.Components
             ((WindowPattern) windowElement.GetCurrentPattern(WindowPattern.Pattern))
                 .WaitForInputIdle(5000);
 
-            return new Window(windowElement);
+            return new Window(windowElement, windowName);
         }
 
         private AutomationElement FindOrWaitForOpenWindow(string windowName)
@@ -61,9 +61,10 @@ namespace WiPFlash.Components
             Monitor.Enter(_waitingRoom);
             AutomationElement windowElement;
 
+            AutomationEventHandler handler = delegate { windowElement = WindowOpened(windowName); };
             Automation.AddAutomationEventHandler(WindowPattern.WindowOpenedEvent,
                                                  AutomationElement.RootElement, TreeScope.Children,
-                                                 delegate { windowElement = WindowOpened(windowName); });
+                                                 handler);
 
             windowElement = FindOpenWindow(windowName);
             while (windowElement == null && (DateTime.Now.Subtract(startedAt)).CompareTo(_timeout) < 0)
@@ -74,6 +75,11 @@ namespace WiPFlash.Components
                 // if it does decide to fire.
                 Monitor.Wait(_waitingRoom, 1000);
             }
+
+            Automation.RemoveAutomationEventHandler(
+                WindowPattern.WindowOpenedEvent, 
+                AutomationElement.RootElement, 
+                handler);
 
             Monitor.Exit(_waitingRoom);
             return windowElement;
@@ -104,18 +110,6 @@ namespace WiPFlash.Components
             }
             Monitor.Exit(_waitingRoom);
             return null;
-        }
-
-
-
-        private void WindowActive(AutomationElement element)
-        {
-            Monitor.Enter(_waitingRoom);
-            if (element.GetCurrentPropertyValue(WindowPattern.WindowInteractionStateProperty).Equals(WindowInteractionState.ReadyForUserInteraction))
-            {
-                Monitor.Pulse(_waitingRoom);
-            }
-            Monitor.Exit(_waitingRoom);
         }
     }
 }

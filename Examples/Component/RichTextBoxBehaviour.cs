@@ -20,10 +20,18 @@ namespace Examples.Component
             Assert.AreEqual("Gooseberry Bear", box.Text);
         }
 
-
-        protected override RichTextBox CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldWaitForTheTextToChange()
         {
-            return new RichTextBox(element);
+            GivenThisWillHappenAtSomePoint(box => box.Text = "Gooseberries");
+            ThenWeShouldBeAbleToWaitFor(box => box.Text.Equals("Gooseberries"));
+        }
+
+
+
+        protected override RichTextBox CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new RichTextBox(element, name);
         }
 
         protected override RichTextBox CreateWrapper()

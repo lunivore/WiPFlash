@@ -8,7 +8,7 @@ namespace WiPFlash.Components
 {
     public class EditableComboBox : ComboBox
     {
-        public EditableComboBox(AutomationElement element) : base(element)
+        public EditableComboBox(AutomationElement element, string name) : base(element, name)
         {
         }
 

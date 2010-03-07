@@ -17,12 +17,18 @@ namespace Examples.Component
         {
             Button button = CreateWrapper();
             button.Click();
-            // TODO Add something that makes clicking the button valuable - history of last changes would be good
         }
 
-        protected override Button CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldProvideItsText()
         {
-            return new Button(element);
+            Button button = CreateWrapper();
+            Assert.AreEqual("Save", button.Text);
+        }
+
+        protected override Button CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new Button(element, name);
         }
 
         protected override Button CreateWrapper()

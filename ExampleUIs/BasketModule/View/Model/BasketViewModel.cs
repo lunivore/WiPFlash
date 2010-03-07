@@ -61,7 +61,7 @@ namespace ExampleUIs.BasketModule.View.Model
         {
             get
             {
-                List<string> basketContents = new List<string>();
+                var basketContents = new List<string>();
                 foreach (var pet in _basket)
                 {
                     basketContents.Add(pet.Name + "\t" + pet.Price);
@@ -74,14 +74,14 @@ namespace ExampleUIs.BasketModule.View.Model
         {
             get { return new DelegateCommand(
                 delegate
+                {
+                    foreach (var pet in _basket)
                     {
-                        foreach (var pet in _basket)
-                        {
-                            _repository.PetWasPutInBasket(pet);    
-                        }
-                        _basket.Clear();
-                        PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
-                    }); }
+                        _repository.PetWasPutInBasket(pet);    
+                    }
+                    _basket.Clear();
+                    PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
+                }); }
         }
 
         public string Total
@@ -93,7 +93,7 @@ namespace ExampleUIs.BasketModule.View.Model
                 {
                     total += pet.PriceInPence; 
                 }
-                return (total/100).ToString("0.00");
+                return (total/100.00).ToString("0.00");
             }
         }
     }

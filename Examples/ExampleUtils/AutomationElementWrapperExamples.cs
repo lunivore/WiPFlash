@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -9,8 +10,28 @@ using WiPFlash.Components;
 
 namespace Examples.ExampleUtils
 {
-    public abstract class AutomationElementWrapperExamples<T> : UIBasedExamples where T : AutomationElementWrapper
+    public abstract class AutomationElementWrapperExamples<T> : UIBasedExamples where T : AutomationElementWrapper<T>
     {
+        private T _element;
+
+        protected delegate void ActionToPerform(T element);
+
+        protected void GivenThisWillHappenAtSomePoint(ActionToPerform action)
+        {
+            _element = CreateWrapper();
+            new Thread(() =>
+                           {
+                               Thread.Sleep(200);
+                               action(_element);
+                           }).Start();
+        }
+
+        protected void ThenWeShouldBeAbleToWaitFor(AutomationElementWrapper<T>.SomethingToWaitFor check)
+        {
+            _element.WaitFor(check);
+            Assert.True(check(_element));
+        }
+
         [Test]
         public void ShouldProvideAccessToTheUnderlyingAutomationElement()
         {
@@ -23,12 +44,19 @@ namespace Examples.ExampleUtils
         {
             try
             {
-                CreateWrapperWith(null);
+                CreateWrapperWith(null, string.Empty);
                 Assert.Fail("AutomationElementWrappers should fail at the point of being initialised with null");
             } catch (NullReferenceException){}
         }
 
-        protected abstract T CreateWrapperWith(AutomationElement element);
+        [Test]
+        public void ShouldProvideTheNameWithWhichItWasConstructed()
+        {
+            T wrapper = CreateWrapperWith(AutomationElement.RootElement, "nameOfElement");
+            Assert.AreEqual("nameOfElement", wrapper.Name);
+        }
+
+        protected abstract T CreateWrapperWith(AutomationElement element, string name);
 
         protected abstract T CreateWrapper();
 

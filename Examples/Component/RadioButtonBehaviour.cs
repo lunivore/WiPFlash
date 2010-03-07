@@ -21,9 +21,16 @@ namespace Examples.Component
             Assert.True(radioButton.Selected);
         }
 
-        protected override RadioButton CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldBeAbleToWaitForSelection()
         {
-            return new RadioButton(element);
+            GivenThisWillHappenAtSomePoint(rb => rb.Select());
+            ThenWeShouldBeAbleToWaitFor(rb => rb.Selected);
+        }
+
+        protected override RadioButton CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new RadioButton(element, name);
         }
 
         protected override RadioButton CreateWrapper()

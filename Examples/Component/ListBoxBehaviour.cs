@@ -48,12 +48,18 @@ namespace Examples.Component
             }
             Assert.True(items.Contains("Rule[Dangerous]"));
             Assert.True(items.Contains("Rule[No Children]"));
-
         }
 
-        protected override ListBox CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldBeAbleToWaitForSelectionAndContentChanges()
         {
-            return new ListBox(element);
+            GivenThisWillHappenAtSomePoint(list => list.Select("Rule[Dangerous]"));
+            ThenWeShouldBeAbleToWaitFor(list => new List<string>(list.Selection).Contains("Rule[Dangerous]"));
+        }
+
+        protected override ListBox CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new ListBox(element, name);
         }
 
         protected override ListBox CreateWrapper()

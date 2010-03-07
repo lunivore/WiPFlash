@@ -20,9 +20,16 @@ namespace Examples.Component
             Assert.AreEqual("Gooseberry Bear", box.Text);
         }
 
-        protected override TextBox CreateWrapperWith(AutomationElement element)
+        [Test]
+        public void ShouldWaitForTextToBeChanged()
         {
-            return new TextBox(element);
+            GivenThisWillHappenAtSomePoint(text => text.Text = "Hello!");
+            ThenWeShouldBeAbleToWaitFor(text => text.Text.Equals("Hello!"));
+        }
+
+        protected override TextBox CreateWrapperWith(AutomationElement element, string name)
+        {
+            return new TextBox(element, name);
         }
 
         protected override TextBox CreateWrapper()

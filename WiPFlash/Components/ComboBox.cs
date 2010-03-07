@@ -3,14 +3,15 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
+using WiPFlash.Framework.Events;
 
 #endregion
 
 namespace WiPFlash.Components
 {
-    public class ComboBox : AutomationElementWrapper
+    public class ComboBox : AutomationElementWrapper<ComboBox>
     {
-        public ComboBox(AutomationElement element) : base(element)
+        public ComboBox(AutomationElement element, string name) : base(element, name)
         {
         }
 
@@ -79,6 +80,25 @@ namespace WiPFlash.Components
                 ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
 
                 return result.ToArray();
+            }
+        }
+
+        public new void WaitFor(SomethingToWaitFor check)
+        {
+            ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Expand();
+            base.WaitFor(check);
+            ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
+        }
+
+        protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
+        {
+            get
+            {
+                return new AutomationEventWrapper[]
+                   {
+                       new StructureChangeEvent(TreeScope.Element),
+                       new OrdinaryEvent(SelectionItemPattern.ElementSelectedEvent, TreeScope.Descendants)
+                   };
             }
         }
     }
