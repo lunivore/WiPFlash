@@ -26,7 +26,9 @@ namespace ExampleUIs.PetRegistryModule
         {
             var petRepository = _container.Resolve<PetRepository>();
             var registrationViewModel = new RegistrationViewModel(petRepository);
-            _regionManager.Regions["RegistryRegion"].Add(new RegistrationPanel(registrationViewModel));
+            var view = new RegistrationPanel(registrationViewModel);
+            _regionManager.Regions["Admin"].Add(view);
+            _regionManager.Regions["Admin"].Activate(view);
         }
     }
 }

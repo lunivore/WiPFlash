@@ -68,6 +68,8 @@
     <Compile Include="Components\Container.cs" />
     <Compile Include="Components\EditableComboBox.cs" />
     <Compile Include="Components\FocusEvent.cs" />
+    <Compile Include="Framework\PropertyBasedFinder.cs" />
+    <Compile Include="Framework\TitleBasedFinder.cs" />
     <Compile Include="Framework\Events\OrdinaryEvent.cs" />
     <Compile Include="Framework\Events\StructureChangeEvent.cs" />
     <Compile Include="Framework\Events\AutomationEventWrapper.cs" />

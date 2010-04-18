@@ -26,7 +26,7 @@ namespace ExampleUIs.HistoryModule
         {
             var petRepository = _container.Resolve<PetRepository>();
             var historyViewModel = new HistoryViewModel(petRepository);
-            _regionManager.Regions["HistoryRegion"].Add(new HistoryPanel(historyViewModel));
+            _regionManager.Regions["Admin"].Add(new HistoryPanel(historyViewModel));
         }
     }
 }

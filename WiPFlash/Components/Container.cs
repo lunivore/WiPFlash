@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework;
@@ -29,7 +30,12 @@ namespace WiPFlash.Components
 
         public T Find<T>(string componentName) where T : AutomationElementWrapper<T>
         {
-            return _finder.Find<T>(this, componentName);            
+            return Find<T>(_finder, componentName);
+        }
+
+        public T Find<T>(IFindAutomationElements finder, string name) where T : AutomationElementWrapper<T>
+        {
+            return finder.Find<T>(this, name);
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor

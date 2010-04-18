@@ -5,19 +5,13 @@
     Title="WiPFlash"
     SizeToContent="WidthAndHeight"
     Name="petShopWindow">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}" x:Key="TabItemRegionStyle">
+            <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.DataContext.ViewHeader}" />
+        </Style>
+    </Window.Resources>
     <StackPanel Orientation="Horizontal">
-        <TabControl Margin="10, 10, 10, 10">
-            <TabItem Name="petRegistryTab" Header="Registry">
-                <ItemsControl cal:RegionManager.RegionName="RegistryRegion"/>
-            </TabItem>
-            <TabItem Name="historyTab" Header="History">
-                <ItemsControl cal:RegionManager.RegionName="HistoryRegion"/>
-            </TabItem>
-        </TabControl>
-        <TabControl Margin="10, 10, 10, 10">
-            <TabItem Header="Basket">
-                <ItemsControl cal:RegionManager.RegionName="BasketRegion" />
-            </TabItem>
-        </TabControl>
+        <TabControl Margin="10, 10, 10, 10" cal:RegionManager.RegionName="Admin"  ItemContainerStyle="{StaticResource TabItemRegionStyle}" />
+        <TabControl Margin="10, 10, 10, 10" cal:RegionManager.RegionName="Sales"  ItemContainerStyle="{StaticResource TabItemRegionStyle}" />
     </StackPanel>
 </Window>

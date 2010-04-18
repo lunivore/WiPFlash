@@ -26,7 +26,9 @@ namespace ExampleUIs.BasketModule
         {
             var petRepository = _container.Resolve<PetRepository>();
             var basketViewModel = new BasketViewModel(petRepository);
-            _regionManager.Regions["BasketRegion"].Add(new BasketPanel(basketViewModel));
+            var panel = new BasketPanel(basketViewModel);
+            _regionManager.Regions["Sales"].Add(panel);
+            _regionManager.Regions["Sales"].Activate(panel);
         }
     }    
 }

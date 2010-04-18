@@ -20,7 +20,9 @@ namespace ExampleUIs.HistoryModule.View.Model
             _history = repository.History;
             _history.PropertyChanged +=
                 delegate { PropertyChanged(this, new PropertyChangedEventArgs("HistorySoFar")); };
-        }    
+        }
+
+        public string ViewHeader { get { return "History"; } }
 
         public string HistorySoFar
         {
