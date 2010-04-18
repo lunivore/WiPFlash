@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -23,7 +24,7 @@ namespace Scenarios
             window.Find<ListBox>("petRulesInput").Select("Rule[Dangerous]", "Rule[No Children]");
             window.Find<Button>("petSaveButton").Click();
 
-            window.Find<Tab>("historyTab").Select();
+            window.Find<Tab>(new TitleBasedFinder(), "History").Select();
 
             string expectedHistory = "Snowdrop the Rabbit registered at a price of £100.00. Food: Carnivorous";
             string actualHistory = window.Find<RichTextBox>("historyInput").Text;

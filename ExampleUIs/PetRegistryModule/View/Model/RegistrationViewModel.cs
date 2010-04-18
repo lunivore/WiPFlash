@@ -22,6 +22,8 @@ namespace ExampleUIs.PetRegistryModule.View.Model
             _pet = new Pet();
         }
 
+        public string ViewHeader { get { return "Registration";  } }
+
         public List<PetType> PetTypes {
             get
             {

@@ -8,30 +8,12 @@ using WiPFlash.Exceptions;
 
 namespace WiPFlash.Framework
 {
-    public class NameBasedFinder : IFindAutomationElements
+    public class NameBasedFinder : PropertyBasedFinder
     {
-        private IWrapAutomationElements _wrapper;
+        public NameBasedFinder() : this(new WrapperFactory()) { }
 
-        public NameBasedFinder(IWrapAutomationElements wrapper)
+        public NameBasedFinder(IWrapAutomationElements wrapper) : base(wrapper, AutomationElement.AutomationIdProperty)
         {
-            _wrapper = wrapper;
-        }
-
-        public T Find<T>(Container root, string name) 
-            where T : AutomationElementWrapper<T>
-        {
-            AutomationElement element = root.Element.FindFirst(
-                TreeScope.Descendants,
-                new PropertyCondition(AutomationElement.AutomationIdProperty, name));
-            if (element == null)
-            {
-                throw new FailureToFindException(string.Format(
-                    "Could not find an element called '{0}'" +
-                    " from the root starting with the element '{1}'. This should be the Name on your WPF class, " +
-                    "mapping to the AutomationId in Microsoft's UI automation.", 
-                    name, root.Element.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty)));
-            }
-            return _wrapper.Wrap<T>(element, name);
         }
     }
 }

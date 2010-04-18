@@ -27,6 +27,8 @@ namespace ExampleUIs.BasketModule.View.Model
                                                };
         }
 
+        public string ViewHeader { get { return "Basket"; } }
+
         public Pet[] AllGoods
         {
             get
