@@ -4,12 +4,14 @@ using WiPFlash.Exceptions;
 
 namespace WiPFlash.Framework
 {
-    public abstract class PropertyBasedFinder : IFindAutomationElements
+    public class PropertyBasedFinder : IFindAutomationElements
     {
         private readonly IWrapAutomationElements _wrapper;
         private readonly AutomationProperty _property;
 
-        protected PropertyBasedFinder(IWrapAutomationElements wrapper, AutomationProperty property)
+        public PropertyBasedFinder(AutomationProperty property) : this(new WrapperFactory(), property) {}
+
+        public PropertyBasedFinder(IWrapAutomationElements wrapper, AutomationProperty property)
         {
             _wrapper = wrapper;
             _property = property;
