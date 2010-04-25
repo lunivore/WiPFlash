@@ -16,16 +16,6 @@ namespace WiPFlash.Framework
         private static readonly IDictionary<Type, CreatesWrapperForType> creatorsByType 
             = new Dictionary<Type, CreatesWrapperForType>
             {
-                {typeof(RichTextBox), (element, name) => new RichTextBox(element, name)},
-                {typeof(TextBox), (element, name) => new TextBox(element, name)},
-                {typeof(TextBlock), (element, name) => new TextBlock(element, name)},
-                {typeof(ListBox), (element, name) => new ListBox(element, name)},
-                {typeof(Button), (element, name) => new Button(element, name)},
-                {typeof(CheckBox), (element, name) => new CheckBox(element, name)},
-                {typeof(RadioButton), (element, name) => new RadioButton(element, name)},
-                {typeof(Tab), (element, name) => new Tab(element, name)},
-                {typeof(EditableComboBox), (element, name) => new EditableComboBox(element, name)},
-                {typeof(Label), (element, name) => new Label(element, name)},
                 {typeof(ComboBox), (element, name) =>
                                        {
                                            var patterns = new List<AutomationPattern>(element.GetSupportedPatterns());
@@ -38,7 +28,26 @@ namespace WiPFlash.Framework
 
         public T Wrap<T>(AutomationElement element, string name) where T : AutomationElementWrapper<T>
         {
-            return (T)creatorsByType[typeof (T)](element, name);
+            if (creatorsByType.ContainsKey(typeof (T)))
+            {
+                return (T) creatorsByType[typeof (T)](element, name);
+            }
+            var constructor = typeof (T).GetConstructor(new[] {typeof (AutomationElement), typeof (string)});
+         
+            if (constructor != null)
+            {
+                return (T) constructor.Invoke(new object[] {element, name});
+            }
+            
+            constructor = typeof (T).GetConstructor(new[] {typeof (AutomationElement)});
+            
+            if (constructor != null)
+            {
+
+                return (T) constructor.Invoke(new object[] {element});
+            }
+            throw new ArgumentException("No suitable constructor found for WiPFlash component of type {0}. " +
+                                        "Should be either (AutomationElement, string) or just (AutomationElement)");
         }
     }
 }

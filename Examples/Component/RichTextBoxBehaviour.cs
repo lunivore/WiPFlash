@@ -4,6 +4,7 @@ using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -37,7 +38,7 @@ namespace Examples.Component
         protected override RichTextBox CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            window.Find<Tab>("historyTab").Select();
+            window.Find<Tab>(new TitleBasedFinder(), "History").Select();
             return window.Find<RichTextBox>("historyInput");
         }
     }
