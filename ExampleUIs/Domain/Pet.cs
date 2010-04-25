@@ -1,14 +1,19 @@
 #region
 
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using ExampleUIs.PetModule.Domain;
 
 #endregion
 
 namespace ExampleUIs.Domain
 {
-    public class Pet
+    public class Pet : INotifyPropertyChanged
     {
+        private bool _sold;
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+     
         public string Name
         {
             get;
@@ -47,9 +52,19 @@ namespace ExampleUIs.Domain
             set;
         }
 
+        public bool Sold
+        {
+            get { return _sold; }
+            set {
+                _sold = value;
+                PropertyChanged(this, new PropertyChangedEventArgs("Sold"));
+            }
+        }
+
         public override string ToString()
         {
             return "Pet[" + Name + "]";
         }
+
     }
 }

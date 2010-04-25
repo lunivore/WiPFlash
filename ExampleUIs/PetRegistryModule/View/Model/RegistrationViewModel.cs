@@ -1,7 +1,9 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using ExampleUIs.Domain;
 using ExampleUIs.PetModule.Domain;
@@ -11,9 +13,11 @@ using ExampleUIs.Utils;
 
 namespace ExampleUIs.PetRegistryModule.View.Model
 {
-    public class RegistrationViewModel
-    {   
-        private PetRepository _petRepository;
+    public class RegistrationViewModel : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged = delegate { };
+    
+        private readonly PetRepository _petRepository;
         private Pet _pet;
 
         public RegistrationViewModel(PetRepository petRepository)
@@ -83,14 +87,27 @@ namespace ExampleUIs.PetRegistryModule.View.Model
 
         public ICommand SaveCommand
         {
-            get { return new SavePetCommand(_petRepository, _pet);  }
+            get { return new SavePetCommand(this);  }
         }
 
         public class SavePetCommand : DelegateCommand
         {
-            public SavePetCommand(PetRepository repository, Pet pet)
-                : base(o => repository.Save(pet))
+            internal SavePetCommand(RegistrationViewModel model)
+                : base(o=>
+                    {
+                        model._petRepository.Save(model._pet);
+                        model._pet = new Pet();
+                        model.NotifyPropertyChanged("Name", "Price", "PetType", "FoodType", "Rules");
+                    })
             {
+            }
+        }
+
+        private void NotifyPropertyChanged(params string[] properties)
+        {
+            foreach (var property in properties)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(property));
             }
         }
     }
