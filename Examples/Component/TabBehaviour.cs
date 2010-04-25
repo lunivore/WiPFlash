@@ -4,6 +4,7 @@ using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -15,7 +16,7 @@ namespace Examples.Component
         [Test]
         public void ShouldAllowTabToBeSelected()
         {
-            Tab tab = FindPetShopElement("historyTab");
+            Tab tab = LaunchPetShopWindow().Find<Tab>(new TitleBasedFinder(), "History");
 
             Assert.False(tab.HasFocus());
 
@@ -37,7 +38,7 @@ namespace Examples.Component
 
         protected override Tab CreateWrapper()
         {
-            return FindPetShopElement("historyTab");
+            return LaunchPetShopWindow().Find<Tab>(new TitleBasedFinder(), "History");
         }
     }
 }
