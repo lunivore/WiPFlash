@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
@@ -14,7 +15,8 @@ namespace ExampleUIs.Domain
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
 
         private readonly History _history;
-        private List<Pet> _pets;
+        private readonly List<Pet> _pets;
+        private readonly List<Pet> _soldPets;
 
         public PetRepository(History history)
         {
@@ -35,7 +37,15 @@ namespace ExampleUIs.Domain
                                     FoodType = PetFood.ALL[0],
                                     Price = "4.50"
                                 },
+                            new Pet
+                                {
+                                    Name="Dancer",
+                                    Type = PetType.ALL[2],
+                                    FoodType = PetFood.ALL[2],
+                                    Price = "54.00"
+                                },
                         };
+            _soldPets = new List<Pet>();
         }
 
         public History History
@@ -45,7 +55,12 @@ namespace ExampleUIs.Domain
 
         public Pet[] Pets
         {
-            get { return _pets.ToArray(); }
+            get
+            {
+                var result = new List<Pet>(_pets);
+                result.RemoveAll(pet => _soldPets.Contains(pet));
+                return result.ToArray();
+            }
         }
 
         public void Save(Pet pet)
@@ -57,7 +72,7 @@ namespace ExampleUIs.Domain
                            {
                                // Mimics talking to a real repository
                                Thread.Sleep(400);
-                               System.Console.WriteLine("Got a new pet in the repository");
+                               Console.WriteLine("Got a new pet in the repository");
                                _pets.Add(pet);
                                PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
                            }).Start();
@@ -66,8 +81,14 @@ namespace ExampleUIs.Domain
 
         public void PetWasPutInBasket(Pet pet)
         {
-            _pets.Remove(pet);
+            pet.Sold = true;
+            _soldPets.Add(pet);
             PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
+        }
+
+        public List<Pet> LastPets(int number)
+        {
+            return _pets.GetRange(_pets.Count - (number), number);
         }
     }
 }

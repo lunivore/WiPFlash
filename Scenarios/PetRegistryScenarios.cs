@@ -31,6 +31,9 @@ namespace Scenarios
             Assert.True(actualHistory.Contains(expectedHistory), 
                 "Should have contained \r\n{0}\r\n but was :\r\n{1}", expectedHistory, actualHistory);
 
+            GridView view = window.Find<GridView>("lastPetsOutput");
+            Assert.AreEqual(view.TextAt(0, 2), "Snowdrop");
+
             window.Find<ComboBox>("basketInput").WaitFor(cb => new List<string>(cb.Items).Contains("Pet[Snowdrop]"));
 
             window.Find<ComboBox>("basketInput").Select("Pet[Snowdrop]");

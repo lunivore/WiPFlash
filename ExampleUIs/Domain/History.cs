@@ -7,17 +7,14 @@ using System.ComponentModel;
 
 namespace ExampleUIs.Domain
 {
-    public class History : INotifyPropertyChanged
-    {        
-        public event PropertyChangedEventHandler PropertyChanged = delegate {};
-
+    public class History
+    {  
         private string _text = "History so far:" + Environment.NewLine;
 
         public void AddText(string addition)
         {
             Console.WriteLine("History: {0}", addition);
             _text = _text + addition + Environment.NewLine;
-            PropertyChanged(this, new PropertyChangedEventArgs("Text"));
         }
 
         public string Text
@@ -26,7 +23,6 @@ namespace ExampleUIs.Domain
             set
             {
                 _text = value;
-                PropertyChanged(this, new PropertyChangedEventArgs("Text"));
             }
         }
 
