@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
@@ -59,14 +60,14 @@ namespace ExampleUIs.BasketModule.View.Model
             }           
         }
 
-        public string[] Basket
+        public BasketItem[] Basket
         {
             get
             {
-                var basketContents = new List<string>();
+                var basketContents = new List<BasketItem>();
                 foreach (var pet in _basket)
                 {
-                    basketContents.Add(pet.Name + "\t" + pet.Price);
+                    basketContents.Add(new BasketItem(pet.Name, pet.Price));
                 }
                 return basketContents.ToArray();
             }
@@ -97,6 +98,28 @@ namespace ExampleUIs.BasketModule.View.Model
                 }
                 return (total/100.00).ToString("0.00");
             }
+        }
+    }
+
+    public class BasketItem
+    {
+        private readonly string _itemName;
+        private readonly string _price;
+
+        public BasketItem(string itemName, string price)
+        {
+            _itemName = itemName;
+            _price = price;
+        }
+
+        public string Price
+        {
+            get { return _price; }
+        }
+
+        public string Item
+        {
+            get { return _itemName; }
         }
     }
 }

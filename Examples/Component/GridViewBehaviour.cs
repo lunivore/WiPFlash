@@ -29,7 +29,7 @@ namespace Examples.Component
         {
             var gridView = CreateWrapper();
             Assert.AreEqual(3*4, gridView.AllText.Length);
-            Assert.AreEqual("Dancer", gridView.AllText[0, 2]);
+            Assert.AreEqual("Dancer", gridView.AllText[2, 0]);
         }
 
         [Test]

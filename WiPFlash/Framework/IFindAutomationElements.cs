@@ -10,5 +10,7 @@ namespace WiPFlash.Framework
     {
         T Find<T>(Container root, string argument)
             where T : AutomationElementWrapper<T>;
+
+        bool Contains(Container root, string argument);
     }
 }

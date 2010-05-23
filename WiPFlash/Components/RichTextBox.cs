@@ -15,6 +15,7 @@ namespace WiPFlash.Components
     {
         public RichTextBox(AutomationElement element, string name) : base(element, name)
         {
+            
         }
 
         public string Text

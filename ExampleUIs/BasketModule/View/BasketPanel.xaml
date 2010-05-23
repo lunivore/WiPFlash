@@ -15,7 +15,14 @@
     </StackPanel>
     <Label>Purchases so far</Label>
     <ScrollViewer Width="300">
-        <ListBox Name="basketOutput" ItemsSource="{Binding Basket}" Height="300" IsEnabled="False"/>
+        <ListView ItemsSource="{Binding Basket}" Name="basketOutput">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Item}"/>
+                    <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </ScrollViewer>
     <WrapPanel FlowDirection="RightToLeft">
         <Label Name="totalOutput" Content="{Binding Total}" Width="100"/>

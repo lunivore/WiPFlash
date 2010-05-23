@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
 
 #endregion
 
@@ -10,14 +11,17 @@ namespace WiPFlash.Components
 {
     public class TextBox : AutomationElementWrapper<TextBox>
     {
+        private readonly ValuePatternWrapper _valuePattern;
+
         public TextBox(AutomationElement element, string name) : base(element, name)
         {
+            _valuePattern = new ValuePatternWrapper(element);
         }
 
         public string Text
         {
-            get { return ((ValuePattern)Element.GetCurrentPattern(ValuePattern.Pattern)).Current.Value; }
-            set { ((ValuePattern) Element.GetCurrentPattern(ValuePattern.Pattern)).SetValue(value); }
+            get { return _valuePattern.Value; }
+            set { _valuePattern.Value = value; }
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor

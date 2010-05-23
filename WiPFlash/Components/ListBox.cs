@@ -1,8 +1,10 @@
 ﻿#region
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
 
 #endregion
 
@@ -10,8 +12,11 @@ namespace WiPFlash.Components
 {
     public class ListBox : AutomationElementWrapper<ListBox>
     {
+        private readonly SelectionPatternWrapper _selectionPattern;
+
         public ListBox(AutomationElement element, string name) : base(element, name)
         {
+            _selectionPattern = new SelectionPatternWrapper(element);
         }
 
         public string[] Selection
@@ -20,7 +25,7 @@ namespace WiPFlash.Components
             {
                 var selectedItems = GetSelectedElements();
                 var result = new List<string>();
-                foreach (var item in selectedItems)
+                foreach (AutomationElement item in selectedItems)
                 {
                     result.Add(item.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString());
                 }
@@ -41,10 +46,9 @@ namespace WiPFlash.Components
             }
         }
 
-        private AutomationElement[] GetSelectedElements()
+        private IEnumerable GetSelectedElements()
         {
-            return ((SelectionPattern) Element.GetCurrentPattern(SelectionPattern.Pattern))
-                .Current.GetSelection();
+            return _selectionPattern.GetSelection();
         }
 
         public void Select(params string[] selections)
@@ -54,7 +58,7 @@ namespace WiPFlash.Components
             {
                 if (selectionList.Contains(listItem.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString()))
                 {
-                    ((SelectionItemPattern)listItem.GetCurrentPattern(SelectionItemPattern.Pattern)).AddToSelection();
+                    new SelectionItemPatternWrapper(listItem).AddToSelection();
                 }
             }
         }
@@ -70,8 +74,7 @@ namespace WiPFlash.Components
             var selection = GetSelectedElements();
             foreach (AutomationElement element in selection)
             {
-                ((SelectionItemPattern)element.GetCurrentPattern(SelectionItemPattern.Pattern))
-                    .RemoveFromSelection();
+                new SelectionItemPatternWrapper(element).RemoveFromSelection();
             }
         }
 

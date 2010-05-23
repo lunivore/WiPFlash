@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
 
 #endregion
 
@@ -10,29 +11,28 @@ namespace WiPFlash.Components
 {
     public class CheckBox : AutomationElementWrapper<CheckBox>
     {
+        private readonly TogglePatternWrapper _togglePattern;
+
         public CheckBox(AutomationElement element, string name) : base(element, name)
         {
+            _togglePattern = new TogglePatternWrapper(element);
         }
 
         public bool Selected
         {
             get
             {
-                ToggleState state = ((TogglePattern) Element.GetCurrentPattern(TogglePattern.Pattern)).Current.ToggleState;
-                return state.Equals(ToggleState.On);
+                return _togglePattern.Selected;
             }
             set
             {
-                if (Selected && !value || !Selected && value)
-                {
-                    Toggle();
-                }
+                _togglePattern.Selected = value;
             }
         }
 
         public void Toggle()
         {
-            ((TogglePattern)Element.GetCurrentPattern(TogglePattern.Pattern)).Toggle();
+            _togglePattern.Toggle();
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
