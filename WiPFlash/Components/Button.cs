@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
 
 #endregion
 
@@ -10,8 +11,11 @@ namespace WiPFlash.Components
 {
     public class Button : AutomationElementWrapper<Button>
     {
+        private readonly InvokePatternWrapper _invokePattern;
+
         public Button(AutomationElement element, string name) : base(element, name)
         {
+            _invokePattern = new InvokePatternWrapper(element);
         }
 
         public string Text
@@ -21,7 +25,7 @@ namespace WiPFlash.Components
 
         public void Click()
         {
-            ((InvokePattern)Element.GetCurrentPattern(InvokePattern.Pattern)).Invoke();
+            _invokePattern.Invoke();
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor

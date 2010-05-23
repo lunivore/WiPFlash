@@ -1,3 +1,4 @@
+using System;
 using System.Windows.Automation;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
@@ -32,6 +33,14 @@ namespace WiPFlash.Framework
                                                      argument, root.Element.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty)));
             }
             return _wrapper.Wrap<T>(element, argument);
+        }
+
+        public bool Contains(Container root, string argument)
+        {
+            AutomationElement element = root.Element.FindFirst(
+                TreeScope.Descendants,
+                new PropertyCondition(_property, argument));
+            return element != null;
         }
     }
 }

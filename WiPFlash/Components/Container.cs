@@ -44,5 +44,15 @@ namespace WiPFlash.Components
                 return new AutomationEventWrapper[] {new FocusEvent()};
             }
         }
+
+        public bool Contains(string name)
+        {
+            return Contains(_finder, name);
+        }
+
+        public bool Contains(IFindAutomationElements finder, string name)
+        {
+            return finder.Contains(this, name);
+        }
     }
 }

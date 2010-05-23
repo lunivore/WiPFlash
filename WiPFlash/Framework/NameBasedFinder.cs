@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Windows.Automation;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;

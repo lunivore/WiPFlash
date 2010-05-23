@@ -15,6 +15,23 @@ namespace Examples.Component
     public class WindowBehaviour : AutomationElementWrapperExamples<Container>
     {
         [Test]
+        public void ShouldUseTheFinderToDetermineIfItContainsAComponent()
+        {
+            var anElement = AutomationElement.RootElement;
+
+            var finder = new Mock<IFindAutomationElements>();
+
+            var window = new Window(anElement, finder.Object);
+
+            finder.Setup(x => x.Contains(window, "here")).Returns(true);
+            finder.Setup(x => x.Contains(window, "not.here")).Returns(false);
+
+            Assert.IsTrue(window.Contains("here"));
+            Assert.IsFalse(window.Contains("not.here"));
+
+        }
+
+        [Test]
         public void ShouldFindTheComponentUsingTheFinderWithItselfAsRoot()
         {
             var anElement = AutomationElement.RootElement;

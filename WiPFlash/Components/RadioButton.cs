@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
 
 #endregion
 
@@ -10,19 +11,21 @@ namespace WiPFlash.Components
 {
     public class RadioButton : AutomationElementWrapper<RadioButton>
     {
+        private readonly SelectionItemPatternWrapper _selectionItemPattern;
+
         public RadioButton(AutomationElement element, string name) : base(element, name)
         {
+            _selectionItemPattern = new SelectionItemPatternWrapper(element);
         }
 
         public bool Selected
         {
-            get { return bool.Parse(((SelectionItemPattern)Element.GetCurrentPattern(SelectionItemPattern.Pattern)).Current.IsSelected.ToString()); }
+            get { return _selectionItemPattern.Selected; }
         }
 
         public void Select()
         {
-            var pattern = ((SelectionItemPattern)Element.GetCurrentPattern(SelectionItemPattern.Pattern));
-            pattern.Select();
+            _selectionItemPattern.Select();
             
         }
 

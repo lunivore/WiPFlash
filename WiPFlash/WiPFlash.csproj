@@ -67,8 +67,15 @@
     <Compile Include="Components\ComboBox.cs" />
     <Compile Include="Components\Container.cs" />
     <Compile Include="Components\EditableComboBox.cs" />
-    <Compile Include="Components\FocusEvent.cs" />
+    <Compile Include="Framework\Patterns\GridPatternWrapper.cs" />
+    <Compile Include="Framework\Patterns\ValuePatternWrapper.cs" />
+    <Compile Include="Framework\Patterns\TogglePatternWrapper.cs" />
+    <Compile Include="Framework\Patterns\InvokePatternWrapper.cs" />
+    <Compile Include="Framework\Patterns\SelectionItemPatternWrapper.cs" />
+    <Compile Include="Framework\Patterns\ExpandCollapsePatternWrapper.cs" />
+    <Compile Include="Framework\Events\FocusEvent.cs" />
     <Compile Include="Components\GridView.cs" />
+    <Compile Include="Framework\Patterns\SelectionPatternWrapper.cs" />
     <Compile Include="Framework\PropertyBasedFinder.cs" />
     <Compile Include="Framework\TitleBasedFinder.cs" />
     <Compile Include="Framework\Events\OrdinaryEvent.cs" />

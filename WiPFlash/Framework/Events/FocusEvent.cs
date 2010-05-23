@@ -1,11 +1,10 @@
 #region
 
 using System.Windows.Automation;
-using WiPFlash.Framework.Events;
 
 #endregion
 
-namespace WiPFlash.Components
+namespace WiPFlash.Framework.Events
 {
     public class FocusEvent : AutomationEventWrapper
     {

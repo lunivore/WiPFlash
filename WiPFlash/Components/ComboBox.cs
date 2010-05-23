@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
 
 #endregion
 
@@ -11,34 +12,39 @@ namespace WiPFlash.Components
 {
     public class ComboBox : AutomationElementWrapper<ComboBox>
     {
+        private readonly SelectionPatternWrapper _selectionPattern;
+        private readonly ExpandCollapsePatternWrapper _expandCollapsePattern;
+
         public ComboBox(AutomationElement element, string name) : base(element, name)
         {
+            _selectionPattern = new SelectionPatternWrapper(element);
+            _expandCollapsePattern = new ExpandCollapsePatternWrapper(element);
         }
 
         public void Select(string selection)
         {
             if (selection.Equals(string.Empty))
             {
-                foreach (var element in ((SelectionPattern)Element.GetCurrentPattern(SelectionPattern.Pattern)).Current.GetSelection())
+                foreach (AutomationElement element in _selectionPattern.GetSelection())
                 {
-                    ((SelectionItemPattern)element.GetCurrentPattern(SelectionItemPattern.Pattern)).RemoveFromSelection();
+                    new SelectionItemPatternWrapper(element).RemoveFromSelection();
                 }
             }
             else
             {
                 bool found = false;
-                ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Expand();
+                _expandCollapsePattern.Expand();
 
                 foreach (AutomationElement listItem in AllItemElements())
                 {
                     if (listItem.GetCurrentPropertyValue(AutomationElement.NameProperty).Equals(selection))
                     {
-                        ((SelectionItemPattern)listItem.GetCurrentPattern(SelectionItemPattern.Pattern)).Select();                        
+                        new SelectionItemPatternWrapper(listItem).Select();                        
                         found = true;
                         break;
                     }
                 }
-                ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
+                _expandCollapsePattern.Collapse();
                 if (!found)
                 {
                     throw new FailureToFindException("Failed to find an element in this ComboBox with a value of " + selection + 
@@ -55,29 +61,20 @@ namespace WiPFlash.Components
 
         public string Selection
         {
-            get
-            {
-                AutomationElement[] selections =
-                    ((SelectionPattern) Element.GetCurrentPattern(SelectionPattern.Pattern)).Current.GetSelection();
-                if (selections.Length < 1) 
-                {
-                    return ""; 
-                }
-                return selections[0].GetCurrentPropertyValue(AutomationElement.NameProperty).ToString();
-            }
+            get { return _selectionPattern.Selection; }
         }
 
         public string[] Items
         {
             get {
                 var result = new List<string>();
-                ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Expand();
+                _expandCollapsePattern.Expand();
 
                 foreach (AutomationElement element in AllItemElements())
                 {
                     result.Add(element.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString());
                 }
-                ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
+                _expandCollapsePattern.Collapse();
 
                 return result.ToArray();
             }
@@ -85,9 +82,9 @@ namespace WiPFlash.Components
 
         public new void WaitFor(SomethingToWaitFor check)
         {
-            ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Expand();
+            _expandCollapsePattern.Expand();
             base.WaitFor(check);
-            ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
+            _expandCollapsePattern.Collapse();
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor

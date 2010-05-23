@@ -12,7 +12,7 @@ namespace WiPFlash.Components
     {
         public static readonly TimeSpan DEFAULT_TIMEOUT = TimeSpan.Parse("00:00:10");
         public static readonly int DEFAULT_TIMEOUT_IN_MILLIS = 10000;
-        private int _processId;
+        private readonly int _processId;
 
         public Window(AutomationElement element, string name) : this(element, name, new NameBasedFinder(new WrapperFactory()))
         {
