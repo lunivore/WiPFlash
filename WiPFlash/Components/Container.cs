@@ -10,7 +10,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class Container : AutomationElementWrapper<Container>
+    public class Container<T> : AutomationElementWrapper<T> where T : Container<T>
     {
         private readonly IFindAutomationElements _finder;
 
@@ -28,14 +28,14 @@ namespace WiPFlash.Components
             _finder = finder;
         }
 
-        public T Find<T>(string componentName) where T : AutomationElementWrapper<T>
+        public TC Find<TC>(string componentName) where TC : AutomationElementWrapper<TC>
         {
-            return Find<T>(_finder, componentName);
+            return Find<TC>(_finder, componentName);
         }
 
-        public T Find<T>(IFindAutomationElements finder, string name) where T : AutomationElementWrapper<T>
+        public TC Find<TC>(IFindAutomationElements finder, string name) where TC : AutomationElementWrapper<TC>
         {
-            return finder.Find<T>(this, name);
+            return finder.Find<TC, T>(this, name);
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor

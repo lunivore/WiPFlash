@@ -9,7 +9,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class Tab : AutomationElementWrapper<Tab>
+    public class Tab : Container<Tab>
     {
         private readonly SelectionItemPatternWrapper _selectionItemPattern;
 

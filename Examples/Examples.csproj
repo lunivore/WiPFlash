@@ -82,6 +82,7 @@
     <Compile Include="Component\WindowBehaviour.cs" />
     <Compile Include="ExampleUtils\AutomationElementWrapperExamples.cs" />
     <Compile Include="Framework\NameBasedFinderBehaviour.cs" />
+    <Compile Include="Framework\PropertyBasedFinderBehaviour.cs" />
     <Compile Include="Framework\WrapperFactoryBehaviour.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

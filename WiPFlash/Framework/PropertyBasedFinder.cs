@@ -18,7 +18,7 @@ namespace WiPFlash.Framework
             _property = property;
         }
 
-        public T Find<T>(Container root, string argument) where T : AutomationElementWrapper<T>
+        public T Find<T, TC>(Container<TC> root, object argument) where T : AutomationElementWrapper<T> where TC : Container<TC>
         {
             AutomationElement element = root.Element.FindFirst(
                 TreeScope.Descendants,
@@ -32,14 +32,14 @@ namespace WiPFlash.Framework
                                                      "mapping to the AutomationId in Microsoft's UI automation.",
                                                      argument, root.Element.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty)));
             }
-            return _wrapper.Wrap<T>(element, argument);
+            return _wrapper.Wrap<T>(element, argument.ToString());
         }
 
-        public bool Contains(Container root, string argument)
+        public bool Contains<TC>(Container<TC> root, object argument) where TC : Container<TC>
         {
             AutomationElement element = root.Element.FindFirst(
                 TreeScope.Descendants,
-                new PropertyCondition(_property, argument));
+                new PropertyCondition(_property, argument.ToString()));
             return element != null;
         }
     }

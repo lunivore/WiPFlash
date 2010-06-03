@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.ComponentModel;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using Moq;
@@ -12,7 +13,7 @@ using WiPFlash.Framework;
 namespace Examples.Component
 {
     [TestFixture]
-    public class WindowBehaviour : AutomationElementWrapperExamples<Container>
+    public class WindowBehaviour : AutomationElementWrapperExamples<Window>
     {
         [Test]
         public void ShouldUseTheFinderToDetermineIfItContainsAComponent()
@@ -42,8 +43,8 @@ namespace Examples.Component
 
             var window = new Window(anElement, finder.Object);
 
-            finder.Setup(x => x.Find<TextBox>(window, "aTextInput")).Returns(textBox);
-            finder.Setup(x => x.Find<ComboBox>(window, "aComboInput")).Returns(comboBox);
+            finder.Setup(x => x.Find<TextBox, Window>(window, "aTextInput")).Returns(textBox);
+            finder.Setup(x => x.Find<ComboBox, Window>(window, "aComboInput")).Returns(comboBox);
 
             Assert.AreEqual(textBox, window.Find<TextBox>("aTextInput"));
             Assert.AreEqual(comboBox, window.Find<ComboBox>("aComboInput"));
@@ -74,12 +75,12 @@ namespace Examples.Component
             Assert.AreEqual(0, windows.Count);
         }
 
-        protected override Container CreateWrapperWith(AutomationElement element, string name)
+        protected override Window CreateWrapperWith(AutomationElement element, string name)
         {
             return new Window(element, name);
         }
 
-        protected override Container CreateWrapper()
+        protected override Window CreateWrapper()
         {
             return LaunchPetShopWindow();
         }
