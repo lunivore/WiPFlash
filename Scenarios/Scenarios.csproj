@@ -47,7 +47,12 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PetRegistryScenarios.cs" />
+    <Compile Include="BasketSteps.cs" />
+    <Compile Include="HistorySteps.cs" />
+    <Compile Include="PetRegistrationAndPurchaseScenarios.cs" />
+    <Compile Include="PetRegistrySteps.cs" />
+    <Compile Include="PetShopScenario.cs" />
+    <Compile Include="PetShopSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -61,6 +66,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Universe.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
