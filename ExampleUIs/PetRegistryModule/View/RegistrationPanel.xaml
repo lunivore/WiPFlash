@@ -1,0 +1,34 @@
+<StackPanel x:Class="ExampleUIs.PetRegistryModule.View.RegistrationPanel"
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            Orientation="Vertical">
+    <StackPanel.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Styles/LabelledFieldStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </StackPanel.Resources>
+
+    <StackPanel Orientation="Horizontal">
+        <Label>Name:</Label>
+        <TextBox Name="petNameInput" Text="{Binding Path=Name}" />
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label>Type:</Label>
+        <ComboBox IsEditable="True" Name="petTypeInput" SelectedItem="{Binding Path=PetType}" ItemsSource="{Binding Path=PetTypes}" SelectedValuePath="Name" DisplayMemberPath="Name"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label>Eats:</Label>
+        <ComboBox IsEditable="False" Name="petFoodInput" SelectedItem="{Binding Path=FoodType}" ItemsSource="{Binding Path=FoodTypes}" SelectedValuePath="Text" DisplayMemberPath="Text"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label>Price:</Label>
+        <TextBox Name="petPriceInput" Text="{Binding Path=Price}"/>
+    </StackPanel>
+    <StackPanel Orientation="Horizontal">
+        <Label>Rules:</Label>
+        <ListBox Name="petRulesInput" ItemsSource="{Binding Path=AllRules}" DisplayMemberPath="Name" SelectionMode="Multiple" />
+    </StackPanel>
+    <Button HorizontalAlignment="Right" Name="petSaveButton" Margin="10, 5, 10, 5" Command="{Binding SaveCommand}">Save</Button>
+</StackPanel>
