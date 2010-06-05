@@ -36,7 +36,7 @@ namespace Examples.Component
                            }).Start();
 
             var block = window.Find<TextBlock>("historyOutput");
-            block.WaitFor(b => b.Text.Equals(string.Empty));
+            block.WaitFor(b => b.Text.Equals(string.Empty), (b) => Assert.Fail("Should have had empty text"));
             Assert.AreEqual(string.Empty, block.Text);
         }
 

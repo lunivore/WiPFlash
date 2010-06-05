@@ -18,7 +18,7 @@ namespace Scenarios
         {
             _universe.Window.Find<Tab>(new TitleBasedFinder(), "History").Select();
             var historyInput = _universe.Window.Find<RichTextBox>("historyInput");
-            historyInput.WaitFor(hi => hi.Text.Contains(expected));
+            historyInput.WaitFor(hi => hi.Text.Contains(expected), (e) => Assert.Fail("History should have contained {0}", expected));
         }
 
         public void ShouldIncludeMostRecentPet(string name)

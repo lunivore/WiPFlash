@@ -20,6 +20,8 @@ namespace WiPFlash.Components
         public TimeSpan DEFAULT_WAIT_TIMEOUT = TimeSpan.Parse("00:00:05");
 
         public delegate bool SomethingToWaitFor(T elementWrapper);
+        public delegate void FailureHandler(T elementWrapper);
+
         protected delegate void WrappedEventHandler();
 
         private readonly AutomationElement _element;
@@ -51,17 +53,17 @@ namespace WiPFlash.Components
             get { return _name; }
         }
 
-        public void WaitFor(SomethingToWaitFor check)
+        public bool WaitFor(SomethingToWaitFor check, FailureHandler failureHandler)
         {
-            WaitFor(check, DEFAULT_WAIT_TIMEOUT);            
+            return WaitFor(check, DEFAULT_WAIT_TIMEOUT, failureHandler);            
         }
 
-        public void WaitFor(SomethingToWaitFor check, TimeSpan timeout)
+        public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureHandler failureHandler)
         {
-            WaitFor(check, timeout, SensibleEventsToWaitFor);
+            return WaitFor(check, timeout, failureHandler, SensibleEventsToWaitFor);
         }
 
-        public void WaitFor(SomethingToWaitFor check, TimeSpan timeout, IEnumerable<AutomationEventWrapper> events)
+        public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureHandler failureHandler, IEnumerable<AutomationEventWrapper> events)
         {
             Monitor.Enter(_waitingRoom);
 
@@ -77,10 +79,10 @@ namespace WiPFlash.Components
 
             if (!check((T)this))
             {
-                throw new FailureToHappenException(
-                    String.Format("Element {0} of type {1} failed to meet your criteria in time",
-                                  _name, GetType().Name));
+                failureHandler((T)this);
+                return false;
             }
+            return true;
         }
 
         private void ClearPulsingHandlers(IEnumerable<AutomationEventWrapper> eventWrappers)

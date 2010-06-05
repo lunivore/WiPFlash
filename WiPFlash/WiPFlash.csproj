@@ -82,7 +82,6 @@
     <Compile Include="Framework\Events\OrdinaryEvent.cs" />
     <Compile Include="Framework\Events\StructureChangeEvent.cs" />
     <Compile Include="Framework\Events\AutomationEventWrapper.cs" />
-    <Compile Include="Exceptions\FailureToHappenException.cs" />
     <Compile Include="Components\Label.cs" />
     <Compile Include="Components\RadioButton.cs" />
     <Compile Include="Components\Tab.cs" />
