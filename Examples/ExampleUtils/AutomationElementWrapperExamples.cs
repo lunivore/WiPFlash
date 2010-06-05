@@ -28,8 +28,17 @@ namespace Examples.ExampleUtils
 
         protected void ThenWeShouldBeAbleToWaitFor(AutomationElementWrapper<T>.SomethingToWaitFor check)
         {
-            _element.WaitFor(check);
+            _element.WaitFor(check, e => Assert.Fail("Should have waited successfully"));
             Assert.True(check(_element));
+        }
+
+        [Test]
+        public void ShouldHandleFailureOfSomethingToHappen()
+        {
+            var wrapper = CreateWrapper();
+            var handled = false;
+            wrapper.WaitFor(w => false, TimeSpan.Parse("00:00:00"), w => handled = true);
+            Assert.True(handled, "Should have handled being unable to wait for false be true");
         }
 
         [Test]

@@ -16,7 +16,9 @@ namespace Scenarios
 
         public void ShouldList(string name)
         {
-            _universe.Window.Find<ComboBox>("basketInput").WaitFor(cb => new List<string>(cb.Items).Contains("Pet[" + name + "]"));
+            _universe.Window.Find<ComboBox>("basketInput").WaitFor(
+                cb => new List<string>(cb.Items).Contains("Pet[" + name + "]"),
+                e => Assert.Fail("Combo box should have contained a pet with name {0}", name));
         }
 
         public void IsAddedWith(string name)
