@@ -15,7 +15,8 @@ namespace WiPFlash
 {
     public class ApplicationLauncher
     {
-        private delegate Application HandlerForNoMatchingProcesses();
+        private delegate Application HandlerForNoMatchingProcesses(string message);
+        public delegate void FailureHandler(string message);
 
         public ApplicationLauncher() : this(Window.DEFAULT_TIMEOUT) {}
 
@@ -38,7 +39,7 @@ namespace WiPFlash
             get; set;
         }
 
-        public Application Launch(string path)
+        public Application Launch(string path, FailureHandler failureHandler)
         {
             try
             {
@@ -47,27 +48,28 @@ namespace WiPFlash
                 return new Application(process, Timeout);
             } catch (Win32Exception e)
             {
-                string message = "Could not find the process to start on path \"" + path + "\". Current directory is \"" +
-                                 Environment.CurrentDirectory + "\".";
-                throw new FailureToLaunchException(e, message);
+                failureHandler("Could not start application: " + e.Message);
             }
+            return null;
         }
 
-        public Application Recycle(string name)
+        public Application Recycle(string name, FailureHandler failureHandler)
         {
-            return RecycleOrHandleHavingNone(name, () => {
-                 throw new FailureToFindException(
-                     "Could not find an existing application with name " + name +
-                     " to recycle"); });
-
+            return RecycleOrHandleNone(name, 
+                s => 
+                { 
+                    failureHandler(s);
+                    return null; 
+                }, 
+                failureHandler);
         }
 
-        public Application LaunchOrRecycle(string name, string path)
+        public Application LaunchOrRecycle(string name, string path, FailureHandler failureHandler)
         {
-            return RecycleOrHandleHavingNone(name, () => Launch(path));
+            return RecycleOrHandleNone(name, s => Launch(path, failureHandler), failureHandler);
         }
 
-        private Application RecycleOrHandleHavingNone(string name, HandlerForNoMatchingProcesses handleNoMatchingProcesses)
+        private Application RecycleOrHandleNone(string name, HandlerForNoMatchingProcesses handler, FailureHandler failureHandler)
         {
             Process[] processes = Process.GetProcessesByName(name);
 
@@ -75,16 +77,18 @@ namespace WiPFlash
 
             if (viableProcesses.Count > 1)
             {
-                throw new FailureToLaunchException("Cannot choose between two or more processes called " + name);
+                failureHandler("Cannot choose between two or more processes called " + name);
+                return null;
             }
             if (viableProcesses.Count < 1)
             {
-                return handleNoMatchingProcesses();
+                 return handler("Cannot find any processes called " + name);
             }
             return new Application(viableProcesses[0], Timeout);
         }
 
-        private List<Process> FilterForViableProcesses(Process[] processes)
+
+        private List<Process> FilterForViableProcesses(IEnumerable<Process> processes)
         {
             var viableProcesses = new List<Process>();
 

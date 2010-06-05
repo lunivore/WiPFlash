@@ -16,7 +16,7 @@ namespace Examples
         public void ShouldStartUpApplicationOnRequest()
         {
             var launcher = new ApplicationLauncher();
-            var app = launcher.Launch(EXAMPLE_APP_PATH);
+            var app = launcher.Launch(EXAMPLE_APP_PATH, (s) => Assert.Fail("Should have launched the app"));
             app.FindWindow(EXAMPLE_APP_WINDOW_NAME);
             Assert.IsNotNull(app.Process);
         }
@@ -25,10 +25,10 @@ namespace Examples
         public void ShouldRecycleExistingApplicationIfRequested()
         {
             var launcher = new ApplicationLauncher();
-            var originalApp = launcher.Launch(EXAMPLE_APP_PATH);
+            var originalApp = launcher.Launch(EXAMPLE_APP_PATH, (s) => Assert.Fail("Should have launched the app"));
             originalApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
 
-            var newApp = launcher.Recycle(EXAMPLE_APP_NAME);
+            var newApp = launcher.Recycle(EXAMPLE_APP_NAME, (s) => Assert.Fail("Should have launched the app"));
             newApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
 
             Assert.AreEqual(originalApp.Process.Id, newApp.Process.Id);
@@ -38,9 +38,9 @@ namespace Examples
         public void ShouldStartUpAnApplicationOrRecycleAnExistingOneAsAppropriate()
         {
             var launcher = new ApplicationLauncher();
-            var originalApp = launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            var originalApp = launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, (s) => Assert.Fail("Should have launched the app"));
             originalApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
-            var newApp = launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            var newApp = launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, (s) => Assert.Fail("Should have launched the app"));
             newApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
             Assert.AreEqual(originalApp.Process.Id, newApp.Process.Id);
         }
@@ -49,51 +49,40 @@ namespace Examples
         public void ShouldComplainIfMoreThanOneProcessExistsToRecycle()
         {
             var launcher = new ApplicationLauncher();
-            launcher.Launch(EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
-            launcher.Launch(EXAMPLE_APP_PATH).FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            launcher.Launch(EXAMPLE_APP_PATH, (s) => Assert.Fail("Should have launched the app"))
+                .FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            launcher.Launch(EXAMPLE_APP_PATH, (s) => Assert.Fail("Should have launched the app"))
+                .FindWindow(EXAMPLE_APP_WINDOW_NAME);
 
-            try
-            {
-                launcher.Recycle(EXAMPLE_APP_NAME);
-                Assert.Fail("Launcher should have complained");
-            } catch (FailureToLaunchException) {}
+            var complained = false;
+            launcher.Recycle(EXAMPLE_APP_NAME, (s) => complained = true);
+            Assert.True(complained, "Launcher should have complained because two apps with the same name exist");
 
-            try
-            {
-                launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
-                Assert.Fail("Launcher should have complained");
-            } catch (FailureToLaunchException) {}
+            complained = false;
+            launcher.LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, (s) => complained = true);
+            Assert.True(complained, "Launcher should have complained because two apps with the same name exist");
         }
 
         [Test]
         public void ShouldComplainIfTheApplicationCantBeLaunched()
         {
             var launcher = new ApplicationLauncher();
-            try
-            {
-                launcher.Launch("Wibble.exe");
-                Assert.Fail("Launcher should have complained");
-            } catch (WiPFlashException){}
-
-            try
-            {
-                launcher.LaunchOrRecycle("Wibble", "Wibble.exe");
-                Assert.Fail("Launcher should have complained");
-            }
-            catch (WiPFlashException) { }
+            var complained = false;
+            launcher.Launch("Wibble.exe", (s) => complained = true);
+            Assert.True(complained, "Launcher should have complained because the app could not be launched");
+            
+            complained = false;
+            launcher.LaunchOrRecycle("Wibble", "Wibble.exe", (s) => complained = true);
+            Assert.True(complained, "Launcher should have complained because the app could not be launched");
         }
-
 
         [Test]
         public void ShouldComplainIfTheApplicationCantBeRecycled()
         {
             var launcher = new ApplicationLauncher();
-            try
-            {
-                launcher.Recycle("Wibble.exe");
-                Assert.Fail("Launcher should have complained");
-            }
-            catch (WiPFlashException) { }
+            var complained = false;
+            launcher.Recycle("Wibble.exe", (s) => complained = true);
+            Assert.True(complained, "Launcher should have complained because the app could not be recycled");
         }
     }
 }

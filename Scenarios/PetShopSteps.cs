@@ -1,4 +1,5 @@
 using System;
+using NUnit.Framework;
 using WiPFlash;
 using WiPFlash.Components;
 
@@ -21,7 +22,7 @@ namespace Scenarios
 
         public void IsRunning()
         {
-            Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
             _universe.Window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
         }
     }
