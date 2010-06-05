@@ -17,7 +17,7 @@ namespace Examples.Component
         [Test]
         public void ShouldFindWindowByName()
         {
-            Application application = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            Application application = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
             Window window = application.FindWindow("petShopWindow");
             Assert.IsNotNull(window.Element);
         }
@@ -27,7 +27,7 @@ namespace Examples.Component
         {
             try
             {
-                new ApplicationLauncher(TimeSpan.Parse("00:00:01")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH).FindWindow(
+                new ApplicationLauncher(TimeSpan.Parse("00:00:01")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail).FindWindow(
                     "wibbleWindow");
                 Assert.Fail("Application should have complained when failing to find window");
             } catch (FailureToFindException) {}
@@ -41,8 +41,8 @@ namespace Examples.Component
 
             
             var started = System.DateTime.Now;
- 
-            Application application = new ApplicationLauncher(farFarTooLong).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+
+            Application application = new ApplicationLauncher(farFarTooLong).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
             Window window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
 
 

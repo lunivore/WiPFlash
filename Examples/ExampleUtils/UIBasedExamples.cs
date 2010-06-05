@@ -41,7 +41,8 @@ namespace Examples.ExampleUtils
 
         protected Window LaunchPetShopWindow()
         {
-            Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20")).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH);
+            Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20"))
+                .LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
             return application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
         }
     }
