@@ -80,7 +80,7 @@ namespace WiPFlash.Components
             }
         }
 
-        public new bool WaitFor(SomethingToWaitFor check, FailureHandler failureHandler)
+        public new bool WaitFor(SomethingToWaitFor check, FailureToHappenHandler failureHandler)
         {
             _expandCollapsePattern.Expand();
             var result = base.WaitFor(check, failureHandler);

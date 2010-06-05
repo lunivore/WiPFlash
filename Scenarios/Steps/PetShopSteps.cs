@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
+using Scenarios.Utils;
 using WiPFlash;
 using WiPFlash.Components;
 
-namespace Scenarios
+namespace Scenarios.Steps
 {
     public class PetShopSteps
     {

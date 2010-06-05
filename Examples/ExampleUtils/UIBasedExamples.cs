@@ -43,7 +43,9 @@ namespace Examples.ExampleUtils
         {
             Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20"))
                 .LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
-            return application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            Window window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            window.HandlerForFailingToFind = Assert.Fail;
+            return window;
         }
     }
 }

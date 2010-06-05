@@ -1,9 +1,10 @@
 using System;
 using NUnit.Framework;
+using Scenarios.Utils;
 using WiPFlash.Components;
 using WiPFlash.Framework;
 
-namespace Scenarios
+namespace Scenarios.Steps
 {
     public class HistorySteps
     {

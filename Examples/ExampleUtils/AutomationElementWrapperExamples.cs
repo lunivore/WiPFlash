@@ -72,6 +72,7 @@ namespace Examples.ExampleUtils
         protected T FindPetShopElement(string name)
         {
             Window window = LaunchPetShopWindow();
+            window.HandlerForFailingToFind = Assert.Fail;
             return window.Find<T>(name);
         }
     }

@@ -70,6 +70,7 @@
     <Compile Include="Component\ButtonBehaviour.cs" />
     <Compile Include="Component\CheckBoxBehaviour.cs" />
     <Compile Include="Component\ComboBoxBehaviour.cs" />
+    <Compile Include="Component\ContainerExamples.cs" />
     <Compile Include="Component\GridViewBehaviour.cs" />
     <Compile Include="Component\EditableComboBoxBehaviour.cs" />
     <Compile Include="Component\LabelBehaviour.cs" />

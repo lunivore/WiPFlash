@@ -43,8 +43,8 @@ namespace Examples.Component
 
             var window = new Window(anElement, finder.Object);
 
-            finder.Setup(x => x.Find<TextBox, Window>(window, "aTextInput")).Returns(textBox);
-            finder.Setup(x => x.Find<ComboBox, Window>(window, "aComboInput")).Returns(comboBox);
+            finder.Setup(x => x.Find<TextBox, Window>(window, "aTextInput", window.HandlerForFailingToFind)).Returns(textBox);
+            finder.Setup(x => x.Find<ComboBox, Window>(window, "aComboInput", window.HandlerForFailingToFind)).Returns(comboBox);
 
             Assert.AreEqual(textBox, window.Find<TextBox>("aTextInput"));
             Assert.AreEqual(comboBox, window.Find<ComboBox>("aComboInput"));
@@ -53,8 +53,8 @@ namespace Examples.Component
         [Test]
         public void ShouldBeAbleToWaitForWindowEvents()
         {
-            GivenThisWillHappenAtSomePoint(window => ((Window)window).Close());
-            ThenWeShouldBeAbleToWaitFor(window => ((Window)window).IsClosed());
+            GivenThisWillHappenAtSomePoint(window => window.Close());
+            ThenWeShouldBeAbleToWaitFor(window => window.IsClosed());
         }
 
         [Test]
@@ -73,6 +73,18 @@ namespace Examples.Component
                                                       new PropertyCondition(AutomationElement.ProcessIdProperty,
                                                           processId)));
             Assert.AreEqual(0, windows.Count);
+        }
+
+        [Test]
+        public void ShouldPassFailureHandlerToChildContainers()
+        {
+            var container = CreateWrapper();
+            var complained = true;
+            container.HandlerForFailingToFind = s => complained = true;
+
+            var childContainer = container.Find<Tab>(new TitleBasedFinder(), "Basket");
+            childContainer.Find<ComboBox>("Unlikely!");
+            Assert.True(complained, "Should have handled failure to find using the given handler");
         }
 
         protected override Window CreateWrapperWith(AutomationElement element, string name)

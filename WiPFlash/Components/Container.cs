@@ -2,7 +2,9 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Windows.Automation;
+using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
 
@@ -10,9 +12,10 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class Container<T> : AutomationElementWrapper<T> where T : Container<T>
+    public class Container<T> : AutomationElementWrapper<T>, IHandleFailureToFindChildren where T : Container<T>
     {
         private readonly IFindAutomationElements _finder;
+        public FailureToFindHandler HandlerForFailingToFind { get; set; }
 
         public Container(AutomationElement element) : this(element, string.Empty)
         {
@@ -26,6 +29,7 @@ namespace WiPFlash.Components
         public Container(AutomationElement element, string name, IFindAutomationElements finder) : base(element, name)
         {
             _finder = finder;
+            HandlerForFailingToFind = (s) => { throw new FailureToFindException(s); };
         }
 
         public TC Find<TC>(string componentName) where TC : AutomationElementWrapper<TC>
@@ -35,7 +39,12 @@ namespace WiPFlash.Components
 
         public TC Find<TC>(IFindAutomationElements finder, string name) where TC : AutomationElementWrapper<TC>
         {
-            return finder.Find<TC, T>(this, name);
+            TC find = finder.Find<TC, T>(this, name, HandlerForFailingToFind);
+            if (find is IHandleFailureToFindChildren)
+            {
+                ((IHandleFailureToFindChildren) find).HandlerForFailingToFind = HandlerForFailingToFind;
+            }
+            return find;
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor

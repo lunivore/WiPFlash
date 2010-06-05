@@ -18,19 +18,20 @@ namespace WiPFlash.Framework
             _property = property;
         }
 
-        public T Find<T, TC>(Container<TC> root, object argument) where T : AutomationElementWrapper<T> where TC : Container<TC>
+        public T Find<T, TC>(Container<TC> root, object argument, FailureToFindHandler failureToFindHandler) where T : AutomationElementWrapper<T> where TC : Container<TC>
         {
             AutomationElement element = root.Element.FindFirst(
                 TreeScope.Descendants,
                 new PropertyCondition(_property, argument));
             if (element == null)
             {
-                throw new FailureToFindException(string.Format(
-                                                     "Could not find an element called '{0}' " +
-                                                     "from the root starting with the element '{1}'. " +
-                                                     "This should be the Name on your WPF class, " +
-                                                     "mapping to the AutomationId in Microsoft's UI automation.",
-                                                     argument, root.Element.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty)));
+                failureToFindHandler(string.Format(
+                     "Could not find an element called '{0}' " +
+                     "from the root starting with the element '{1}'. " +
+                     "This should be the Name on your WPF class, " +
+                     "mapping to the AutomationId in Microsoft's UI automation.",
+                     argument, root.Element.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty)));
+                return null;
             }
             return _wrapper.Wrap<T>(element, argument.ToString());
         }

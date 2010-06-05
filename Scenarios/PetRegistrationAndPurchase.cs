@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Examples.ExampleUtils;
 using NUnit.Framework;
+using Scenarios.Utils;
 using WiPFlash.Components;
 using WiPFlash.Framework;
 
@@ -12,7 +13,7 @@ using WiPFlash.Framework;
 namespace Scenarios
 {
     [TestFixture]
-    public class PetRegistrationAndPurchaseScenarios : PetShopScenario
+    public class PetRegistrationAndPurchase : PetShopScenario
     {
         [Test]
         public void ICanRegisterAPet()
