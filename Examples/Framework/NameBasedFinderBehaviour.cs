@@ -44,20 +44,17 @@ namespace Examples.Framework
             wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement, comboBoxName)).Returns(comboBox);
 
             var finder = new NameBasedFinder(wrapperFactory.Object);
-            Assert.AreEqual(comboBox, finder.Find<ComboBox, Window>(window, comboBoxName));
+            Assert.AreEqual(comboBox, finder.Find<ComboBox, Window>(window, comboBoxName, Assert.Fail));
         }
 
         [Test]
-        public void ShouldComplainIfElementNotFound()
+        public void ShouldHandleElementNotFound()
         {
             Window window = LaunchPetShopWindow();
             var finder = new NameBasedFinder(new Mock<IWrapAutomationElements>().Object);
-            try
-            {
-                finder.Find<ComboBox, Window>(window, "wibbleInput");
-                Assert.Fail("Should have complained about the non-existent element");
-            }
-            catch(FailureToFindException) {}
+            var complained = false;
+            finder.Find<ComboBox, Window>(window, "wibbleInput", (s) => complained = true);
+            Assert.True(complained, "Should have complained about the non-existent element");
         }
 
 

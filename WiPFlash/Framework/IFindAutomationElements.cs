@@ -6,9 +6,11 @@ using WiPFlash.Components;
 
 namespace WiPFlash.Framework
 {
+    public delegate void FailureToFindHandler(string message);
+
     public interface IFindAutomationElements
     {
-        T Find<T, TC>(Container<TC> root, object argument)
+        T Find<T, TC>(Container<TC> root, object argument, FailureToFindHandler failureToFindHandler)
             where T : AutomationElementWrapper<T>
             where TC : Container<TC>;
 

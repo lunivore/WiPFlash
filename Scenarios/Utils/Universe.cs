@@ -1,6 +1,6 @@
 using WiPFlash.Components;
 
-namespace Scenarios
+namespace Scenarios.Utils
 {
     public class Universe
     {

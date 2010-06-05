@@ -30,7 +30,7 @@ namespace Examples.Framework
             wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement, comboBoxName)).Returns(comboBox);
 
             var finder = new PropertyBasedFinder(wrapperFactory.Object, AutomationElement.ControlTypeProperty);
-            finder.Find<ComboBox, Tab>(basket, ControlType.ComboBox);
+            finder.Find<ComboBox, Tab>(basket, ControlType.ComboBox, Assert.Fail);
         }
     }
 }

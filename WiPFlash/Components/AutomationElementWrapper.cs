@@ -20,7 +20,7 @@ namespace WiPFlash.Components
         public TimeSpan DEFAULT_WAIT_TIMEOUT = TimeSpan.Parse("00:00:05");
 
         public delegate bool SomethingToWaitFor(T elementWrapper);
-        public delegate void FailureHandler(T elementWrapper);
+        public delegate void FailureToHappenHandler(T elementWrapper);
 
         protected delegate void WrappedEventHandler();
 
@@ -53,17 +53,17 @@ namespace WiPFlash.Components
             get { return _name; }
         }
 
-        public bool WaitFor(SomethingToWaitFor check, FailureHandler failureHandler)
+        public bool WaitFor(SomethingToWaitFor check, FailureToHappenHandler failureHandler)
         {
             return WaitFor(check, DEFAULT_WAIT_TIMEOUT, failureHandler);            
         }
 
-        public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureHandler failureHandler)
+        public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureToHappenHandler failureHandler)
         {
             return WaitFor(check, timeout, failureHandler, SensibleEventsToWaitFor);
         }
 
-        public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureHandler failureHandler, IEnumerable<AutomationEventWrapper> events)
+        public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureToHappenHandler failureHandler, IEnumerable<AutomationEventWrapper> events)
         {
             Monitor.Enter(_waitingRoom);
 

@@ -1,6 +1,7 @@
 using System;
+using Scenarios.Steps;
 
-namespace Scenarios
+namespace Scenarios.Utils
 {
     public class PetShopScenario
     {
