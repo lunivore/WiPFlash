@@ -1,7 +1,5 @@
 ﻿#region
 
-using System;
-using System.Collections.Generic;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
@@ -33,11 +31,19 @@ namespace Examples.Component
         }
 
         [Test]
+        public void ShouldDetermineIfItContainsARow()
+        {
+            var gridView = CreateWrapper();
+            Assert.IsTrue(gridView.ContainsRow("Dancer", "Rabbit", "54.00", "False"));
+            Assert.IsFalse(gridView.ContainsRow("Prancer", "Reindeer", "30.00", "False"));
+        }
+
+        [Test]
         public void ShouldBeAbleToWaitForContentChanges()
         {
             GivenThisWillHappenAtSomePoint(view =>
                                                {
-                                                   _window.Find<ComboBox>("basketInput").Select("Pet[Dancer]");
+                                                   _window.Find<ComboBox>("basketPetInput").Select("Pet[Dancer]");
                                                    _window.Find<Button>("purchaseButton").Click();
                                                });
             ThenWeShouldBeAbleToWaitFor(view => view.TextAt(3, 2) == "True");

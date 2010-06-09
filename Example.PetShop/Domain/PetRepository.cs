@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
 
@@ -11,14 +12,14 @@ namespace Example.PetShop.Domain
 {
     public class PetRepository : INotifyPropertyChanged
     {
-        private readonly Example.PetShop.Domain.History _history;
-        private readonly List<Pet> _pets;
-        private readonly List<Pet> _soldPets;
+        private readonly History _history;
+        private readonly ObservableCollection<Pet> _unsoldPets;
+        private readonly ObservableCollection<Pet> _pets;
 
-        public PetRepository(Example.PetShop.Domain.History history)
+        public PetRepository(History history)
         {
             _history = history;
-            _pets = new List<Pet>
+            _pets = new ObservableCollection<Pet>
                         {
                             new Pet
                                 {
@@ -42,21 +43,19 @@ namespace Example.PetShop.Domain
                                     Price = "54.00"
                                 },
                         };
-            _soldPets = new List<Pet>();
+            _unsoldPets = new ObservableCollection<Pet>(_pets);
         }
 
-        public Example.PetShop.Domain.History History
+        public History History
         {
             get { return _history; }
         }
 
-        public Pet[] Pets
+        public ObservableCollection<Pet> UnsoldPets
         {
             get
             {
-                var result = new List<Pet>(_pets);
-                result.RemoveAll(pet => _soldPets.Contains(pet));
-                return result.ToArray();
+                return _unsoldPets;
             }
         }
 
@@ -78,6 +77,7 @@ namespace Example.PetShop.Domain
                                Thread.Sleep(400);
                                Console.WriteLine("Got a new pet in the repository");
                                _pets.Add(pet);
+                               _unsoldPets.Add(pet);
                                PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
                            }).Start();
         }
@@ -85,13 +85,13 @@ namespace Example.PetShop.Domain
         public void PetWasPutInBasket(Pet pet)
         {
             pet.Sold = true;
-            _soldPets.Add(pet);
+            _unsoldPets.Remove(pet);
             PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
         }
 
         public List<Pet> LastPets(int number)
         {
-            return _pets.GetRange(_pets.Count - (number), number);
+            return new List<Pet>(_pets).GetRange(_pets.Count - (number), number);
         }
     }
 }

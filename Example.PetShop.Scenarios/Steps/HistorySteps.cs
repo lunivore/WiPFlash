@@ -1,8 +1,11 @@
-using System;
+#region
+
 using Example.PetShop.Scenarios.Utils;
 using NUnit.Framework;
 using WiPFlash.Components;
 using WiPFlash.Framework;
+
+#endregion
 
 namespace Example.PetShop.Scenarios.Steps
 {

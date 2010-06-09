@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using Examples.ExampleUtils;
@@ -42,10 +41,6 @@ namespace Examples.Component
         {
             ListBox listBox = CreateWrapper();
             var items = new List<string>(listBox.Items);
-            foreach (var list in items)
-            {
-                Console.WriteLine(list);
-            }
             Assert.True(items.Contains("Rule[Dangerous]"));
             Assert.True(items.Contains("Rule[No Children]"));
         }

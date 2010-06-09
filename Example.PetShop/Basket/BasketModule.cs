@@ -27,7 +27,8 @@ namespace Example.PetShop.Basket
         public void Initialize()
         {
             var petRepository = _container.Resolve<PetRepository>();
-            var basketViewModel = new BasketViewModel(petRepository);
+            var accessoryRepository = _container.Resolve<AccessoryRepository>();
+            var basketViewModel = new BasketViewModel(petRepository, accessoryRepository);
             var panel = new BasketPanel(basketViewModel);
             _regionManager.Regions["Sales"].Add(panel);
             _regionManager.Regions["Sales"].Activate(panel);

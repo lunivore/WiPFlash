@@ -45,12 +45,20 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="UIAutomationClient">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Steps\AccessoryRegistrySteps.cs" />
     <Compile Include="Steps\BasketSteps.cs" />
     <Compile Include="Steps\HistorySteps.cs" />
     <Compile Include="PetRegistrationAndPurchase.cs" />
     <Compile Include="Steps\PetRegistrySteps.cs" />
+    <Compile Include="Utils\CollectionUtils.cs" />
     <Compile Include="Utils\PetShopScenario.cs" />
     <Compile Include="Steps\PetShopSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -83,7 +91,7 @@
       <Project>{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}</Project>
       <Name>Examples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ExampleUIs\Example.PetShop.csproj">
+    <ProjectReference Include="..\Example.PetShop\Example.PetShop.csproj">
       <Project>{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}</Project>
       <Name>Example.PetShop</Name>
     </ProjectReference>

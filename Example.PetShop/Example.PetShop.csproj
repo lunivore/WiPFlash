@@ -85,6 +85,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="AccessoryRegistry\View\AccessoryRegistryPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Basket\Styles\BasketStyles.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +119,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessoryRegistry\View\Model\AccessoryViewModel.cs" />
+    <Compile Include="AccessoryRegistry\View\AccessoryRegistryPanel.xaml.cs">
+      <DependentUpon>AccessoryRegistryPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="AccessoryRegistry\View\ListBoxHelper.cs" />
+    <Compile Include="Domain\Accessory.cs" />
+    <Compile Include="Domain\AccessoryRepository.cs" />
+    <Compile Include="AccessoryRegistry\AccessoryRegistryModule.cs" />
     <Compile Include="Basket\BasketModule.cs" />
     <Compile Include="Basket\View\BasketPanel.xaml.cs">
       <DependentUpon>BasketPanel.xaml</DependentUpon>
@@ -158,6 +170,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <Compile Include="PetRegistry\PetRegistryModule.cs" />
+    <Compile Include="Utils\CollectionUtils.cs" />
     <Compile Include="Utils\DelegateCommand.cs" />
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">

@@ -4,8 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
-using Example.PetShop.Utils;
 using Example.PetShop.Domain;
+using Example.PetShop.Utils;
 
 #endregion
 
@@ -13,18 +13,39 @@ namespace Example.PetShop.Basket.View.Model
 {
     public class BasketViewModel : INotifyPropertyChanged
     {
-        private static List<Pet> _basket;
-        private readonly PetRepository _repository;
+        private static List<Pet> _petBasket;
+        private readonly PetRepository _petRepository;
+        private readonly AccessoryRepository _accessoryRepository;
+        private readonly List<Accessory> _accessoryBasket;
 
-        public BasketViewModel(PetRepository repository)
+        public BasketViewModel(PetRepository petRepository, AccessoryRepository accessoryRepository)
         {
-            _repository = repository;
-            _basket = new List<Pet>();
-            _repository.PropertyChanged += (o, e) =>
+            _petRepository = petRepository;
+            _accessoryRepository = accessoryRepository;
+            _petBasket = new List<Pet>();
+            _accessoryBasket = new List<Accessory>();
+            _petRepository.UnsoldPets.CollectionChanged += (o, e) =>
                                                {
                                                    Console.WriteLine("New pet! Ooh, exciting.");
-                                                   PropertyChanged(this, new PropertyChangedEventArgs("AllGoods"));
+                                                   PropertyChanged(this, new PropertyChangedEventArgs("AllAvailablePets"));
                                                };
+            _accessoryRepository.AccessoriesSelected += (o, e) =>
+                                                            {
+                                                                foreach (var accessory in e.Accessories)
+                                                                {
+                                                                    if (!_accessoryBasket.Contains(accessory))
+                                                                    {
+                                                                        _accessoryBasket.Add(accessory);
+                                                                    }
+                                                                }
+                                                                PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
+                                                            };
+            _accessoryRepository.AccessoriesUnselected += (o, e) =>
+                                                              {
+                                                                  _accessoryBasket.RemoveAll(
+                                                                      a => e.Accessories.Contains(a));
+                                                                  PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
+                                                              };
         }
 
         public string ViewHeader
@@ -32,12 +53,12 @@ namespace Example.PetShop.Basket.View.Model
             get { return "Basket"; }
         }
 
-        public Pet[] AllGoods
+        public Pet[] AllAvailablePets
         {
             get
             {
-                var pets = new List<Pet>(_repository.Pets);
-                foreach (Pet pet in _basket)
+                var pets = new List<Pet>(_petRepository.UnsoldPets);
+                foreach (Pet pet in _petBasket)
                 {
                     pets.Remove(pet);
                 }
@@ -50,9 +71,9 @@ namespace Example.PetShop.Basket.View.Model
             get { return null; }
             set
             {
-                if (value != null && !_basket.Contains(value))
+                if (value != null && !_petBasket.Contains(value))
                 {
-                    _basket.Add(value);
+                    _petBasket.Add(value);
                     PropertyChanged(this, new PropertyChangedEventArgs("Purchase"));
                     PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
                     PropertyChanged(this, new PropertyChangedEventArgs("Total"));
@@ -65,9 +86,13 @@ namespace Example.PetShop.Basket.View.Model
             get
             {
                 var basketContents = new List<BasketItem>();
-                foreach (Pet pet in _basket)
+                foreach (Pet pet in _petBasket)
                 {
                     basketContents.Add(new BasketItem(pet.Name, pet.Price));
+                }
+                foreach (Accessory accessory in _accessoryBasket)
+                {
+                    basketContents.Add(new BasketItem(accessory.Name, accessory.Price));
                 }
                 return basketContents.ToArray();
             }
@@ -80,11 +105,11 @@ namespace Example.PetShop.Basket.View.Model
                 return new DelegateCommand(
                     delegate
                         {
-                            foreach (Pet pet in _basket)
+                            foreach (Pet pet in _petBasket)
                             {
-                                _repository.PetWasPutInBasket(pet);
+                                _petRepository.PetWasPutInBasket(pet);
                             }
-                            _basket.Clear();
+                            _petBasket.Clear();
                             PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
                         });
             }
@@ -95,7 +120,7 @@ namespace Example.PetShop.Basket.View.Model
             get
             {
                 int total = 0;
-                foreach (Pet pet in _basket)
+                foreach (Pet pet in _petBasket)
                 {
                     total += pet.PriceInPence;
                 }

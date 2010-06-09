@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
-using Example.PetShop.Utils;
 using Example.PetShop.Domain;
+using Example.PetShop.Utils;
 
 #endregion
 

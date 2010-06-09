@@ -11,7 +11,7 @@
     </StackPanel.Resources>
     <StackPanel Orientation="Horizontal">
         <Label Width="100">Select purchases:</Label>
-        <ComboBox Name="basketInput" ItemsSource="{Binding AllGoods}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedItem="{Binding Purchase}" Width="200"/>
+        <ComboBox Name="basketPetInput" ItemsSource="{Binding AllAvailablePets}" DisplayMemberPath="Name" SelectedValuePath="Name" SelectedItem="{Binding Purchase}" Width="200"/>
     </StackPanel>
     <Label>Purchases so far</Label>
     <ScrollViewer Width="300">

@@ -1,7 +1,11 @@
-﻿using System.Collections.Generic;
+﻿#region
+
+using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
 using WiPFlash.Framework.Patterns;
+
+#endregion
 
 namespace WiPFlash.Components
 {
@@ -34,6 +38,25 @@ namespace WiPFlash.Components
         public string TextAt(int column, int row)
         {
             return _gridPattern.TextAt(column, row);
+        }
+
+        public bool ContainsRow(params string[] fields)
+        {
+            var allText = AllText;
+            if (allText.GetLength(1) != fields.Length) { return false; }
+            var found = false;
+            for (int row = 0; row < allText.GetLength(0) && !found; row++)
+            {
+                found = true;
+                for (int col = 0; col < allText.GetLength(1) && found; col++)
+                {
+                    if (allText[row, col] != fields[col])
+                    {
+                        found = false;
+                    }
+                }
+            }
+            return found;
         }
     }
 }

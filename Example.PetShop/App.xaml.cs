@@ -1,7 +1,6 @@
 ﻿#region
 
 using System.Windows;
-using Example.PetShop;
 
 #endregion
 

@@ -76,6 +76,7 @@
     <Compile Include="Component\LabelBehaviour.cs" />
     <Compile Include="Component\ListBoxBehaviour.cs" />
     <Compile Include="Component\RadioButtonBehaviour.cs" />
+    <Compile Include="Component\ScrollViewerBehaviour.cs" />
     <Compile Include="Component\TabBehaviour.cs" />
     <Compile Include="Component\RichTextBoxBehaviour.cs" />
     <Compile Include="Component\TextBlockBehaviour.cs" />

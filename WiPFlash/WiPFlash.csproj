@@ -70,6 +70,7 @@
     <Compile Include="Components\IHandleFailureToFindChildren.cs" />
     <Compile Include="Components\Panel.cs" />
     <Compile Include="Framework\Patterns\GridPatternWrapper.cs" />
+    <Compile Include="Framework\Patterns\ScrollPatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ValuePatternWrapper.cs" />
     <Compile Include="Framework\Patterns\TogglePatternWrapper.cs" />
     <Compile Include="Framework\Patterns\InvokePatternWrapper.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Components\GridView.cs" />
     <Compile Include="Framework\Patterns\SelectionPatternWrapper.cs" />
     <Compile Include="Framework\PropertyBasedFinder.cs" />
+    <Compile Include="Components\ScrollViewer.cs" />
     <Compile Include="Framework\TitleBasedFinder.cs" />
     <Compile Include="Framework\Events\OrdinaryEvent.cs" />
     <Compile Include="Framework\Events\StructureChangeEvent.cs" />
