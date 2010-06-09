@@ -1,9 +1,12 @@
-using System;
+#region
+
 using System.Windows.Automation;
 using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
+
+#endregion
 
 namespace Examples.Component
 {

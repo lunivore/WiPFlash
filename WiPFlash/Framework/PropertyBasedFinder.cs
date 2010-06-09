@@ -1,7 +1,9 @@
-using System;
+#region
+
 using System.Windows.Automation;
 using WiPFlash.Components;
-using WiPFlash.Exceptions;
+
+#endregion
 
 namespace WiPFlash.Framework
 {

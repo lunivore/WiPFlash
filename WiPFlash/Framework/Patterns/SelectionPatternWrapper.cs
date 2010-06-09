@@ -1,6 +1,9 @@
-using System;
+#region
+
 using System.Collections;
 using System.Windows.Automation;
+
+#endregion
 
 namespace WiPFlash.Framework.Patterns
 {

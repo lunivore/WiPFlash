@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
-using WiPFlash.Exceptions;
 using WiPFlash.Framework.Events;
 
 #endregion
@@ -41,6 +40,11 @@ namespace WiPFlash.Components
             _element = element;
             _name = name;
             _waitingRoom = new object();
+        }
+
+        public bool IsOffscreen
+        {
+            get { return (bool) _element.GetCurrentPropertyValue(AutomationElement.IsOffscreenProperty); }
         }
 
         public AutomationElement Element

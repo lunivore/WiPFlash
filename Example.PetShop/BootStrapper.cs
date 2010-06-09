@@ -15,8 +15,10 @@ namespace Example.PetShop
         {
             var history = new Domain.History();
             var petRepository = new PetRepository(history);
+            var accessoryRepository = new AccessoryRepository();
             Container.RegisterInstance(history);
             Container.RegisterInstance(petRepository);
+            Container.RegisterInstance(accessoryRepository);
             var shell = Container.Resolve<Shell>();
             shell.Show();
             return shell;

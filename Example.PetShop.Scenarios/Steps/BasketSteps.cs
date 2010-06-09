@@ -1,8 +1,12 @@
-using System;
+#region
+
 using System.Collections.Generic;
 using Example.PetShop.Scenarios.Utils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Framework;
+
+#endregion
 
 namespace Example.PetShop.Scenarios.Steps
 {
@@ -17,14 +21,14 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void ShouldList(string name)
         {
-            _universe.Window.Find<ComboBox>("basketInput").WaitFor(
+            _universe.Window.Find<ComboBox>("basketPetInput").WaitFor(
                 cb => new List<string>(cb.Items).Contains("Pet[" + name + "]"),
                 e => Assert.Fail("Combo box should have contained a pet with name {0}", name));
         }
 
         public void IsAddedWith(string name)
         {
-            _universe.Window.Find<ComboBox>("basketInput").Select("Pet[" + name + "]");
+            _universe.Window.Find<ComboBox>("basketPetInput").Select("Pet[" + name + "]");
         }
 
         public void ShouldHaveTotal(string expectedTotal)
@@ -53,15 +57,15 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void ShouldNotList(string name)
         {
-            string[] goodsAvailable = _universe.Window.Find<ComboBox>("basketInput").Items;
+            string[] goodsAvailable = _universe.Window.Find<ComboBox>("basketPetInput").Items;
             Assert.False(new List<string>(goodsAvailable).Contains("Pet[" + name + "]"));
         }
 
         public void ShouldContain(string name, string price)
         {
+            _universe.Window.Find<Tab>(new TitleBasedFinder(), "Basket").Select();
             var basketContents = _universe.Window.Find<GridView>("basketOutput");
-            Assert.AreEqual(name, basketContents.TextAt(0, 0));
-            Assert.AreEqual(price, basketContents.TextAt(1, 0));
+            Assert.True(basketContents.ContainsRow(name, price));
         }
     }
 }

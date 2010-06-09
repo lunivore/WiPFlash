@@ -8,8 +8,6 @@ namespace Example.PetShop.Domain
 {
     public class Rule
     {
-        public static List<Rule> ALL = new List<Rule>
-                                           {SELL_IN_PAIRS, CHECK_ENVIRONMENT, UNSUITABLE_FOR_CHILDREN, DANGEROUS};
 
         public static Rule CHECK_ENVIRONMENT = new Rule(
             "Special Environment",
@@ -26,6 +24,8 @@ namespace Example.PetShop.Domain
         public static Rule UNSUITABLE_FOR_CHILDREN = new Rule(
             "No Children",
             "This animal is not suitable for a household with children - please check with customer.");
+
+        public static List<Rule> ALL = new List<Rule> { SELL_IN_PAIRS, CHECK_ENVIRONMENT, UNSUITABLE_FOR_CHILDREN, DANGEROUS };
 
         private readonly string _name;
         private readonly string _text;

@@ -1,8 +1,6 @@
 ﻿#region
 
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;
@@ -37,9 +35,9 @@ namespace WiPFlash.Components
             return Find<TC>(_finder, componentName);
         }
 
-        public TC Find<TC>(IFindAutomationElements finder, string name) where TC : AutomationElementWrapper<TC>
+        public TC Find<TC>(IFindAutomationElements finder, object value) where TC : AutomationElementWrapper<TC>
         {
-            TC find = finder.Find<TC, T>(this, name, HandlerForFailingToFind);
+            TC find = finder.Find<TC, T>(this, value, HandlerForFailingToFind);
             if (find is IHandleFailureToFindChildren)
             {
                 ((IHandleFailureToFindChildren) find).HandlerForFailingToFind = HandlerForFailingToFind;
@@ -59,9 +57,9 @@ namespace WiPFlash.Components
             return Contains(_finder, name);
         }
 
-        public bool Contains(IFindAutomationElements finder, string name)
+        public bool Contains(IFindAutomationElements finder, object value)
         {
-            return finder.Contains(this, name);
+            return finder.Contains(this, value);
         }
     }
 }

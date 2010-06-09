@@ -1,4 +1,8 @@
+#region
+
 using WiPFlash.Components;
+
+#endregion
 
 namespace Example.PetShop.Scenarios.Utils
 {

@@ -1,4 +1,8 @@
+#region
+
 using WiPFlash.Framework;
+
+#endregion
 
 namespace WiPFlash.Components
 {

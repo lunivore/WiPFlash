@@ -1,12 +1,7 @@
 ﻿#region
 
-using System;
-using System.Collections.Generic;
 using Example.PetShop.Scenarios.Utils;
-using Examples.ExampleUtils;
 using NUnit.Framework;
-using WiPFlash.Components;
-using WiPFlash.Framework;
 
 #endregion
 
@@ -35,8 +30,16 @@ namespace Example.PetShop.Scenarios
                 .RequiresAVATReceipt()
                 .IsPurchased();
             ThenTheBasket.ShouldNotList("Snowdrop");
+        }
 
-
+        [Test]
+        public void ICanBrowseAccessories()
+        {
+            GivenThePetshop.IsRunning();
+            WhenTheAccessories.AreSelected("Rubber bone", "Dog Collar (Large)", "Dog Collar (Small)");
+            ThenTheBasket.ShouldContain("Rubber bone", "1.50");
+            ThenTheBasket.ShouldContain("Dog Collar (Large)", "10.00");
+            ThenTheBasket.ShouldContain("Dog Collar (Small)", "9.00");
         }
     }
 }

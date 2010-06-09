@@ -6,7 +6,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Automation;
 using WiPFlash.Components;
-using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 
 #endregion

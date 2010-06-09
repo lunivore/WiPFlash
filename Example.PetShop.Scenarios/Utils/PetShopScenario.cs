@@ -1,5 +1,9 @@
-using System;
+#region
+
 using Example.PetShop.Scenarios.Steps;
+using NUnit.Framework;
+
+#endregion
 
 namespace Example.PetShop.Scenarios.Utils
 {
@@ -8,6 +12,7 @@ namespace Example.PetShop.Scenarios.Utils
         private readonly PetShopSteps _petShopSteps;
         private readonly PetRegistrySteps _petRegistrySteps;
         private readonly BasketSteps _basketSteps;
+        private readonly AccessoryRegistrySteps _accessoryRegistrySteps;
         private readonly HistorySteps _historySteps;
 
         protected PetShopScenario() : this(new Universe())
@@ -15,16 +20,17 @@ namespace Example.PetShop.Scenarios.Utils
             
         }
 
-        private PetShopScenario(Universe universe) : this(new PetShopSteps(universe), new PetRegistrySteps(universe), new HistorySteps(universe), new BasketSteps(universe))
+        private PetShopScenario(Universe universe) : this(new PetShopSteps(universe), new PetRegistrySteps(universe), new HistorySteps(universe), new BasketSteps(universe), new AccessoryRegistrySteps(universe))
         {
         }
 
-        private PetShopScenario(PetShopSteps petShopSteps, PetRegistrySteps petRegistrySteps, HistorySteps historySteps, BasketSteps basketSteps)
+        private PetShopScenario(PetShopSteps petShopSteps, PetRegistrySteps petRegistrySteps, HistorySteps historySteps, BasketSteps basketSteps, AccessoryRegistrySteps accessoryRegistrySteps)
         {
             _petShopSteps = petShopSteps;
             _petRegistrySteps = petRegistrySteps;
             _historySteps = historySteps;
             _basketSteps = basketSteps;
+            _accessoryRegistrySteps = accessoryRegistrySteps;
         }
 
         protected PetShopSteps GivenThePetshop
@@ -55,6 +61,22 @@ namespace Example.PetShop.Scenarios.Utils
         protected BasketSteps WhenTheBasket
         {
             get { return _basketSteps; }
+        }
+
+        protected AccessoryRegistrySteps ThenTheAccessories
+        {
+            get { return _accessoryRegistrySteps; }
+        }
+
+        protected AccessoryRegistrySteps WhenTheAccessories
+        {
+            get { return _accessoryRegistrySteps; }
+        }
+
+        [TearDown]
+        public void CloseAllWindows()
+        {
+            _petShopSteps.CloseWindows();
         }
     }
 }

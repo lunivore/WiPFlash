@@ -5,7 +5,6 @@ using Examples.ExampleUtils;
 using Moq;
 using NUnit.Framework;
 using WiPFlash.Components;
-using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 
 #endregion

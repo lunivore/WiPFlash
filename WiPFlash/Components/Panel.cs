@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿#region
+
 using System.Windows.Automation;
 using WiPFlash.Framework;
+
+#endregion
 
 namespace WiPFlash.Components
 {

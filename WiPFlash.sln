@@ -2,6 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Examples", "Examples\Examples.csproj", "{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE} = {2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiPFlash", "WiPFlash\WiPFlash.csproj", "{61FB3011-0DAA-48DD-9FF3-9944E6FF5E79}"
 EndProject
