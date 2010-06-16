@@ -14,7 +14,7 @@ namespace WiPFlash.Components
         public static readonly int DEFAULT_TIMEOUT_IN_MILLIS = 10000;
         private readonly int _processId;
 
-        public Window(AutomationElement element, string name) : this(element, name, new NameBasedFinder(new WrapperFactory()))
+        public Window(AutomationElement element, string name) : this(element, name, new PropertyBasedFinder(new WrapperFactory()))
         {
         }
 

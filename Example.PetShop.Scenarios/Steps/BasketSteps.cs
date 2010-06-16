@@ -63,7 +63,7 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void ShouldContain(string name, string price)
         {
-            _universe.Window.Find<Tab>(new TitleBasedFinder(), "Basket").Select();
+            _universe.Window.Find<Tab>(FindBy.WpfTitleOrText("Basket")).Select();
             var basketContents = _universe.Window.Find<GridView>("basketOutput");
             Assert.True(basketContents.ContainsRow(name, price));
         }

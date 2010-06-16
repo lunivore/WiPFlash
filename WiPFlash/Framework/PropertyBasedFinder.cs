@@ -1,7 +1,10 @@
 #region
 
+using System;
+using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Components;
+using WiPFlash.Framework.Events;
 
 #endregion
 
@@ -10,40 +13,48 @@ namespace WiPFlash.Framework
     public class PropertyBasedFinder : IFindAutomationElements
     {
         private readonly IWrapAutomationElements _wrapper;
-        private readonly AutomationProperty _property;
 
-        public PropertyBasedFinder(AutomationProperty property) : this(new WrapperFactory(), property) {}
+        public PropertyBasedFinder() : this(new WrapperFactory()) {}
 
-        public PropertyBasedFinder(IWrapAutomationElements wrapper, AutomationProperty property)
+        public PropertyBasedFinder(IWrapAutomationElements wrapper)
         {
             _wrapper = wrapper;
-            _property = property;
         }
 
-        public T Find<T, TC>(Container<TC> root, object argument, FailureToFindHandler failureToFindHandler) where T : AutomationElementWrapper<T> where TC : Container<TC>
+        public T Find<T, TC>(Container<TC> root, PropertyCondition condition, FailureToFindHandler failureToFindHandler) where T : AutomationElementWrapper<T> where TC : Container<TC>
         {
             AutomationElement element = root.Element.FindFirst(
                 TreeScope.Descendants,
-                new PropertyCondition(_property, argument));
+                condition);
             if (element == null)
             {
                 failureToFindHandler(string.Format(
-                     "Could not find an element called '{0}' " +
-                     "from the root starting with the element '{1}'. " +
-                     "This should be the Name on your WPF class, " +
-                     "mapping to the AutomationId in Microsoft's UI automation.",
-                     argument, root.Element.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty)));
+                     "Could not find an element with property '{0}', value {1} " +
+                     "from the root starting with the element '{2}'. " +
+                     "Please note that the Name in WPF classes maps to the AutomationIdProperty " +
+                     "and the text or title is often a NameProperty.",
+                     condition.Property.ProgrammaticName, condition.Value, 
+                     root.Name));
                 return null;
             }
-            return _wrapper.Wrap<T>(element, argument.ToString());
+            return _wrapper.Wrap<T>(element, string.Format("{0}[{1}]", condition.Property.ProgrammaticName, condition.Value));
         }
 
-        public bool Contains<TC>(Container<TC> root, object argument) where TC : Container<TC>
+        public bool Contains<TC>(Container<TC> root, PropertyCondition condition) where TC : Container<TC>
         {
-            AutomationElement element = root.Element.FindFirst(
-                TreeScope.Descendants,
-                new PropertyCondition(_property, argument.ToString()));
-            return element != null;
+            return Find<ContainedElement, TC>(root, condition, (s) => { }) != null;
+        }
+
+        private class ContainedElement : AutomationElementWrapper<ContainedElement>
+        {
+            public ContainedElement(AutomationElement element, string name) : base(element, name)
+            {
+            }
+
+            protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
+            {
+                get { return new AutomationEventWrapper[0]; }
+            }
         }
     }
 }

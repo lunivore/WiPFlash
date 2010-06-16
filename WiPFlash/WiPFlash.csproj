@@ -67,8 +67,9 @@
     <Compile Include="Components\ComboBox.cs" />
     <Compile Include="Components\Container.cs" />
     <Compile Include="Components\EditableComboBox.cs" />
-    <Compile Include="Components\IHandleFailureToFindChildren.cs" />
+    <Compile Include="Components\IContainChildren.cs" />
     <Compile Include="Components\Panel.cs" />
+    <Compile Include="Framework\FindBy.cs" />
     <Compile Include="Framework\Patterns\GridPatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ScrollPatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ValuePatternWrapper.cs" />
@@ -81,7 +82,6 @@
     <Compile Include="Framework\Patterns\SelectionPatternWrapper.cs" />
     <Compile Include="Framework\PropertyBasedFinder.cs" />
     <Compile Include="Components\ScrollViewer.cs" />
-    <Compile Include="Framework\TitleBasedFinder.cs" />
     <Compile Include="Framework\Events\OrdinaryEvent.cs" />
     <Compile Include="Framework\Events\StructureChangeEvent.cs" />
     <Compile Include="Framework\Events\AutomationEventWrapper.cs" />
@@ -91,7 +91,6 @@
     <Compile Include="Components\RichTextBox.cs" />
     <Compile Include="Components\TextBlock.cs" />
     <Compile Include="Framework\Events\PropertyChangeEvent.cs" />
-    <Compile Include="Framework\NameBasedFinder.cs" />
     <Compile Include="Framework\IWrapAutomationElements.cs" />
     <Compile Include="Components\ListBox.cs" />
     <Compile Include="Components\TextBox.cs" />

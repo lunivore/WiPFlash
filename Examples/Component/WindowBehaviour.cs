@@ -18,35 +18,15 @@ namespace Examples.Component
         public void ShouldUseTheFinderToDetermineIfItContainsAComponent()
         {
             var anElement = AutomationElement.RootElement;
-
             var finder = new Mock<IFindAutomationElements>();
-
             var window = new Window(anElement, finder.Object);
 
-            finder.Setup(x => x.Contains(window, "here")).Returns(true);
-            finder.Setup(x => x.Contains(window, "not.here")).Returns(false);
-
+            finder.Setup(x => x.Contains(window, It.IsAny<PropertyCondition>())).Returns(true);
             Assert.IsTrue(window.Contains("here"));
+            
+            finder.Setup(x => x.Contains(window, It.IsAny<PropertyCondition>())).Returns(false);
             Assert.IsFalse(window.Contains("not.here"));
 
-        }
-
-        [Test]
-        public void ShouldFindTheComponentUsingTheFinderWithItselfAsRoot()
-        {
-            var anElement = AutomationElement.RootElement;
-            var textBox = new TextBox(anElement, "aTextInput");
-            var comboBox = new ComboBox(anElement, "aComboInput");
-
-            var finder = new Mock<IFindAutomationElements>();
-
-            var window = new Window(anElement, finder.Object);
-
-            finder.Setup(x => x.Find<TextBox, Window>(window, "aTextInput", window.HandlerForFailingToFind)).Returns(textBox);
-            finder.Setup(x => x.Find<ComboBox, Window>(window, "aComboInput", window.HandlerForFailingToFind)).Returns(comboBox);
-
-            Assert.AreEqual(textBox, window.Find<TextBox>("aTextInput"));
-            Assert.AreEqual(comboBox, window.Find<ComboBox>("aComboInput"));
         }
 
         [Test]
@@ -81,7 +61,7 @@ namespace Examples.Component
             var complained = true;
             container.HandlerForFailingToFind = s => complained = true;
 
-            var childContainer = container.Find<Tab>(new TitleBasedFinder(), "Basket");
+            var childContainer = container.Find<Tab>(FindBy.WpfTitleOrText("Basket"));
             childContainer.Find<ComboBox>("Unlikely!");
             Assert.True(complained, "Should have handled failure to find using the given handler");
         }
