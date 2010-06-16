@@ -19,7 +19,7 @@ namespace WiPFlash
 
         public ApplicationLauncher() : this(Window.DEFAULT_TIMEOUT) {}
 
-        public ApplicationLauncher(TimeSpan timeout) : this(timeout, new NameBasedFinder(new WrapperFactory()))
+        public ApplicationLauncher(TimeSpan timeout) : this(timeout, new PropertyBasedFinder(new WrapperFactory()))
         {
         }
 

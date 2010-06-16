@@ -21,18 +21,17 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void AreSelected(params string[] accessoryNames)
         {
-            var accessoriesTab = _universe.Window.Find<Tab>(new TitleBasedFinder(), "Accessories");
+            var accessoriesTab = _universe.Window.Find<Tab>(FindBy.WpfTitleOrText("Accessories"));
             accessoriesTab.Select();
             var scrollViewer =
-                accessoriesTab.Find<ScrollViewer>(
-                    new PropertyBasedFinder(AutomationElement.IsScrollPatternAvailableProperty), true);
+                accessoriesTab.Find<ScrollViewer>(new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true));
 
             var table = accessoriesTab.Find<ListBox>("accessoriesOutput");
 
             foreach (var name in accessoryNames)
             {
-                scrollViewer.ScrollDown(s => s.Contains(new PropertyBasedFinder(AutomationElement.NameProperty), name),(s) => {});
-                scrollViewer.ScrollUp(s => s.Contains(new PropertyBasedFinder(AutomationElement.NameProperty), name), (s2) => Assert.Fail("Should have scrolled to {0}" + name));
+                scrollViewer.ScrollDown(s => s.Contains(name),(s) => {});
+                scrollViewer.ScrollUp(s => s.Contains(FindBy.WpfTitleOrText(name)), (s2) => Assert.Fail("Should have scrolled to {0}" + name));
             }
 
             

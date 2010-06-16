@@ -10,7 +10,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class Container<T> : AutomationElementWrapper<T>, IHandleFailureToFindChildren where T : Container<T>
+    public class Container<T> : AutomationElementWrapper<T>, IContainChildren where T : Container<T>
     {
         private readonly IFindAutomationElements _finder;
         public FailureToFindHandler HandlerForFailingToFind { get; set; }
@@ -19,9 +19,8 @@ namespace WiPFlash.Components
         {
         }
 
-        public Container(AutomationElement element, string name) : this(element, name, new NameBasedFinder(new WrapperFactory()))
+        public Container(AutomationElement element, string name) : this(element, name, new PropertyBasedFinder(new WrapperFactory()))
         {
-            
         }
 
         public Container(AutomationElement element, string name, IFindAutomationElements finder) : base(element, name)
@@ -32,15 +31,15 @@ namespace WiPFlash.Components
 
         public TC Find<TC>(string componentName) where TC : AutomationElementWrapper<TC>
         {
-            return Find<TC>(_finder, componentName);
+            return Find<TC>(FindBy.UiAutomationId(componentName));
         }
 
-        public TC Find<TC>(IFindAutomationElements finder, object value) where TC : AutomationElementWrapper<TC>
+        public TC Find<TC>(PropertyCondition condition) where TC : AutomationElementWrapper<TC>
         {
-            TC find = finder.Find<TC, T>(this, value, HandlerForFailingToFind);
-            if (find is IHandleFailureToFindChildren)
+            TC find = _finder.Find<TC, T>(this, condition, HandlerForFailingToFind);
+            if (find is IContainChildren)
             {
-                ((IHandleFailureToFindChildren) find).HandlerForFailingToFind = HandlerForFailingToFind;
+                ((IContainChildren) find).HandlerForFailingToFind = HandlerForFailingToFind;
             }
             return find;
         }
@@ -54,12 +53,12 @@ namespace WiPFlash.Components
 
         public bool Contains(string name)
         {
-            return Contains(_finder, name);
+            return Contains(FindBy.UiAutomationId(name));
         }
 
-        public bool Contains(IFindAutomationElements finder, object value)
+        public bool Contains(PropertyCondition condition)
         {
-            return finder.Contains(this, value);
+            return _finder.Contains(this, condition);
         }
     }
 }

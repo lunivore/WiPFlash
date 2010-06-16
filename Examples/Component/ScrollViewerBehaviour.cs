@@ -17,7 +17,7 @@ namespace Examples.Component
         public void ShouldScrollUntilCheckIsTrue()
         {
             var scrollViewer = CreateWrapper();
-            scrollViewer.ScrollDown(s => s.Contains(new PropertyBasedFinder(AutomationElement.NameProperty), "Flea powder"), s => Assert.Fail("Should have found row"));
+            scrollViewer.ScrollDown(s => s.Contains(FindBy.WpfTitleOrText("Flea powder")), s => Assert.Fail("Should have found row"));
         }
 
         [Test]
@@ -37,9 +37,9 @@ namespace Examples.Component
 
         protected override ScrollViewer CreateWrapper()
         {
-            var tab = LaunchPetShopWindow().Find<Tab>(new TitleBasedFinder(), "Accessories");
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfTitleOrText("Accessories"));
             tab.Select();
-            return tab.Find<ScrollViewer>(new PropertyBasedFinder(AutomationElement.IsScrollPatternAvailableProperty), true);
+            return tab.Find<ScrollViewer>(new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true));
         }
     }
 }

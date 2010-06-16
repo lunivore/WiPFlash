@@ -16,7 +16,7 @@ namespace Examples.Component
         [Test]
         public void ShouldAllowTabToBeSelected()
         {
-            Tab tab = LaunchPetShopWindow().Find<Tab>(new TitleBasedFinder(), "History");
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfTitleOrText("History"));
 
             Assert.False(tab.HasFocus());
 
@@ -38,7 +38,7 @@ namespace Examples.Component
 
         protected override Tab CreateWrapper()
         {
-            return LaunchPetShopWindow().Find<Tab>(new TitleBasedFinder(), "History");
+            return LaunchPetShopWindow().Find<Tab>(FindBy.WpfTitleOrText("History"));
         }
     }
 }

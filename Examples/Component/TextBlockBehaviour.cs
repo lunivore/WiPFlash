@@ -27,7 +27,7 @@ namespace Examples.Component
         {
             
             var window = LaunchPetShopWindow();
-            var tab = window.Find<Tab>(new TitleBasedFinder(), "History");
+            var tab = window.Find<Tab>(FindBy.WpfTitleOrText("History"));
             tab.Select();
             new Thread(() =>
                            {                               
@@ -48,7 +48,7 @@ namespace Examples.Component
         protected override TextBlock CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            window.Find<Tab>(new TitleBasedFinder(), "History").Select();
+            window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
             return window.Find<TextBlock>("historyOutput");
         }
     }

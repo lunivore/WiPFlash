@@ -18,7 +18,7 @@ namespace Examples.Framework
         public void ShouldFindAnElementBasedOnAProperty()
         {
             var window = LaunchPetShopWindow();
-            var basket = window.Find<Tab>(new TitleBasedFinder(), "Basket");
+            var basket = window.Find<Tab>(FindBy.WpfTitleOrText("Basket"));
 
             AutomationElement comboBoxElement = window.Element.FindFirst(TreeScope.Descendants,
                new PropertyCondition(AutomationElement.ClassNameProperty,
@@ -29,8 +29,8 @@ namespace Examples.Framework
             var comboBox = new ComboBox(comboBoxElement, "aComboBox");
             wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement, comboBoxName)).Returns(comboBox);
 
-            var finder = new PropertyBasedFinder(wrapperFactory.Object, AutomationElement.ControlTypeProperty);
-            finder.Find<ComboBox, Tab>(basket, ControlType.ComboBox, Assert.Fail);
+            var finder = new PropertyBasedFinder(wrapperFactory.Object);
+            finder.Find<ComboBox, Tab>(basket, FindBy.ControlType(ControlType.ComboBox), Assert.Fail);
         }
     }
 }

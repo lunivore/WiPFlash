@@ -6,7 +6,7 @@ using WiPFlash.Framework;
 
 namespace WiPFlash.Components
 {
-    public interface IHandleFailureToFindChildren
+    public interface IContainChildren
     {
         FailureToFindHandler HandlerForFailingToFind { get; set; }
     }

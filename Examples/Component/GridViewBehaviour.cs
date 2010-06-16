@@ -57,7 +57,7 @@ namespace Examples.Component
         protected override GridView CreateWrapper()
         {
             _window = LaunchPetShopWindow();
-            _window.Find<Tab>(new TitleBasedFinder(), "History").Select();
+            _window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
             return _window.Find<GridView>("lastPetsOutput");
         }
     }

@@ -38,7 +38,7 @@ namespace Examples.Component
         protected override RichTextBox CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            window.Find<Tab>(new TitleBasedFinder(), "History").Select();
+            window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
             return window.Find<RichTextBox>("historyInput");
         }
     }
