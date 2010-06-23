@@ -24,5 +24,10 @@ namespace WiPFlash.Framework.Patterns
         {
             ((ExpandCollapsePattern)Element.GetCurrentPattern(ExpandCollapsePattern.Pattern)).Collapse();
         }
+
+        public bool IsAvailable()
+        {
+            return (bool) Element.GetCurrentPropertyValue(AutomationElement.IsExpandCollapsePatternAvailableProperty);
+        }
     }
 }

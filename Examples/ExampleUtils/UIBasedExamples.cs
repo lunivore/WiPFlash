@@ -13,6 +13,8 @@ namespace Examples.ExampleUtils
 {
     public abstract class UIBasedExamples
     {
+        protected Window _window;
+
         public const string EXAMPLE_APP_PATH =
             @"..\..\..\" + EXAMPLE_APP_NAME + @"\bin\debug\" + EXAMPLE_APP_NAME + ".exe";
 
@@ -42,10 +44,10 @@ namespace Examples.ExampleUtils
         protected Window LaunchPetShopWindow()
         {
             Application application = new ApplicationLauncher(TimeSpan.Parse("00:00:20"))
-                .LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, (s) => Assert.Fail("{0} - {1}", s, EXAMPLE_APP_PATH));
-            Window window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
-            window.HandlerForFailingToFind = Assert.Fail;
-            return window;
+                .Launch(EXAMPLE_APP_PATH, (s) => Assert.Fail("{0} - {1}", s, EXAMPLE_APP_PATH));
+            _window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+            _window.HandlerForFailingToFind = Assert.Fail;
+            return _window;
         }
     }
 }

@@ -2,12 +2,13 @@
 
 using System.Collections.ObjectModel;
 using Example.PetShop.Domain;
+using Example.PetShop.Utils;
 
 #endregion
 
 namespace Example.PetShop.AccessoryRegistry.View.Model
 {
-    public class AccessoryViewModel
+    public class AccessoryViewModel : IHaveATitle
     {
         private readonly AccessoryRepository _repository;
 
@@ -16,7 +17,7 @@ namespace Example.PetShop.AccessoryRegistry.View.Model
             _repository = repository;
         }
 
-        public string ViewHeader
+        public string Title
         {
             get { return "Accessories"; }
         }

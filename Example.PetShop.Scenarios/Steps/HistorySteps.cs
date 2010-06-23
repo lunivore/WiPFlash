@@ -20,7 +20,7 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void ShouldContain(string expected)
         {
-            _universe.Window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
+            _universe.Window.Find<Menu>("mainMenu").Find<Menu>("tabMenu").Select("TabPresenter[History]");
             var historyInput = _universe.Window.Find<RichTextBox>("historyInput");
             historyInput.WaitFor(hi => hi.Text.Contains(expected), (e) => Assert.Fail("History should have contained {0}", expected));
         }

@@ -1,10 +1,12 @@
 ﻿#region
 
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Framework.Events;
 
 #endregion
 
@@ -28,7 +30,7 @@ namespace Examples.ExampleUtils
 
         protected void ThenWeShouldBeAbleToWaitFor(AutomationElementWrapper<T>.SomethingToWaitFor check)
         {
-            _element.WaitFor(check, e => Assert.Fail("Should have waited successfully"));
+            _element.WaitFor(check, TimeSpan.Parse("00:00:01"), e => Assert.Fail("Should have waited successfully"));
             Assert.True(check(_element));
         }
 
@@ -69,11 +71,13 @@ namespace Examples.ExampleUtils
 
         protected abstract T CreateWrapper();
 
+        protected Window PetShopWindow { get { return _window; }}
+
         protected T FindPetShopElement(string name)
         {
-            Window window = LaunchPetShopWindow();
-            window.HandlerForFailingToFind = Assert.Fail;
-            return window.Find<T>(name);
+            _window = LaunchPetShopWindow();
+            _window.HandlerForFailingToFind = Assert.Fail;
+            return _window.Find<T>(name);
         }
     }
 }

@@ -27,10 +27,6 @@ namespace WiPFlash.Components
         private readonly object _waitingRoom;
         private readonly string _name;
 
-        protected AutomationElementWrapper(AutomationElement element) : this(element, "")
-        {
-        }
-
         protected AutomationElementWrapper(AutomationElement element, string name)
         {
             if (element == null)

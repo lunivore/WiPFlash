@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Windows;
 using Example.PetShop.Domain;
 using Microsoft.Practices.Composite.Modularity;
@@ -19,6 +20,7 @@ namespace Example.PetShop
             Container.RegisterInstance(history);
             Container.RegisterInstance(petRepository);
             Container.RegisterInstance(accessoryRepository);
+            Container.RegisterType(typeof(ShellViewModel));
             var shell = Container.Resolve<Shell>();
             shell.Show();
             return shell;
