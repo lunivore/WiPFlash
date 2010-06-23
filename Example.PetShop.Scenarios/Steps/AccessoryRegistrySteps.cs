@@ -30,11 +30,10 @@ namespace Example.PetShop.Scenarios.Steps
 
             foreach (var name in accessoryNames)
             {
-                scrollViewer.ScrollDown(s => s.Contains(name),(s) => {});
-                scrollViewer.ScrollUp(s => s.Contains(FindBy.WpfTitleOrText(name)), (s2) => Assert.Fail("Should have scrolled to {0}" + name));
+                var nameForThisLoop = name;
+                scrollViewer.ScrollDown(s => s.Contains(nameForThisLoop),s => {});
+                scrollViewer.ScrollUp(s => s.Contains(FindBy.WpfTitleOrText(nameForThisLoop)), (s2) => Assert.Fail("Should have scrolled to {0}" + nameForThisLoop));
             }
-
-            
             table.Select(CollectionUtils.Convert(accessoryNames, name=> "Accessory[" + name + "]").ToArray());
         }
     }

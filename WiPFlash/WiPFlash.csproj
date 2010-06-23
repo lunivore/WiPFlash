@@ -68,6 +68,7 @@
     <Compile Include="Components\Container.cs" />
     <Compile Include="Components\EditableComboBox.cs" />
     <Compile Include="Components\IContainChildren.cs" />
+    <Compile Include="Components\Menu.cs" />
     <Compile Include="Components\Panel.cs" />
     <Compile Include="Framework\FindBy.cs" />
     <Compile Include="Framework\Patterns\GridPatternWrapper.cs" />

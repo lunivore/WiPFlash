@@ -11,7 +11,7 @@ using Example.PetShop.Utils;
 
 namespace Example.PetShop.Basket.View.Model
 {
-    public class BasketViewModel : INotifyPropertyChanged
+    public class BasketViewModel : INotifyPropertyChanged, IHaveATitle
     {
         private static List<Pet> _petBasket;
         private readonly PetRepository _petRepository;
@@ -48,7 +48,7 @@ namespace Example.PetShop.Basket.View.Model
                                                               };
         }
 
-        public string ViewHeader
+        public string Title
         {
             get { return "Basket"; }
         }
@@ -127,6 +127,11 @@ namespace Example.PetShop.Basket.View.Model
                 return (total/100.00).ToString("0.00");
             }
         }
+
+        public bool Cash{ set; get; }
+        public bool Cheque { set; get; }
+        public bool Card { set; get; }
+        public bool VatReceipt { set; get; }
 
         #region INotifyPropertyChanged Members
 

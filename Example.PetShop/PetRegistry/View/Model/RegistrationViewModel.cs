@@ -11,7 +11,7 @@ using Example.PetShop.Utils;
 
 namespace Example.PetShop.PetRegistry.View.Model
 {
-    public class RegistrationViewModel : INotifyPropertyChanged
+    public class RegistrationViewModel : INotifyPropertyChanged, IHaveATitle
     {
         private readonly PetRepository _petRepository;
         private Pet _pet;
@@ -22,7 +22,7 @@ namespace Example.PetShop.PetRegistry.View.Model
             _pet = new Pet();
         }
 
-        public string ViewHeader
+        public string Title
         {
             get { return "Registration"; }
         }

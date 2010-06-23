@@ -11,9 +11,10 @@ namespace Example.PetShop
     /// </summary>
     public partial class Shell : Window
     {
-        public Shell()
+        public Shell(ShellViewModel model)
         {
             InitializeComponent();
+            DataContext = model;
         }
     }
 }

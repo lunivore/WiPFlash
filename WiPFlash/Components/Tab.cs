@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
@@ -30,9 +31,15 @@ namespace WiPFlash.Components
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
         {
-            get {
+            get 
+            {
                 return new AutomationEventWrapper[] {new FocusEvent()};
             }
+        }
+
+        public bool IsSelected()
+        {
+            return _selectionItemPattern.IsSelected();
         }
     }
 }

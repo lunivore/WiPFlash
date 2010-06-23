@@ -75,6 +75,7 @@
     <Compile Include="Component\EditableComboBoxBehaviour.cs" />
     <Compile Include="Component\LabelBehaviour.cs" />
     <Compile Include="Component\ListBoxBehaviour.cs" />
+    <Compile Include="Component\MenuBehaviour.cs" />
     <Compile Include="Component\RadioButtonBehaviour.cs" />
     <Compile Include="Component\ScrollViewerBehaviour.cs" />
     <Compile Include="Component\TabBehaviour.cs" />

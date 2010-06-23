@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Windows.Automation;
 
 #endregion
@@ -38,6 +39,11 @@ namespace WiPFlash.Framework.Patterns
         public void AddToSelection()
         {
             ((SelectionItemPattern)Element.GetCurrentPattern(SelectionItemPattern.Pattern)).AddToSelection();
+        }
+
+        public bool IsSelected()
+        {
+            return ((SelectionItemPattern) Element.GetCurrentPattern(SelectionItemPattern.Pattern)).Current.IsSelected;
         }
     }
 }

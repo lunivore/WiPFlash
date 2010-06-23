@@ -3,12 +3,13 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Example.PetShop.Domain;
+using Example.PetShop.Utils;
 
 #endregion
 
 namespace Example.PetShop.History.View.Model
 {
-    public class HistoryViewModel : INotifyPropertyChanged
+    public class HistoryViewModel : INotifyPropertyChanged, IHaveATitle
     {
         private readonly Domain.History _history;
         private readonly PetRepository _repository;
@@ -25,7 +26,7 @@ namespace Example.PetShop.History.View.Model
                     };
         }
 
-        public string ViewHeader
+        public string Title
         {
             get { return "History"; }
         }
