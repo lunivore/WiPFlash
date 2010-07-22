@@ -38,7 +38,7 @@ namespace WiPFlash.Components
             get
             {
                 var result = new List<string>();
-                foreach (AutomationElement element in AllItemElements())
+                foreach (AutomationElement element in ItemElements())
                 {
                     result.Add(element.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString());
                 }
@@ -54,7 +54,7 @@ namespace WiPFlash.Components
         public void Select(params string[] selections)
         {
             var selectionList = new List<string>(selections);
-            foreach (AutomationElement listItem in AllItemElements())
+            foreach (AutomationElement listItem in ItemElements())
             {
                 if (selectionList.Contains(listItem.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString()))
                 {
@@ -63,10 +63,9 @@ namespace WiPFlash.Components
             }
         }
 
-        private AutomationElementCollection AllItemElements()
+        public AutomationElementCollection ItemElements()
         {
-            return Element.FindAll(TreeScope.Children,
-                                   new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.ListItem));
+            return _selectionPattern.ItemElements();
         }
 
         public void ClearSelection()
