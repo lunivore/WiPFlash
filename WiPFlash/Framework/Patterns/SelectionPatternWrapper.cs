@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections;
 using System.Windows.Automation;
 
@@ -33,6 +34,12 @@ namespace WiPFlash.Framework.Patterns
         public IEnumerable GetSelection()
         {
             return ((SelectionPattern) Element.GetCurrentPattern(SelectionPattern.Pattern)).Current.GetSelection();
+        }
+
+        public AutomationElementCollection ItemElements()
+        {
+            return Element.FindAll(TreeScope.Children,
+                            new PropertyCondition(AutomationElement.IsSelectionItemPatternAvailableProperty, true));
         }
     }
 }
