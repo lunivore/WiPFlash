@@ -1,14 +1,14 @@
 ﻿#region
 
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class ScrollViewerBehaviour : AutomationElementWrapperExamples<ScrollViewer>
@@ -17,7 +17,7 @@ namespace Examples.Component
         public void ShouldScrollUntilCheckIsTrue()
         {
             var scrollViewer = CreateWrapper();
-            scrollViewer.ScrollDown(s => s.Contains(FindBy.WpfTitleOrText("Flea powder")), s => Assert.Fail("Should have found row"));
+            scrollViewer.ScrollDown(s => s.Contains(FindBy.WpfText("Flea powder")), s => Assert.Fail("Should have found row"));
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Examples.Component
 
         protected override ScrollViewer CreateWrapper()
         {
-            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfTitleOrText("Accessories"));
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("Accessories"));
             tab.Select();
             return tab.Find<ScrollViewer>(new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true));
         }

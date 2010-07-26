@@ -45,7 +45,7 @@ namespace Example.PetShop.Basket.View.Model
                                                                   _accessoryBasket.RemoveAll(
                                                                       a => e.Accessories.Contains(a));
                                                                   PropertyChanged(this, new PropertyChangedEventArgs("Basket"));
-                                                              };
+                                                              };                                  
         }
 
         public string Title

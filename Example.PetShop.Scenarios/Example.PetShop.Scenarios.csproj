@@ -58,7 +58,6 @@
     <Compile Include="Steps\HistorySteps.cs" />
     <Compile Include="PetRegistrationAndPurchase.cs" />
     <Compile Include="Steps\PetRegistrySteps.cs" />
-    <Compile Include="Utils\CollectionUtils.cs" />
     <Compile Include="Utils\PetShopScenario.cs" />
     <Compile Include="Steps\PetShopSteps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -87,9 +86,9 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Examples\Examples.csproj">
+    <ProjectReference Include="..\Examples\WiPFlash.Examples.csproj">
       <Project>{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}</Project>
-      <Name>Examples</Name>
+      <Name>WiPFlash.Examples</Name>
     </ProjectReference>
     <ProjectReference Include="..\Example.PetShop\Example.PetShop.csproj">
       <Project>{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}</Project>

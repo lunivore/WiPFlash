@@ -1,20 +1,19 @@
 ﻿#region
 
+using System;
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class GridViewBehaviour : AutomationElementWrapperExamples<GridView>
     {
-        private Window _window;
-
         [Test]
         public void ShouldProvideItsTextByCell()
         {
@@ -37,6 +36,28 @@ namespace Examples.Component
             Assert.IsTrue(gridView.ContainsRow("Dancer", "Rabbit", "54.00", "False"));
             Assert.IsFalse(gridView.ContainsRow("Prancer", "Reindeer", "30.00", "False"));
         }
+        
+        [Test]
+        public void ShouldDetermineIfItContainsARowWithTheGivenHeaderAndPropertyCondition()
+        {
+            var gridView = CreateWrapper();
+            Assert.True(gridView.ContainsRow("Name", FindBy.WpfText("Dancer")));
+        }
+
+        [Test]
+        public void ShouldBeAbleToRetrieveTheRowIndexForARowWithTheGivenHeaderAndPropertyCondition()
+        {
+            var gridView = CreateWrapper();
+            Assert.AreEqual(2, gridView.IndexOf("Name", FindBy.WpfText("Dancer")));
+        }
+
+        [Test]
+        public void ShouldBeAbleToRetrieveTheElementOfAGivenHeaderAndPropertyCondition()
+        {
+            var gridView = CreateWrapper();
+            var cell = gridView.ElementOf<Label>("Name", FindBy.WpfText("Dancer"));
+            Assert.AreEqual(cell.Element, ((GridPattern)gridView.Element.GetCurrentPattern(GridPattern.Pattern)).GetItem(2, 0) );
+        }
 
         [Test]
         public void ShouldBeAbleToWaitForContentChanges()
@@ -49,6 +70,15 @@ namespace Examples.Component
             ThenWeShouldBeAbleToWaitFor(view => view.TextAt(3, 2) == "True");
         }
 
+        [Test]
+        public void ShouldExposeItselfAsAListView()
+        {
+            var gridView = new GridView(AutomationElement.RootElement, "Fake grid");
+            var listView = gridView.AsListView();
+            Assert.AreSame(gridView.Element, listView.Element);
+            Assert.AreEqual(typeof (ListView), listView.GetType());
+        }
+
         protected override GridView CreateWrapperWith(AutomationElement element, string name)
         {
             return new GridView(element, name);
@@ -57,7 +87,7 @@ namespace Examples.Component
         protected override GridView CreateWrapper()
         {
             _window = LaunchPetShopWindow();
-            _window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
+            _window.Find<Tab>(FindBy.WpfText("History")).Select();
             return _window.Find<GridView>("lastPetsOutput");
         }
     }

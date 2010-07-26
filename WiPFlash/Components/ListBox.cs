@@ -63,7 +63,7 @@ namespace WiPFlash.Components
             }
         }
 
-        public AutomationElementCollection ItemElements()
+        protected AutomationElementCollection ItemElements()
         {
             return _selectionPattern.ItemElements();
         }

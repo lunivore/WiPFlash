@@ -68,10 +68,13 @@
     <Compile Include="Components\Container.cs" />
     <Compile Include="Components\EditableComboBox.cs" />
     <Compile Include="Components\IContainChildren.cs" />
+    <Compile Include="Framework\IMatchConditions.cs" />
+    <Compile Include="Components\ListView.cs" />
     <Compile Include="Components\Menu.cs" />
     <Compile Include="Components\Panel.cs" />
     <Compile Include="Framework\FindBy.cs" />
-    <Compile Include="Framework\Patterns\GridPatternWrapper.cs" />
+    <Compile Include="Framework\ConditionMatcher.cs" />
+    <Compile Include="Framework\Patterns\TablePatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ScrollPatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ValuePatternWrapper.cs" />
     <Compile Include="Framework\Patterns\TogglePatternWrapper.cs" />
@@ -113,6 +116,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Framework\WrapperFactory.cs" />
+    <Compile Include="Util\CollectionUtils.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -123,9 +127,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

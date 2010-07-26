@@ -3,14 +3,14 @@
 using System;
 using System.Threading;
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class TextBlockBehaviour : AutomationElementWrapperExamples<TextBlock>
@@ -27,7 +27,7 @@ namespace Examples.Component
         {
             
             var window = LaunchPetShopWindow();
-            var tab = window.Find<Tab>(FindBy.WpfTitleOrText("History"));
+            var tab = window.Find<Tab>(FindBy.WpfText("History"));
             tab.Select();
             new Thread(() =>
                            {                               
@@ -48,7 +48,7 @@ namespace Examples.Component
         protected override TextBlock CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
+            window.Find<Tab>(FindBy.WpfText("History")).Select();
             return window.Find<TextBlock>("historyOutput");
         }
     }

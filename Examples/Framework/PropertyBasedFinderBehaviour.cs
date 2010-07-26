@@ -1,15 +1,15 @@
 ﻿#region
 
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using Moq;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Framework
+namespace WiPFlash.Examples.Framework
 {
     [TestFixture]
     public class PropertyBasedFinderBehaviour : UIBasedExamples
@@ -18,11 +18,11 @@ namespace Examples.Framework
         public void ShouldFindAnElementBasedOnAProperty()
         {
             var window = LaunchPetShopWindow();
-            var basket = window.Find<Tab>(FindBy.WpfTitleOrText("Basket"));
+            var basket = window.Find<Tab>(FindBy.WpfText("Basket"));
 
             AutomationElement comboBoxElement = window.Element.FindFirst(TreeScope.Descendants,
-               new PropertyCondition(AutomationElement.ClassNameProperty,
-               typeof(ComboBox).Name));
+                                                                         new PropertyCondition(AutomationElement.ClassNameProperty,
+                                                                                               typeof(ComboBox).Name));
             string comboBoxName = comboBoxElement.GetCurrentPropertyValue(AutomationElement.AutomationIdProperty).ToString();
 
             var wrapperFactory = new Mock<IWrapAutomationElements>();

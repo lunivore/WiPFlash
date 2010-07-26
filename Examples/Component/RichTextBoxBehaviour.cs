@@ -1,14 +1,14 @@
 ﻿#region
 
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class RichTextBoxBehaviour : AutomationElementWrapperExamples<RichTextBox>
@@ -38,7 +38,7 @@ namespace Examples.Component
         protected override RichTextBox CreateWrapper()
         {
             Window window = LaunchPetShopWindow();
-            window.Find<Tab>(FindBy.WpfTitleOrText("History")).Select();
+            window.Find<Tab>(FindBy.WpfText("History")).Select();
             return window.Find<RichTextBox>("historyInput");
         }
     }

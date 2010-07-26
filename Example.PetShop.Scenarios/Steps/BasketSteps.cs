@@ -1,6 +1,7 @@
 #region
 
 using System.Collections.Generic;
+using System.Windows.Automation;
 using Example.PetShop.Scenarios.Utils;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -63,7 +64,7 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void ShouldContain(string name, string price)
         {
-            _universe.Window.Find<Tab>(FindBy.WpfTitleOrText("Basket")).Select();
+            _universe.Window.Find<Tab>(FindBy.WpfText("Basket")).Select();
             var basketContents = _universe.Window.Find<GridView>("basketOutput");
             Assert.True(basketContents.ContainsRow(name, price));
         }

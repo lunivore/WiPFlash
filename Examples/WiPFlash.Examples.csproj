@@ -8,8 +8,8 @@
     <ProjectGuid>{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Examples</RootNamespace>
-    <AssemblyName>Examples</AssemblyName>
+    <RootNamespace>WiPFlash.Examples</RootNamespace>
+    <AssemblyName>WiPFlash.Examples</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -66,6 +66,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationLauncherBehaviour.cs" />
+    <Compile Include="Framework\ConditionMatcherBehaviour.cs" />
+    <Compile Include="Util\CollectionUtilsBehaviour.cs" />
     <Compile Include="Component\ApplicationBehaviour.cs" />
     <Compile Include="Component\ButtonBehaviour.cs" />
     <Compile Include="Component\CheckBoxBehaviour.cs" />

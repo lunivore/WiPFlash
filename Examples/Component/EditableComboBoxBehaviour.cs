@@ -6,7 +6,7 @@ using WiPFlash.Components;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class EditableComboBoxBehaviour : ComboBoxBehaviour

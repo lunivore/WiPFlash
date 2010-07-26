@@ -1,15 +1,14 @@
 ﻿#region
 
 using System;
-using Examples.ExampleUtils;
 using NUnit.Framework;
-using WiPFlash;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Exceptions;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class ApplicationBehaviour : UIBasedExamples
