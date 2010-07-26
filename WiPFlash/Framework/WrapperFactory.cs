@@ -25,6 +25,11 @@ namespace WiPFlash.Framework
                                        }
                 }
             };
+        
+        public T Wrap<T>(AutomationElement element, PropertyCondition condition) where T : AutomationElementWrapper<T>
+        {
+            return Wrap<T>(element, string.Format("{0}[{1}]", condition.Property.ProgrammaticName, condition.Value));
+        }
 
         public T Wrap<T>(AutomationElement element, string name) where T : AutomationElementWrapper<T>
         {

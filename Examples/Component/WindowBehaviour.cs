@@ -1,15 +1,15 @@
 ﻿#region
 
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using Moq;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class WindowBehaviour : AutomationElementWrapperExamples<Window>
@@ -46,11 +46,11 @@ namespace Examples.Component
             window.Close();
 
             var windows = AutomationElement.RootElement.FindAll(TreeScope.Descendants,
-                                                  new AndCondition(
-                                                      new PropertyCondition(AutomationElement.AutomationIdProperty,
-                                                                        EXAMPLE_APP_WINDOW_NAME),
-                                                      new PropertyCondition(AutomationElement.ProcessIdProperty,
-                                                          processId)));
+                                                                new AndCondition(
+                                                                    new PropertyCondition(AutomationElement.AutomationIdProperty,
+                                                                                          EXAMPLE_APP_WINDOW_NAME),
+                                                                    new PropertyCondition(AutomationElement.ProcessIdProperty,
+                                                                                          processId)));
             Assert.AreEqual(0, windows.Count);
         }
 
@@ -61,7 +61,7 @@ namespace Examples.Component
             var complained = true;
             container.HandlerForFailingToFind = s => complained = true;
 
-            var childContainer = container.Find<Tab>(FindBy.WpfTitleOrText("Basket"));
+            var childContainer = container.Find<Tab>(FindBy.WpfText("Basket"));
             childContainer.Find<ComboBox>("Unlikely!");
             Assert.True(complained, "Should have handled failure to find using the given handler");
         }

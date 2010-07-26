@@ -20,7 +20,12 @@ namespace WiPFlash.Framework
             return new PropertyCondition(AutomationElement.NameProperty, name);
         }
 
-        public static PropertyCondition WpfTitleOrText(string text)
+        public static PropertyCondition WpfTitle(string text)
+        {
+            return UiAutomationName(text);
+        }
+
+        public static PropertyCondition WpfText(string text)
         {
             return UiAutomationName(text);
         }

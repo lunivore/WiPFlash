@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class MenuBehaviour : AutomationElementWrapperExamples<Menu>
@@ -38,7 +38,7 @@ namespace Examples.Component
         public void ShouldAllowMeToWaitUntilTheSelectionOrTheItemsChange()
         {
             GivenThisWillHappenAtSomePoint(menu => menu.Find<Menu>("tabMenu").Select("TabPresenter[History]"));
-            var historyTab = PetShopWindow.Find<Tab>(FindBy.WpfTitleOrText("History"));
+            var historyTab = PetShopWindow.Find<Tab>(FindBy.WpfText("History"));
             ThenWeShouldBeAbleToWaitFor((ignored) => historyTab.IsSelected());
         }
     }

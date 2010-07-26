@@ -10,7 +10,7 @@ using WiPFlash.Framework.Events;
 
 #endregion
 
-namespace Examples.ExampleUtils
+namespace WiPFlash.Examples.ExampleUtils
 {
     public abstract class AutomationElementWrapperExamples<T> : UIBasedExamples where T : AutomationElementWrapper<T>
     {

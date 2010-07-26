@@ -1,14 +1,14 @@
 ﻿#region
 
 using System.Windows.Automation;
-using Examples.ExampleUtils;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace Examples.Component
+namespace WiPFlash.Examples.Component
 {
     [TestFixture]
     public class TabBehaviour : AutomationElementWrapperExamples<Tab>
@@ -16,7 +16,7 @@ namespace Examples.Component
         [Test]
         public void ShouldAllowTabToBeSelected()
         {
-            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfTitleOrText("History"));
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("History"));
 
             Assert.False(tab.HasFocus());
 
@@ -38,7 +38,7 @@ namespace Examples.Component
 
         protected override Tab CreateWrapper()
         {
-            return LaunchPetShopWindow().Find<Tab>(FindBy.WpfTitleOrText("History"));
+            return LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("History"));
         }
     }
 }

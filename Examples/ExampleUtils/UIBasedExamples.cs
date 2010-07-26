@@ -4,12 +4,11 @@ using System;
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
-using WiPFlash;
 using WiPFlash.Components;
 
 #endregion
 
-namespace Examples.ExampleUtils
+namespace WiPFlash.Examples.ExampleUtils
 {
     public abstract class UIBasedExamples
     {

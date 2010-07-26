@@ -13,7 +13,6 @@ namespace Example.PetShop
     {
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
         private readonly IRegionManager _regionManager;
-        private ObservableCollection<string> _tabs;
 
         public ShellViewModel(IRegionManager regionManager)
         {
@@ -83,7 +82,7 @@ namespace Example.PetShop
                 return true;
             }
 
-            public event EventHandler CanExecuteChanged;
+            public event EventHandler CanExecuteChanged = delegate {};
         }
 
         public class TabPresenter
