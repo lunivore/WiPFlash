@@ -3,7 +3,6 @@
 using Example.PetShop.Scenarios.Utils;
 using NUnit.Framework;
 using WiPFlash.Components;
-using WiPFlash.Framework;
 
 #endregion
 
