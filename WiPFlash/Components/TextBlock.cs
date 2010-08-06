@@ -8,7 +8,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class TextBlock : AutomationElementWrapper<TextBlock>
+    public class TextBlock : AutomationElementWrapper
     {
         public TextBlock(AutomationElement element, string name) : base(element, name)
         {

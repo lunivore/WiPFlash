@@ -8,7 +8,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class ScrollViewer : Container<ScrollViewer>
+    public class ScrollViewer : Container
     {
         private readonly ScrollPatternWrapper _scrollPattern;
 

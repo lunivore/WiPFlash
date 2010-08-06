@@ -17,9 +17,9 @@ namespace WiPFlash
         private delegate Application HandlerForNoMatchingProcesses(string message);
         public delegate void FailureToLaunchHandler(string message);
 
-        public ApplicationLauncher() : this(Window.DEFAULT_TIMEOUT) {}
+        public ApplicationLauncher() : this(Window.DefaultTimeout) {}
 
-        public ApplicationLauncher(TimeSpan timeout) : this(timeout, new PropertyBasedFinder(new WrapperFactory()))
+        public ApplicationLauncher(TimeSpan timeout) : this(timeout, new ConditionBasedFinder(new WrapperFactory(), new ConditionDescriber()))
         {
         }
 

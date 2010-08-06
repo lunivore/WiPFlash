@@ -9,7 +9,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class TextBox : AutomationElementWrapper<TextBox>
+    public class TextBox : AutomationElementWrapper
     {
         private readonly ValuePatternWrapper _valuePattern;
 

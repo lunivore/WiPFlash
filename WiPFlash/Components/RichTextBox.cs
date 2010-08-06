@@ -11,7 +11,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class RichTextBox : AutomationElementWrapper<RichTextBox>
+    public class RichTextBox : AutomationElementWrapper
     {
         public RichTextBox(AutomationElement element, string name) : base(element, name)
         {

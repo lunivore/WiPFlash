@@ -67,6 +67,7 @@
   <ItemGroup>
     <Compile Include="ApplicationLauncherBehaviour.cs" />
     <Compile Include="Framework\ConditionMatcherBehaviour.cs" />
+    <Compile Include="Framework\ConditionDescriberBehaviour.cs" />
     <Compile Include="Util\CollectionUtilsBehaviour.cs" />
     <Compile Include="Component\ApplicationBehaviour.cs" />
     <Compile Include="Component\ButtonBehaviour.cs" />

@@ -9,7 +9,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class RadioButton : AutomationElementWrapper<RadioButton>
+    public class RadioButton : AutomationElementWrapper
     {
         private readonly SelectionItemPatternWrapper _selectionItemPattern;
 

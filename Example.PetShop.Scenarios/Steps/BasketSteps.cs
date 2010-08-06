@@ -23,7 +23,7 @@ namespace Example.PetShop.Scenarios.Steps
         public void ShouldList(string name)
         {
             _universe.Window.Find<ComboBox>("basketPetInput").WaitFor(
-                cb => new List<string>(cb.Items).Contains("Pet[" + name + "]"),
+                (cb, e) => new List<string>(((ComboBox)cb).Items).Contains("Pet[" + name + "]"),
                 e => Assert.Fail("Combo box should have contained a pet with name {0}", name));
         }
 

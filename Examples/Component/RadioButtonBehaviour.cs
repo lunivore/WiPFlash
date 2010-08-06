@@ -25,7 +25,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldBeAbleToWaitForSelection()
         {
             GivenThisWillHappenAtSomePoint(rb => rb.Select());
-            ThenWeShouldBeAbleToWaitFor(rb => rb.Selected);
+            ThenWeShouldBeAbleToWaitFor((rb, e) => ((RadioButton)rb).Selected);
         }
 
         protected override RadioButton CreateWrapperWith(AutomationElement element, string name)

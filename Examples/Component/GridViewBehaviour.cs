@@ -67,7 +67,7 @@ namespace WiPFlash.Examples.Component
                                                    _window.Find<ComboBox>("basketPetInput").Select("Pet[Dancer]");
                                                    _window.Find<Button>("purchaseButton").Click();
                                                });
-            ThenWeShouldBeAbleToWaitFor(view => view.TextAt(3, 2) == "True");
+            ThenWeShouldBeAbleToWaitFor((view, e) => ((GridView)view).TextAt(3, 2) == "True");
         }
 
         [Test]

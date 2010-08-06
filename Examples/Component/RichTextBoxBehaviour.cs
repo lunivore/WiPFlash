@@ -25,7 +25,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldWaitForTheTextToChange()
         {
             GivenThisWillHappenAtSomePoint(box => box.Text = "Gooseberries");
-            ThenWeShouldBeAbleToWaitFor(box => box.Text.Equals("Gooseberries"));
+            ThenWeShouldBeAbleToWaitFor((box, e) => ((RichTextBox)box).Text.Equals("Gooseberries"));
         }
 
 

@@ -12,7 +12,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Examples.ExampleUtils
 {
-    public abstract class AutomationElementWrapperExamples<T> : UIBasedExamples where T : AutomationElementWrapper<T>
+    public abstract class AutomationElementWrapperExamples<T> : UIBasedExamples where T : AutomationElementWrapper
     {
         private T _element;
 
@@ -28,10 +28,10 @@ namespace WiPFlash.Examples.ExampleUtils
                            }).Start();
         }
 
-        protected void ThenWeShouldBeAbleToWaitFor(AutomationElementWrapper<T>.SomethingToWaitFor check)
+        protected void ThenWeShouldBeAbleToWaitFor(AutomationElementWrapper.SomethingToWaitFor check)
         {
             _element.WaitFor(check, TimeSpan.Parse("00:00:01"), e => Assert.Fail("Should have waited successfully"));
-            Assert.True(check(_element));
+            Assert.True(check(_element, null));
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace WiPFlash.Examples.ExampleUtils
         {
             var wrapper = CreateWrapper();
             var handled = false;
-            wrapper.WaitFor(w => false, TimeSpan.Parse("00:00:00"), w => handled = true);
+            wrapper.WaitFor((w, e) => false, TimeSpan.Parse("00:00:00"), w => handled = true);
             Assert.True(handled, "Should have handled being unable to wait for false be true");
         }
 

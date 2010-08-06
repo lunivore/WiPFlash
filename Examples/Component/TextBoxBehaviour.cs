@@ -24,7 +24,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldWaitForTextToBeChanged()
         {
             GivenThisWillHappenAtSomePoint(text => text.Text = "Hello!");
-            ThenWeShouldBeAbleToWaitFor(text => text.Text.Equals("Hello!"));
+            ThenWeShouldBeAbleToWaitFor((text, e) => ((TextBox)text).Text.Equals("Hello!"));
         }
 
         protected override TextBox CreateWrapperWith(AutomationElement element, string name)

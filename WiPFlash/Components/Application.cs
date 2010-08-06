@@ -25,7 +25,7 @@ namespace WiPFlash.Components
             
         }
 
-        public Application(Process process) : this(process, Window.DEFAULT_TIMEOUT)
+        public Application(Process process) : this(process, Window.DefaultTimeout)
         {
         }
 

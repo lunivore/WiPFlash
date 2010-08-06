@@ -7,7 +7,7 @@ using WiPFlash.Framework;
 
 namespace WiPFlash.Components
 {
-    public class Panel : Container<Panel>
+    public class Panel : Container
     {
         public Panel(AutomationElement element, string name) : base(element, name)
         {

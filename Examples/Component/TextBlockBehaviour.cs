@@ -36,7 +36,7 @@ namespace WiPFlash.Examples.Component
                            }).Start();
 
             var block = window.Find<TextBlock>("historyOutput");
-            block.WaitFor(b => b.Text.Equals(string.Empty), (b) => Assert.Fail("Should have had empty text"));
+            block.WaitFor((b, e) => ((TextBlock)b).Text.Equals(string.Empty), (b) => Assert.Fail("Should have had empty text"));
             Assert.AreEqual(string.Empty, block.Text);
         }
 

@@ -10,7 +10,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class ComboBox : AutomationElementWrapper<ComboBox>
+    public class ComboBox : AutomationElementWrapper
     {
         private readonly SelectionPatternWrapper _selectionPattern;
         private readonly ExpandCollapsePatternWrapper _expandCollapsePattern;

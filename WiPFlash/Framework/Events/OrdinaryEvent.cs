@@ -1,11 +1,11 @@
 #region
 
 using System.Windows.Automation;
-using WiPFlash.Framework.Events;
+using WiPFlash.Components;
 
 #endregion
 
-namespace WiPFlash.Components
+namespace WiPFlash.Framework.Events
 {
     public class OrdinaryEvent : AutomationEventWrapper
     {
@@ -20,11 +20,11 @@ namespace WiPFlash.Components
             _eventId = eventId;
         }
 
-        public override void Add(WrappedEventHandler handler, AutomationElement element)
+        public override void Add(WrappedEventHandler handler, AutomationElementWrapper element)
         {
-            _handler = (o, e) => handler();
-            _element = element;
-            Automation.AddAutomationEventHandler(_eventId, element, _scope, _handler);
+            _handler = (o, e) => handler(element, e);
+            _element = element.Element;
+            Automation.AddAutomationEventHandler(_eventId, _element, _scope, _handler);
         }
 
         public override void Remove()

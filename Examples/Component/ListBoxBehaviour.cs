@@ -49,7 +49,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldBeAbleToWaitForSelectionAndContentChanges()
         {
             GivenThisWillHappenAtSomePoint(list => list.Select("Rule[Dangerous]"));
-            ThenWeShouldBeAbleToWaitFor(list => new List<string>(list.Selection).Contains("Rule[Dangerous]"));
+            ThenWeShouldBeAbleToWaitFor((list, e) => new List<string>(((ListBox)list).Selection).Contains("Rule[Dangerous]"));
         }
 
         protected override ListBox CreateWrapperWith(AutomationElement element, string name)

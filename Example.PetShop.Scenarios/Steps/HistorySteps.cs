@@ -22,7 +22,7 @@ namespace Example.PetShop.Scenarios.Steps
         {
             _universe.Window.Find<Menu>("mainMenu").Find<Menu>("tabMenu").Select("TabPresenter[History]");
             var historyInput = _universe.Window.Find<RichTextBox>("historyInput");
-            historyInput.WaitFor(hi => hi.Text.Contains(expected), (e) => Assert.Fail("History should have contained {0}", expected));
+            historyInput.WaitFor((hi, e) => ((RichTextBox)hi).Text.Contains(expected), src => Assert.Fail("History should have contained {0}", expected));
         }
 
         public void ShouldIncludeMostRecentPet(string name)
