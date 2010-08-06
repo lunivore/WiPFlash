@@ -52,11 +52,11 @@ namespace WiPFlash.Examples.Component
         }
 
         [Test]
-        public void ShouldBeAbleToRetrieveTheElementOfAGivenHeaderAndPropertyCondition()
+        public void ShouldBeAbleToRetrieveTheElementReferencedByARowWithHeaderMatchingAPropertyConditionFromSecondHeader()
         {
             var gridView = CreateWrapper();
-            var cell = gridView.ElementOf<Label>("Name", FindBy.WpfText("Dancer"));
-            Assert.AreEqual(cell.Element, ((GridPattern)gridView.Element.GetCurrentPattern(GridPattern.Pattern)).GetItem(2, 0) );
+            var cell = gridView.FindReferencedElement<Label>("Name", FindBy.WpfText("Dancer"), "Price");
+            Assert.AreEqual("54.00", cell.Text );
         }
 
         [Test]
