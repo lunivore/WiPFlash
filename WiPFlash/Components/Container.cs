@@ -10,7 +10,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class Container<T> : AutomationElementWrapper<T>, IContainChildren where T : Container<T>
+    public class Container : AutomationElementWrapper, IContainChildren
     {
         private readonly IFindAutomationElements _finder;
         public FailureToFindHandler HandlerForFailingToFind { get; set; }
@@ -19,7 +19,7 @@ namespace WiPFlash.Components
         {
         }
 
-        public Container(AutomationElement element, string name) : this(element, name, new PropertyBasedFinder(new WrapperFactory()))
+        public Container(AutomationElement element, string name) : this(element, name, new ConditionBasedFinder(new WrapperFactory(), new ConditionDescriber()))
         {
         }
 
@@ -29,14 +29,14 @@ namespace WiPFlash.Components
             HandlerForFailingToFind = (s) => { throw new FailureToFindException(s); };
         }
 
-        public TC Find<TC>(string componentName) where TC : AutomationElementWrapper<TC>
+        public TC Find<TC>(string componentName) where TC : AutomationElementWrapper
         {
             return Find<TC>(FindBy.UiAutomationId(componentName));
         }
 
-        public TC Find<TC>(PropertyCondition condition) where TC : AutomationElementWrapper<TC>
+        public TC Find<TC>(PropertyCondition condition) where TC : AutomationElementWrapper
         {
-            TC find = _finder.Find<TC, T>(this, condition, HandlerForFailingToFind);
+            TC find = _finder.Find<TC>(this, condition, HandlerForFailingToFind);
             if (find is IContainChildren)
             {
                 ((IContainChildren) find).HandlerForFailingToFind = HandlerForFailingToFind;

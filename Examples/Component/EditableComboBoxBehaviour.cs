@@ -27,7 +27,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldAllowMeToWaitUntilTheSelectionOrTheItemsChange()
         {
             GivenThisWillHappenAtSomePoint(combo => combo.Select("PetType[Rabbit]"));
-            ThenWeShouldBeAbleToWaitFor((cb) => cb.Selection.Equals("PetType[Rabbit]"));
+            ThenWeShouldBeAbleToWaitFor((cb, e) => ((EditableComboBox)cb).Selection.Equals("PetType[Rabbit]"));
         }
 
         protected override ComboBox CreateWrapperWith(AutomationElement element, string name)

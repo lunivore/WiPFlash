@@ -31,7 +31,7 @@ namespace WiPFlash.Examples.Component
             // For an example of waiting until the items change, see the scenarios.
 
             GivenThisWillHappenAtSomePoint(combo => combo.Select("PetFood[Carnivorous]"));
-            ThenWeShouldBeAbleToWaitFor((cb) => cb.Selection.Equals("PetFood[Carnivorous]"));
+            ThenWeShouldBeAbleToWaitFor((cb, e) => ((ComboBox)cb).Selection.Equals("PetFood[Carnivorous]"));
         }
 
         protected override ComboBox CreateWrapperWith(AutomationElement element, string name)

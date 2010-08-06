@@ -39,7 +39,7 @@ namespace WiPFlash.Examples.Component
         {
             GivenThisWillHappenAtSomePoint(menu => menu.Find<Menu>("tabMenu").Select("TabPresenter[History]"));
             var historyTab = PetShopWindow.Find<Tab>(FindBy.WpfText("History"));
-            ThenWeShouldBeAbleToWaitFor((ignored) => historyTab.IsSelected());
+            ThenWeShouldBeAbleToWaitFor((ignored, alsoIgnored) => historyTab.IsSelected());
         }
     }
 }

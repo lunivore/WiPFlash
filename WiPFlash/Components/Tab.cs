@@ -10,7 +10,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class Tab : Container<Tab>
+    public class Tab : Container
     {
         private readonly SelectionItemPatternWrapper _selectionItemPattern;
 

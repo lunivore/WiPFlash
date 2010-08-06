@@ -37,7 +37,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldBeAbleToWaitForSelection()
         {
             GivenThisWillHappenAtSomePoint(cb => cb.Selected = true);
-            ThenWeShouldBeAbleToWaitFor(cb => cb.Selected.Equals(true));
+            ThenWeShouldBeAbleToWaitFor((cb, e) => ((CheckBox)cb).Selected.Equals(true));
         }
 
         protected override CheckBox CreateWrapperWith(AutomationElement element, string name)

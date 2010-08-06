@@ -8,7 +8,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Components
 {
-    public class Label : AutomationElementWrapper<Label>
+    public class Label : AutomationElementWrapper
     {
         public Label(AutomationElement element, string name) : base(element, name)
         {

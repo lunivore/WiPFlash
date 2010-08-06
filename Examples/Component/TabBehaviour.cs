@@ -28,7 +28,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldWaitForTheTabToGetFocus()
         {
             GivenThisWillHappenAtSomePoint(tab => tab.Select());
-            ThenWeShouldBeAbleToWaitFor(tab => tab.HasFocus());
+            ThenWeShouldBeAbleToWaitFor((tab, e) => ((Tab)tab).HasFocus());
         }
 
         protected override Tab CreateWrapperWith(AutomationElement element, string name)

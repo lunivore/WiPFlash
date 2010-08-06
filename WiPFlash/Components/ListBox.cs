@@ -10,7 +10,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class ListBox : AutomationElementWrapper<ListBox>
+    public class ListBox : AutomationElementWrapper
     {
         private readonly SelectionPatternWrapper _selectionPattern;
 

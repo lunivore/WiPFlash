@@ -11,11 +11,9 @@ namespace WiPFlash.Framework
 
     public interface IFindAutomationElements
     {
-        T Find<T, TC>(Container<TC> root, PropertyCondition condition, FailureToFindHandler failureToFindHandler)
-            where T : AutomationElementWrapper<T>
-            where TC : Container<TC>;
+        T Find<T>(Container root, Condition condition, FailureToFindHandler failureToFindHandler)
+            where T : AutomationElementWrapper;
 
-        bool Contains<TC>(Container<TC> root, PropertyCondition condition)
-            where TC : Container<TC>;
+        bool Contains(Container root, Condition condition);
     }
 }

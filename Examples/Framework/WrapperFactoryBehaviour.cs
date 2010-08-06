@@ -58,7 +58,7 @@ namespace WiPFlash.Examples.Framework
             Assert.IsAssignableFrom(typeof(SpecialComboBox), wrapperFactory.Wrap<SpecialComboBox>(comboBox, "Special Combo"));
         }
 
-        public class SpecialComboBox : AutomationElementWrapper<SpecialComboBox>
+        public class SpecialComboBox : AutomationElementWrapper
         {
             public SpecialComboBox(AutomationElement element, string name) : base(element, name)
             {

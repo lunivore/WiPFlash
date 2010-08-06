@@ -1,6 +1,7 @@
 #region
 
 using System.Windows.Automation;
+using WiPFlash.Components;
 
 #endregion
 
@@ -17,11 +18,11 @@ namespace WiPFlash.Framework.Events
             _scope = scope;
         }
 
-        public override void Add(WrappedEventHandler handler, AutomationElement element)
+        public override void Add(WrappedEventHandler handler, AutomationElementWrapper element)
         {
-            _handler = (o, e) => handler();
-            _element = element;
-            Automation.AddStructureChangedEventHandler(element, _scope, _handler);
+            _handler = (o, e) => handler(element, e);
+            _element = element.Element;
+            Automation.AddStructureChangedEventHandler(_element, _scope, _handler);
         }
 
         public override void Remove()

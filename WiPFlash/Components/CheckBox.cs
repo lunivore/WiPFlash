@@ -9,7 +9,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class CheckBox : AutomationElementWrapper<CheckBox>
+    public class CheckBox : AutomationElementWrapper
     {
         private readonly TogglePatternWrapper _togglePattern;
 

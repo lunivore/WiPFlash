@@ -47,7 +47,7 @@ namespace WiPFlash.Examples.Component
         }
     }
 
-    public class MyContainer : Container<MyContainer>
+    public class MyContainer : Container
     {
         public MyContainer()
             : base(AutomationElement.RootElement)

@@ -74,6 +74,8 @@
     <Compile Include="Components\Panel.cs" />
     <Compile Include="Framework\FindBy.cs" />
     <Compile Include="Framework\ConditionMatcher.cs" />
+    <Compile Include="Framework\IDescribeConditions.cs" />
+    <Compile Include="Framework\ConditionDescriber.cs" />
     <Compile Include="Framework\Patterns\TablePatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ScrollPatternWrapper.cs" />
     <Compile Include="Framework\Patterns\ValuePatternWrapper.cs" />
@@ -84,7 +86,7 @@
     <Compile Include="Framework\Events\FocusEvent.cs" />
     <Compile Include="Components\GridView.cs" />
     <Compile Include="Framework\Patterns\SelectionPatternWrapper.cs" />
-    <Compile Include="Framework\PropertyBasedFinder.cs" />
+    <Compile Include="Framework\ConditionBasedFinder.cs" />
     <Compile Include="Components\ScrollViewer.cs" />
     <Compile Include="Framework\Events\OrdinaryEvent.cs" />
     <Compile Include="Framework\Events\StructureChangeEvent.cs" />

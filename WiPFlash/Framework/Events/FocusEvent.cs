@@ -1,6 +1,7 @@
 #region
 
 using System.Windows.Automation;
+using WiPFlash.Components;
 
 #endregion
 
@@ -10,13 +11,9 @@ namespace WiPFlash.Framework.Events
     {
         private AutomationFocusChangedEventHandler _handler;
 
-        public FocusEvent()
+        public override void Add(WrappedEventHandler handler, AutomationElementWrapper element)
         {
-        }
-
-        public override void Add(WrappedEventHandler handler, AutomationElement element)
-        {
-            _handler = (o, e) => handler();
+            _handler = (o, e) => handler(element, e);
             Automation.AddAutomationFocusChangedEventHandler(_handler);
         }
 

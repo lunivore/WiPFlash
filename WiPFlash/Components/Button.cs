@@ -9,7 +9,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class Button : AutomationElementWrapper<Button>
+    public class Button : AutomationElementWrapper
     {
         private readonly InvokePatternWrapper _invokePattern;
 

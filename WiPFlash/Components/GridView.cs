@@ -11,7 +11,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class GridView : AutomationElementWrapper<GridView>
+    public class GridView : AutomationElementWrapper
     {
         private readonly TablePatternWrapper _tablePattern;
         private readonly IMatchConditions _conditionMatcher;
@@ -97,7 +97,7 @@ namespace WiPFlash.Components
          * "Dancer" and "54.00", the arguments would be "Name", Find.ByText("Dancer"), "Price" -
          * this would return the label which displays the 54.00 price.
          */
-        public T FindReferencedElement<T>(string referenceHeader, PropertyCondition cellMatcherToFindRow, string targetHeader) where T : AutomationElementWrapper<T>
+        public T FindReferencedElement<T>(string referenceHeader, PropertyCondition cellMatcherToFindRow, string targetHeader) where T : AutomationElementWrapper
         {
             int referenceColumn = _tablePattern.ColumnWithHeader(referenceHeader);
             int targetColumn = _tablePattern.ColumnWithHeader(targetHeader);

@@ -33,7 +33,7 @@ namespace WiPFlash.Examples.Component
         public void ShouldBeAbleToWaitForWindowEvents()
         {
             GivenThisWillHappenAtSomePoint(window => window.Close());
-            ThenWeShouldBeAbleToWaitFor(window => window.IsClosed());
+            ThenWeShouldBeAbleToWaitFor((window, e) => ((Window)window).IsClosed());
         }
 
         [Test]

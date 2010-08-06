@@ -11,7 +11,7 @@ using WiPFlash.Framework.Patterns;
 
 namespace WiPFlash.Components
 {
-    public class Menu : Container<Menu>
+    public class Menu : Container
     {
         private ExpandCollapsePatternWrapper _expandCollapsePattern;
 

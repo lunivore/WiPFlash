@@ -29,8 +29,8 @@ namespace WiPFlash.Examples.Framework
             var comboBox = new ComboBox(comboBoxElement, "aComboBox");
             wrapperFactory.Setup(x => x.Wrap<ComboBox>(comboBoxElement, comboBoxName)).Returns(comboBox);
 
-            var finder = new PropertyBasedFinder(wrapperFactory.Object);
-            finder.Find<ComboBox, Tab>(basket, FindBy.ControlType(ControlType.ComboBox), Assert.Fail);
+            var finder = new ConditionBasedFinder(wrapperFactory.Object, new Mock<IDescribeConditions>().Object);
+            finder.Find<ComboBox>(basket, FindBy.ControlType(ControlType.ComboBox), Assert.Fail);
         }
     }
 }

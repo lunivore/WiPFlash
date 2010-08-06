@@ -30,7 +30,7 @@ namespace WiPFlash.Examples.Component
                                Thread.Sleep(200);
                                window.Find<ComboBox>("basketPetInput").Select("Pet[Cinnamon]");
                            }).Start();
-            label.WaitFor(l => l.Text.Equals("4.50"), e => Assert.Fail("Should have waited for label to be 4.50"));
+            label.WaitFor((l, e) => ((Label)l).Text.Equals("4.50"), e => Assert.Fail("Should have waited for label to be 4.50"));
             Assert.AreEqual("4.50", label.Text);
         }
 

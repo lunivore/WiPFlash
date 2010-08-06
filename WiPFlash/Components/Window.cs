@@ -8,13 +8,13 @@ using WiPFlash.Framework;
 
 namespace WiPFlash.Components
 {
-    public class Window : Container<Window>
+    public class Window : Container
     {
-        public static readonly TimeSpan DEFAULT_TIMEOUT = TimeSpan.Parse("00:00:10");
-        public static readonly int DEFAULT_TIMEOUT_IN_MILLIS = 10000;
+        public static readonly TimeSpan DefaultTimeout = TimeSpan.Parse("00:00:10");
+        public static readonly int DefaultTimeoutInMillis = 10000;
         private readonly int _processId;
 
-        public Window(AutomationElement element, string name) : this(element, name, new PropertyBasedFinder(new WrapperFactory()))
+        public Window(AutomationElement element, string name) : this(element, name, new ConditionBasedFinder(new WrapperFactory(), new ConditionDescriber()))
         {
         }
 

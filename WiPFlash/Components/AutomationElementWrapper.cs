@@ -14,18 +14,19 @@ namespace WiPFlash.Components
      * Constructs an automation element wrapper which will find other elements by automation id (WPF element Name)
      */
 
-    public abstract class AutomationElementWrapper<T> where T : AutomationElementWrapper<T>
+    public abstract class AutomationElementWrapper
     {
-        public TimeSpan DEFAULT_WAIT_TIMEOUT = TimeSpan.Parse("00:00:05");
+        public TimeSpan DefaultWaitTimeout = TimeSpan.Parse("00:00:05");
 
-        public delegate bool SomethingToWaitFor(T elementWrapper);
-        public delegate void FailureToHappenHandler(T elementWrapper);
+        public delegate bool SomethingToWaitFor(AutomationElementWrapper source, AutomationEventArgs e);
+        public delegate void FailureToHappenHandler(AutomationElementWrapper elementWrapper);
 
         protected delegate void WrappedEventHandler();
 
         private readonly AutomationElement _element;
         private readonly object _waitingRoom;
         private readonly string _name;
+        private AutomationEventArgs _triggeringEvent;
 
         protected AutomationElementWrapper(AutomationElement element, string name)
         {
@@ -55,7 +56,7 @@ namespace WiPFlash.Components
 
         public bool WaitFor(SomethingToWaitFor check, FailureToHappenHandler failureHandler)
         {
-            return WaitFor(check, DEFAULT_WAIT_TIMEOUT, failureHandler);            
+            return WaitFor(check, DefaultWaitTimeout, failureHandler);            
         }
 
         public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureToHappenHandler failureHandler)
@@ -66,20 +67,21 @@ namespace WiPFlash.Components
         public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureToHappenHandler failureHandler, IEnumerable<AutomationEventWrapper> events)
         {
             Monitor.Enter(_waitingRoom);
+            _triggeringEvent = null;
 
             DateTime started = DateTime.Now;
             var handlerRemovers = AddPulsingHandlers(events);
 
-            while(!check((T)this) && DateTime.Now.Subtract(started).CompareTo(timeout) < 0)
+            while(!check(this, _triggeringEvent) && DateTime.Now.Subtract(started).CompareTo(timeout) < 0)
             {
                 Monitor.Wait(_waitingRoom, timeout);
             }
             Monitor.Exit(_waitingRoom);
             ClearPulsingHandlers(handlerRemovers);
 
-            if (!check((T)this))
+            if (!check(this, null))
             {
-                failureHandler((T)this);
+                failureHandler(this);
                 return false;
             }
             return true;
@@ -97,7 +99,11 @@ namespace WiPFlash.Components
         {
             foreach (var wrapper in eventWrappers)
             {
-                wrapper.Add(PulseTheWaitingRoom, Element);
+                wrapper.Add((src, e) =>
+                                {
+                                    _triggeringEvent = e;
+                                    PulseTheWaitingRoom();
+                                }, this);
             }
             return eventWrappers;
         }
