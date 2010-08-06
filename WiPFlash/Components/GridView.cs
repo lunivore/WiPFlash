@@ -89,15 +89,25 @@ namespace WiPFlash.Components
             return IndexOf(header, condition) > -1;
         }
 
-        public T ElementOf<T>(string header, PropertyCondition condition) where T : AutomationElementWrapper<T>
+        /**
+         * Given a row for which the cell in the referenced column matches the property condition,
+         * returns the element in that row from the cell referenced by the target header.
+         * 
+         * eg: If a table has headers "Name" and "Price", and the values in a row are
+         * "Dancer" and "54.00", the arguments would be "Name", Find.ByText("Dancer"), "Price" -
+         * this would return the label which displays the 54.00 price.
+         */
+        public T FindReferencedElement<T>(string referenceHeader, PropertyCondition cellMatcherToFindRow, string targetHeader) where T : AutomationElementWrapper<T>
         {
-            int columnWithHeader = _tablePattern.ColumnWithHeader(header);
+            int referenceColumn = _tablePattern.ColumnWithHeader(referenceHeader);
+            int targetColumn = _tablePattern.ColumnWithHeader(targetHeader);
+
             for (int row = 0; row < _tablePattern.RowCount; row++)
             {
-                var element = _tablePattern.ElementAt(row, columnWithHeader);
-                if (_conditionMatcher.Matches(element, condition))
+                var element = _tablePattern.ElementAt(row, referenceColumn);
+                if (_conditionMatcher.Matches(element, cellMatcherToFindRow))
                 {
-                    return _wrapperFactory.Wrap<T>(element, condition);
+                    return _wrapperFactory.Wrap<T>(_tablePattern.ElementAt(row, targetColumn), cellMatcherToFindRow);
                 }
             }
             return null;
