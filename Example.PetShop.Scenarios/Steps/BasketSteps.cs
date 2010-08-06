@@ -1,7 +1,6 @@
 #region
 
 using System.Collections.Generic;
-using System.Windows.Automation;
 using Example.PetShop.Scenarios.Utils;
 using NUnit.Framework;
 using WiPFlash.Components;

@@ -1,12 +1,10 @@
 ﻿#region
 
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
-using WiPFlash.Framework.Events;
 
 #endregion
 

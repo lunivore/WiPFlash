@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Windows;
 using Example.PetShop.Domain;
 using Microsoft.Practices.Composite.Modularity;

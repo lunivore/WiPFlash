@@ -1,6 +1,5 @@
 ﻿#region
 
-using System;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;

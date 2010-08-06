@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows.Automation;
-using System.Windows.Controls;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework.Events;
 using WiPFlash.Framework.Patterns;
