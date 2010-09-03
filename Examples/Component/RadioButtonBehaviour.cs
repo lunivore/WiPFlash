@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -10,32 +11,29 @@ using WiPFlash.Examples.ExampleUtils;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class RadioButtonBehaviour : AutomationElementWrapperExamples<RadioButton>
+    public class RadioButtonBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowItselfToBeSelected()
         {
-            RadioButton radioButton = CreateWrapper();
+            var radioButton = LaunchPetShopWindow().Find<RadioButton>("cardPaymentInput");
             Assert.False(radioButton.Selected);
             radioButton.Select();
             Assert.True(radioButton.Selected);
         }
 
         [Test]
-        public void ShouldBeAbleToWaitForSelection()
+        public void ShouldWaitForSelection()
         {
-            GivenThisWillHappenAtSomePoint(rb => rb.Select());
-            ThenWeShouldBeAbleToWaitFor((rb, e) => ((RadioButton)rb).Selected);
-        }
-
-        protected override RadioButton CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new RadioButton(element, name);
-        }
-
-        protected override RadioButton CreateWrapper()
-        {
-            return LaunchPetShopWindow().Find<RadioButton>("cardPaymentInput");
+            var radioButton = LaunchPetShopWindow().Find<RadioButton>("cardPaymentInput");
+            new Thread(o =>
+                           {
+                               Thread.Sleep(100);
+                               radioButton.Select();;
+                           }).Start(null);
+            Assert.True(radioButton.WaitFor(
+                (src, e) => radioButton.Selected,
+                src => Assert.Fail()));
         }
     }
 }

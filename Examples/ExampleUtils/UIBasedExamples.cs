@@ -48,5 +48,14 @@ namespace WiPFlash.Examples.ExampleUtils
             _window.HandlerForFailingToFind = Assert.Fail;
             return _window;
         }
+
+        protected Window PetShopWindow { get { return _window; } }
+
+        protected T FindPetShopElement<T>(string name) where T : AutomationElementWrapper
+        {
+            _window = LaunchPetShopWindow();
+            _window.HandlerForFailingToFind = Assert.Fail;
+            return _window.Find<T>(name);
+        }
     }
 }

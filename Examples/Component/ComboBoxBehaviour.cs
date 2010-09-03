@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -12,69 +13,34 @@ using WiPFlash.Exceptions;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class NonEditableComboBoxBehaviour : ComboBoxBehaviour
+    public abstract class ComboBoxBehaviour : UIBasedExamples
     {
-
-
         [Test]
         public void ShouldProvideCurrentItems()
         {
-            ComboBox comboBox = CreateWrapper();
+            Window window = LaunchPetShopWindow();
+            ComboBox comboBox = window.Find<ComboBox>("petFoodInput");
             var items = new List<string>(comboBox.Items);
             Assert.True(items.Contains("PetFood[Carnivorous]"));
-            Assert.True(items.Contains("PetFood[Eats People]"));            
+            Assert.True(items.Contains("PetFood[Eats People]"));
         }
 
-        [Test]
-        public void ShouldAllowMeToWaitUntilTheSelectionOrTheItemsChange()
-        {
-            // For an example of waiting until the items change, see the scenarios.
-
-            GivenThisWillHappenAtSomePoint(combo => combo.Select("PetFood[Carnivorous]"));
-            ThenWeShouldBeAbleToWaitFor((cb, e) => ((ComboBox)cb).Selection.Equals("PetFood[Carnivorous]"));
-        }
-
-        protected override ComboBox CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new ComboBox(element, name);
-        }
-
-        protected override ComboBox CreateWrapper()
-        {
-            Window window = LaunchPetShopWindow();
-            return window.Find<ComboBox>(ComboBoxName);
-        }
-
-        protected override string SelectableValue
-        {
-            get { return "PetFood[Carnivorous]"; }
-        }
-
-        protected override string ComboBoxName
-        {
-            get { return "petFoodInput"; }
-        }
-    }
-
-    [TestFixture]
-    public abstract class ComboBoxBehaviour : AutomationElementWrapperExamples<ComboBox>
-    {
         [Test]
         public void ShouldAllowValuesToBeSetUsingToStringWhenNotEditable()
         {
             var window = LaunchPetShopWindow();
-            var nonEditableBox = window.Find<ComboBox>(ComboBoxName);
+            var nonEditableBox = window.Find<ComboBox>("petFoodInput");
             nonEditableBox.Select("");
             Assert.AreEqual("", nonEditableBox.Selection);
-            nonEditableBox.Select(SelectableValue);
-            Assert.AreEqual(SelectableValue, nonEditableBox.Selection);
+            nonEditableBox.Select("PetFood[Carnivorous]");
+            Assert.AreEqual("PetFood[Carnivorous]", nonEditableBox.Selection);
         }
 
         [Test]
         public void ShouldComplainIfValueSelectedWhichIsntInTheList()
         {
             var window = LaunchPetShopWindow();
-            var nonEditableBox = window.Find<ComboBox>(ComboBoxName);
+            var nonEditableBox = window.Find<ComboBox>("petFoodInput");
             try
             {
                 nonEditableBox.Select("Wibble");
@@ -86,7 +52,20 @@ namespace WiPFlash.Examples.Component
             }
         }
 
-        protected virtual string ComboBoxName { get{ return string.Empty; } }
-        protected virtual string SelectableValue { get { return string.Empty; } }
+        [Test]
+        public void ShouldBeAbleToWaitForContentsToBeSelected()
+        {
+            var window = LaunchPetShopWindow();
+            var nonEditableBox = window.Find<ComboBox>("petFoodInput");
+            new Thread(o =>
+            {
+                Thread.Sleep(100);
+                nonEditableBox.Select("PetFood[Carnivorous]");
+            }).Start();
+
+            Assert.True(nonEditableBox.WaitFor(
+                (src, e) => nonEditableBox.Selection.Equals("PetFood[Carnivorous]"),
+                src => Assert.Fail()));
+        }
     }
 }

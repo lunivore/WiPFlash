@@ -13,12 +13,14 @@ using WiPFlash.Framework;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class TextBlockBehaviour : AutomationElementWrapperExamples<TextBlock>
+    public class TextBlockBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowTextToBeRetrievedFromBlock()
         {
-            TextBlock block = CreateWrapper();
+            Window window = LaunchPetShopWindow();
+            window.Find<Tab>(FindBy.WpfText("History")).Select();
+            var block = window.Find<TextBlock>("historyOutput");
             Assert.AreEqual("History so far:" + Environment.NewLine, block.Text);
         }
 
@@ -36,20 +38,8 @@ namespace WiPFlash.Examples.Component
                            }).Start();
 
             var block = window.Find<TextBlock>("historyOutput");
-            block.WaitFor((b, e) => ((TextBlock)b).Text.Equals(string.Empty), (b) => Assert.Fail("Should have had empty text"));
+            block.WaitFor((b, e) => ((TextBlock)b).Text.Equals(string.Empty), b => Assert.Fail("Should have had empty text"));
             Assert.AreEqual(string.Empty, block.Text);
-        }
-
-        protected override TextBlock CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new TextBlock(element, name);
-        }
-
-        protected override TextBlock CreateWrapper()
-        {
-            Window window = LaunchPetShopWindow();
-            window.Find<Tab>(FindBy.WpfText("History")).Select();
-            return window.Find<TextBlock>("historyOutput");
         }
     }
 }

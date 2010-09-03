@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -10,12 +11,12 @@ using WiPFlash.Examples.ExampleUtils;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class CheckBoxBehaviour : AutomationElementWrapperExamples<CheckBox>
+    public class CheckBoxBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowItselfToBeToggled()
         {
-            CheckBox checkBox = CreateWrapper();
+            var checkBox = LaunchPetShopWindow().Find<CheckBox>("vatReceiptInput");
             Assert.False(checkBox.Selected);
             checkBox.Toggle();
             Assert.True(checkBox.Selected);
@@ -26,7 +27,7 @@ namespace WiPFlash.Examples.Component
         [Test]
         public void ShouldAllowItselfToBeSelected()
         {
-            CheckBox checkBox = CreateWrapper();
+            var checkBox = LaunchPetShopWindow().Find<CheckBox>("vatReceiptInput");
             checkBox.Selected = true;
             Assert.True(checkBox.Selected);
             checkBox.Selected = false;
@@ -36,18 +37,13 @@ namespace WiPFlash.Examples.Component
         [Test]
         public void ShouldBeAbleToWaitForSelection()
         {
-            GivenThisWillHappenAtSomePoint(cb => cb.Selected = true);
-            ThenWeShouldBeAbleToWaitFor((cb, e) => ((CheckBox)cb).Selected.Equals(true));
-        }
-
-        protected override CheckBox CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new CheckBox(element, name);
-        }
-
-        protected override CheckBox CreateWrapper()
-        {
-            return LaunchPetShopWindow().Find<CheckBox>("vatReceiptInput");
+            var checkBox = LaunchPetShopWindow().Find<CheckBox>("vatReceiptInput");
+            new Thread(o =>
+                           {
+                               Thread.Sleep(100);
+                               checkBox.Selected = true;
+                           }).Start(null);
+            Assert.True(checkBox.WaitFor((src, e) => checkBox.Selected, (src) => Assert.Fail()));
         }
     }
 }

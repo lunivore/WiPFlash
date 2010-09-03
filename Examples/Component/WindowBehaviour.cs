@@ -12,7 +12,7 @@ using WiPFlash.Framework;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class WindowBehaviour : AutomationElementWrapperExamples<Window>
+    public class WindowBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldUseTheFinderToDetermineIfItContainsAComponent()
@@ -27,13 +27,6 @@ namespace WiPFlash.Examples.Component
             finder.Setup(x => x.Contains(window, It.IsAny<PropertyCondition>())).Returns(false);
             Assert.IsFalse(window.Contains("not.here"));
 
-        }
-
-        [Test]
-        public void ShouldBeAbleToWaitForWindowEvents()
-        {
-            GivenThisWillHappenAtSomePoint(window => window.Close());
-            ThenWeShouldBeAbleToWaitFor((window, e) => ((Window)window).IsClosed());
         }
 
         [Test]
@@ -57,23 +50,13 @@ namespace WiPFlash.Examples.Component
         [Test]
         public void ShouldPassFailureHandlerToChildContainers()
         {
-            var container = CreateWrapper();
+            var container = LaunchPetShopWindow();
             var complained = true;
             container.HandlerForFailingToFind = s => complained = true;
 
             var childContainer = container.Find<Tab>(FindBy.WpfText("Basket"));
             childContainer.Find<ComboBox>("Unlikely!");
             Assert.True(complained, "Should have handled failure to find using the given handler");
-        }
-
-        protected override Window CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new Window(element, name);
-        }
-
-        protected override Window CreateWrapper()
-        {
-            return LaunchPetShopWindow();
         }
     }
 }

@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
+using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
 using WiPFlash.Framework.Patterns;
 

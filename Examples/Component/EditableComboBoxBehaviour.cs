@@ -1,20 +1,23 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
+using WiPFlash.Examples.ExampleUtils;
+using WiPFlash.Exceptions;
 
 #endregion
 
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class EditableComboBoxBehaviour : ComboBoxBehaviour
+    public class EditableComboBoxBehaviour: UIBasedExamples
     {
         [Test]
         public void ShouldAllowValuesToBeSetWhenEditable()
         {
-            var editableBox = (EditableComboBox)CreateWrapper();
+            var editableBox = LaunchPetShopWindow().Find<EditableComboBox>("petTypeInput");
             editableBox.Select("");
             Assert.AreEqual("", editableBox.Selection);
             editableBox.Select("PetType[Rabbit]");
@@ -24,31 +27,57 @@ namespace WiPFlash.Examples.Component
         }
 
         [Test]
-        public void ShouldAllowMeToWaitUntilTheSelectionOrTheItemsChange()
-        {
-            GivenThisWillHappenAtSomePoint(combo => combo.Select("PetType[Rabbit]"));
-            ThenWeShouldBeAbleToWaitFor((cb, e) => ((EditableComboBox)cb).Selection.Equals("PetType[Rabbit]"));
-        }
-
-        protected override ComboBox CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new EditableComboBox(element, name);
-        }
-
-        protected override ComboBox CreateWrapper()
+        public void ShouldProvideCurrentItems()
         {
             Window window = LaunchPetShopWindow();
-            return window.Find<ComboBox>(ComboBoxName);
+            var comboBox = window.Find<EditableComboBox>("petTypeInput");
+            var items = new System.Collections.Generic.List<string>(comboBox.Items);
+            Assert.True(items.Contains("PetType[Rabbit]"));
+            Assert.True(items.Contains("PetType[Dog]"));
         }
 
-        protected override string SelectableValue
+        [Test]
+        public void ShouldAllowValuesToBeSetUsingToString()
         {
-            get { return "PetType[Rabbit]"; }
+            var window = LaunchPetShopWindow();
+            var editableBox = window.Find<EditableComboBox>("petTypeInput");
+            editableBox.Select("");
+            Assert.AreEqual("", editableBox.Selection);
+            editableBox.Select("PetType[Rabbit]");
+            Assert.AreEqual("PetType[Rabbit]", editableBox.Selection);
         }
 
-        protected override string ComboBoxName
+        [Test]
+        public void ShouldComplainIfValueSelectedWhichIsntInTheList()
         {
-            get { return "petTypeInput"; }
+            var window = LaunchPetShopWindow();
+            var nonEditableBox = window.Find<EditableComboBox>("petTypeInput");
+            try
+            {
+                nonEditableBox.Select("Wibble");
+                Assert.Fail("Should have complained that it couldn't find the element Wibble");
+            }
+            catch (FailureToFindException)
+            {
+
+            }
         }
+
+        [Test]
+        public void ShouldBeAbleToWaitForContentsToBeSelected()
+        {
+            var window = LaunchPetShopWindow();
+            var nonEditableBox = window.Find<EditableComboBox>("petTypeInput");
+            new Thread(o =>
+            {
+                Thread.Sleep(100);
+                nonEditableBox.Select("PetType[Rabbit]");
+            }).Start();
+
+            Assert.True(nonEditableBox.WaitFor(
+                (src, e) => nonEditableBox.Selection.Equals("PetType[Rabbit]"), 
+                src => Assert.Fail()));
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -10,12 +11,13 @@ using WiPFlash.Examples.ExampleUtils;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class TextBoxBehaviour : AutomationElementWrapperExamples<TextBox>
+    public class TextBoxBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowTextToBeEnteredIntoTheTextBox()
         {
-            TextBox box = CreateWrapper();
+            var window = LaunchPetShopWindow();
+            var box = window.Find<TextBox>("petNameInput");
             box.Text = "Gooseberry Bear";
             Assert.AreEqual("Gooseberry Bear", box.Text);
         }
@@ -23,18 +25,15 @@ namespace WiPFlash.Examples.Component
         [Test]
         public void ShouldWaitForTextToBeChanged()
         {
-            GivenThisWillHappenAtSomePoint(text => text.Text = "Hello!");
-            ThenWeShouldBeAbleToWaitFor((text, e) => ((TextBox)text).Text.Equals("Hello!"));
-        }
+            var window = LaunchPetShopWindow();
+            var box = window.Find<TextBox>("petNameInput");
+            new Thread((o) => {
+                                  Thread.Sleep(100); 
+                                  box.Text = "Fred"; 
+            }).Start(null);
 
-        protected override TextBox CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new TextBox(element, name);
-        }
-
-        protected override TextBox CreateWrapper()
-        {
-            return FindPetShopElement("petNameInput");
+            Assert.IsTrue(box.WaitFor((src, e) => box.Text.Equals("Fred"), 
+                src => Assert.Fail()));
         }
     }
 }
