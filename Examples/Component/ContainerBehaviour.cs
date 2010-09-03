@@ -11,12 +11,12 @@ using WiPFlash.Exceptions;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class ContainerExamples : AutomationElementWrapperExamples<MyContainer>
+    public class ContainerBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldHandleFailureToFindAComponentByThrowingAnExceptionByDefault()
         {
-            var container = CreateWrapper();
+            var container = new MyContainer();
             try
             {
                 container.Find<ComboBox>("Wibble");
@@ -28,22 +28,12 @@ namespace WiPFlash.Examples.Component
         [Test]
         public void ShouldAllowTheFailureToFindHandlerToBeSet()
         {
-            var container = CreateWrapper();
+            var container = new MyContainer();
             var complained = true;
             container.HandlerForFailingToFind = (s) => complained = true;
             container.Find<ComboBox>("Wibble");
             
             Assert.True(complained, "Should have handled failure to find using the given handler");
-        }
-
-        protected override MyContainer CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new MyContainer(element, name);
-        }
-
-        protected override MyContainer CreateWrapper()
-        {
-            return new MyContainer();
         }
     }
 

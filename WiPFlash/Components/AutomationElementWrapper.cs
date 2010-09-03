@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
+using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
 
 #endregion
@@ -18,17 +19,15 @@ namespace WiPFlash.Components
     {
         public TimeSpan DefaultWaitTimeout = TimeSpan.Parse("00:00:05");
 
-        public delegate bool SomethingToWaitFor(AutomationElementWrapper source, AutomationEventArgs e);
-        public delegate void FailureToHappenHandler(AutomationElementWrapper elementWrapper);
-
-        protected delegate void WrappedEventHandler();
-
         private readonly AutomationElement _element;
-        private readonly object _waitingRoom;
         private readonly string _name;
-        private AutomationEventArgs _triggeringEvent;
+        private readonly IWaitForEvents _waiter;
 
-        protected AutomationElementWrapper(AutomationElement element, string name)
+        protected AutomationElementWrapper(AutomationElement element, string name) : this(element, name, new Waiter())
+        {
+        }
+
+        protected AutomationElementWrapper(AutomationElement element, string name, IWaitForEvents waiter)
         {
             if (element == null)
             {
@@ -36,7 +35,7 @@ namespace WiPFlash.Components
             }
             _element = element;
             _name = name;
-            _waitingRoom = new object();
+            _waiter = waiter;
         }
 
         public bool IsOffscreen
@@ -66,55 +65,10 @@ namespace WiPFlash.Components
 
         public bool WaitFor(SomethingToWaitFor check, TimeSpan timeout, FailureToHappenHandler failureHandler, IEnumerable<AutomationEventWrapper> events)
         {
-            Monitor.Enter(_waitingRoom);
-            _triggeringEvent = null;
-
-            DateTime started = DateTime.Now;
-            var handlerRemovers = AddPulsingHandlers(events);
-
-            while(!check(this, _triggeringEvent) && DateTime.Now.Subtract(started).CompareTo(timeout) < 0)
-            {
-                Monitor.Wait(_waitingRoom, timeout);
-            }
-            Monitor.Exit(_waitingRoom);
-            ClearPulsingHandlers(handlerRemovers);
-
-            if (!check(this, null))
-            {
-                failureHandler(this);
-                return false;
-            }
-            return true;
-        }
-
-        private void ClearPulsingHandlers(IEnumerable<AutomationEventWrapper> eventWrappers)
-        {
-            foreach (var wrapper in eventWrappers)
-            {
-                wrapper.Remove();
-            }
-        }
-
-        private IEnumerable<AutomationEventWrapper> AddPulsingHandlers(IEnumerable<AutomationEventWrapper> eventWrappers)
-        {
-            foreach (var wrapper in eventWrappers)
-            {
-                wrapper.Add((src, e) =>
-                                {
-                                    _triggeringEvent = e;
-                                    PulseTheWaitingRoom();
-                                }, this);
-            }
-            return eventWrappers;
+            return _waiter.WaitFor(this, check, timeout, failureHandler, events);
         }
 
         protected abstract IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor { get; }
 
-        private void PulseTheWaitingRoom()
-        {
-            Monitor.Enter(_waitingRoom);
-            Monitor.Pulse(_waitingRoom);
-            Monitor.Exit(_waitingRoom);
-        }
     }
 }

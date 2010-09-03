@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -11,7 +12,7 @@ using WiPFlash.Framework;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class TabBehaviour : AutomationElementWrapperExamples<Tab>
+    public class TabBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowTabToBeSelected()
@@ -25,20 +26,20 @@ namespace WiPFlash.Examples.Component
         }
 
         [Test]
-        public void ShouldWaitForTheTabToGetFocus()
+        public void ShouldWaitForTabToBeSelected()
         {
-            GivenThisWillHappenAtSomePoint(tab => tab.Select());
-            ThenWeShouldBeAbleToWaitFor((tab, e) => ((Tab)tab).HasFocus());
-        }
 
-        protected override Tab CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new Tab(element, name);
-        }
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("History"));
 
-        protected override Tab CreateWrapper()
-        {
-            return LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("History"));
+            new Thread(o =>
+                           {
+                               Thread.Sleep(100);
+                               tab.Select();
+                           }).Start(null);
+
+            Assert.True(tab.WaitFor(
+                (src, e) => tab.HasFocus(),
+                src => Assert.Fail()));
         }
     }
 }

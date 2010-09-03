@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -11,35 +12,34 @@ using WiPFlash.Framework;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class RichTextBoxBehaviour : AutomationElementWrapperExamples<RichTextBox>
+    public class RichTextBoxBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowTextToBeEnteredIntoTheTextBox()
         {
-            RichTextBox box = CreateWrapper();
+            Window window = LaunchPetShopWindow();
+            window.Find<Tab>(FindBy.WpfText("History")).Select();
+            var box = window.Find<RichTextBox>("historyInput");
             box.Text = "Gooseberry Bear";
             Assert.AreEqual("Gooseberry Bear", box.Text);
         }
 
         [Test]
-        public void ShouldWaitForTheTextToChange()
-        {
-            GivenThisWillHappenAtSomePoint(box => box.Text = "Gooseberries");
-            ThenWeShouldBeAbleToWaitFor((box, e) => ((RichTextBox)box).Text.Equals("Gooseberries"));
-        }
-
-
-
-        protected override RichTextBox CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new RichTextBox(element, name);
-        }
-
-        protected override RichTextBox CreateWrapper()
+        public void ShouldWaitForTextToBeChanged()
         {
             Window window = LaunchPetShopWindow();
             window.Find<Tab>(FindBy.WpfText("History")).Select();
-            return window.Find<RichTextBox>("historyInput");
+            var box = window.Find<RichTextBox>("historyInput");
+
+            new Thread(o =>
+                           {
+                               Thread.Sleep(100);
+                               box.Text = "Fred";
+                           }).Start(null);
+            Assert.True(box.WaitFor(
+                (src, e) => box.Text.Equals("Fred"),
+                src => Assert.Fail()));
+            
         }
     }
 }

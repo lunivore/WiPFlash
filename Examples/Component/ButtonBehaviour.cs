@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -10,31 +11,37 @@ using WiPFlash.Examples.ExampleUtils;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class ButtonBehaviour : AutomationElementWrapperExamples<Button>
+    public class ButtonBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldBeClickable()
         {
-            Button button = CreateWrapper();
+            Window window = LaunchPetShopWindow();
+            var button = window.Find<Button>("petSaveButton");
             button.Click();
         }
 
         [Test]
         public void ShouldProvideItsText()
         {
-            Button button = CreateWrapper();
+            Window window = LaunchPetShopWindow();
+            var button = window.Find<Button>("petSaveButton");
             Assert.AreEqual("Save", button.Text);
         }
 
-        protected override Button CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new Button(element, name);
-        }
-
-        protected override Button CreateWrapper()
+        [Test]
+        public void ShouldBeAbleToWaitUntilItsEnabled()
         {
             Window window = LaunchPetShopWindow();
-            return window.Find<Button>("petSaveButton");
+            var petsToBuy = window.Find<ComboBox>("basketPetInput");
+            var button = window.Find<Button>("petSaveButton");
+
+            new Thread(o => {
+                Thread.Sleep(100); 
+                petsToBuy.Select("Pet[Dancer]");
+            }).Start(null);
+
+            button.WaitFor((src, e) => button.IsEnabled, src => Assert.Fail());
         }
     }
 }

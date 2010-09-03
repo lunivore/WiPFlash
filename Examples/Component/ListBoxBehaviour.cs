@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Components;
@@ -11,7 +12,7 @@ using WiPFlash.Examples.ExampleUtils;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class ListBoxBehaviour : AutomationElementWrapperExamples<ListBox>
+    public class ListBoxBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldAllowItemsToBeSelected()
@@ -39,27 +40,28 @@ namespace WiPFlash.Examples.Component
         [Test]
         public void ShouldProvideCurrentItems()
         {
-            ListBox listBox = CreateWrapper();
+            var window = LaunchPetShopWindow();
+            var listBox = window.Find<ListBox>("petRulesInput");
             var items = new List<string>(listBox.Items);
             Assert.True(items.Contains("Rule[Dangerous]"));
             Assert.True(items.Contains("Rule[No Children]"));
         }
 
         [Test]
-        public void ShouldBeAbleToWaitForSelectionAndContentChanges()
+        public void ShouldWaitForItemsToBeSelected()
         {
-            GivenThisWillHappenAtSomePoint(list => list.Select("Rule[Dangerous]"));
-            ThenWeShouldBeAbleToWaitFor((list, e) => new List<string>(((ListBox)list).Selection).Contains("Rule[Dangerous]"));
-        }
+            var window = LaunchPetShopWindow();
+            var listBox = window.Find<ListBox>("petRulesInput");
 
-        protected override ListBox CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new ListBox(element, name);
-        }
+            new Thread(o =>
+                           {
+                               Thread.Sleep(100);
+                               listBox.Select("Rule[Dangerous]");
+                           }).Start(null);
 
-        protected override ListBox CreateWrapper()
-        {
-            return LaunchPetShopWindow().Find<ListBox>("petRulesInput");
+            Assert.True(listBox.WaitFor(
+                (src, e) => new List<string>(listBox.Selection).Contains("Rule[Dangerous]"),
+                src => Assert.Fail()));           
         }
     }
 }

@@ -11,35 +11,26 @@ using WiPFlash.Framework;
 namespace WiPFlash.Examples.Component
 {
     [TestFixture]
-    public class ScrollViewerBehaviour : AutomationElementWrapperExamples<ScrollViewer>
+    public class ScrollViewerBehaviour : UIBasedExamples
     {
         [Test]
         public void ShouldScrollUntilCheckIsTrue()
         {
-            var scrollViewer = CreateWrapper();
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("Accessories"));
+            tab.Select();
+            var scrollViewer = tab.Find<ScrollViewer>(new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true));
             scrollViewer.ScrollDown(s => s.Contains(FindBy.WpfText("Flea powder")), s => Assert.Fail("Should have found row"));
         }
 
         [Test]
         public void ShouldHandleFailureToScroll()
         {
-
-            var scrollViewer = CreateWrapper();
-            var complained = false;
-            scrollViewer.ScrollDown(s => false, (s) => complained = true);
-            Assert.True(complained, "Should have handled failure to scroll");
-        }
-
-        protected override ScrollViewer CreateWrapperWith(AutomationElement element, string name)
-        {
-            return new ScrollViewer(element, name);
-        }
-
-        protected override ScrollViewer CreateWrapper()
-        {
             var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("Accessories"));
             tab.Select();
-            return tab.Find<ScrollViewer>(new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true));
+            var scrollViewer = tab.Find<ScrollViewer>(new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true));
+            var complained = false;
+            scrollViewer.ScrollDown(s => false, s => complained = true);
+            Assert.True(complained, "Should have handled failure to scroll");
         }
     }
 }

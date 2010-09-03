@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
@@ -39,6 +40,11 @@ namespace WiPFlash.Components
                                    AutomationElement.IsEnabledProperty)
                            };
             }
+        }
+
+        public bool IsEnabled
+        {
+            get { return (Boolean)Element.GetCurrentPropertyValue(AutomationElement.IsEnabledProperty); }
         }
     }
 }
