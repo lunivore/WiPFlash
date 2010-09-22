@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Threading;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -42,38 +43,56 @@ namespace WiPFlash.Components
 
         public Window FindWindow(string windowName)
         {
-            var windowElement = FindOrWaitForOpenWindow(windowName);
+            return FindWindow(FindBy.UiAutomationId(windowName));
+        }
+
+        public Window FindWindow(Condition condition)
+        {
+            return FindWindow(condition, _timeout,
+                              message => { throw new FailureToFindException(message); });
+        }
+
+        public Window FindWindow(string windowName, TimeSpan timeout, FailureToFindHandler handler)
+        {
+            return FindWindow(FindBy.UiAutomationId(windowName), timeout, handler);
+        }
+
+        public Window FindWindow(Condition condition, TimeSpan timeout, FailureToFindHandler handler)
+        {
+            string windowName = new ConditionDescriber().Describe(condition);
+            var windowElement = FindOrWaitForOpenWindow(condition, timeout);
 
             if (windowElement == null)
             {
-                string message = "Failed to find window with name " + windowName + " in timespan " + _timeout;
-                throw new FailureToFindException(message);
+                string message = "Failed to find window with name " + windowName + " in timespan " + timeout;
+                handler(message);
+                return null;
             }
-            ((WindowPattern) windowElement.GetCurrentPattern(WindowPattern.Pattern))
+            ((WindowPattern)windowElement.GetCurrentPattern(WindowPattern.Pattern))
                 .WaitForInputIdle(5000);
 
             return new Window(windowElement, windowName);
         }
 
-        private AutomationElement FindOrWaitForOpenWindow(string windowName)
+        private AutomationElement FindOrWaitForOpenWindow(Condition condition, TimeSpan timeout)
         {
             DateTime startedAt = DateTime.Now;
             Monitor.Enter(_waitingRoom);
             AutomationElement windowElement;
 
-            AutomationEventHandler handler = delegate { windowElement = WindowOpened(windowName); };
+            AutomationEventHandler handler = delegate { windowElement = WindowOpened(condition); };
             Automation.AddAutomationEventHandler(WindowPattern.WindowOpenedEvent,
                                                  AutomationElement.RootElement, TreeScope.Children,
                                                  handler);
 
-            windowElement = FindOpenWindow(windowName);
-            while (windowElement == null && (DateTime.Now.Subtract(startedAt)).CompareTo(_timeout) < 0)
+            windowElement = FindOpenWindow(condition);
+            while (windowElement == null && (DateTime.Now.Subtract(startedAt)).CompareTo(timeout) < 0)
             {
                 // We are polling because sometimes the event handler doesn't fire 
                 // quickly enough for my liking - the system is too busy. This lets 
                 // us check every second, while still taking advantage of the event handling
                 // if it does decide to fire.
-                Monitor.Wait(_waitingRoom, 1000);
+                Monitor.Wait(_waitingRoom, Math.Min(1000, timeout.Milliseconds));
             }
 
             Automation.RemoveAutomationEventHandler(
@@ -85,9 +104,8 @@ namespace WiPFlash.Components
             return windowElement;
         }
 
-        private AutomationElement FindOpenWindow(string windowName)
+        private AutomationElement FindOpenWindow(Condition ourWindow)
         {
-            Condition ourWindow = new PropertyCondition(AutomationElement.AutomationIdProperty, windowName);
             Condition ourProcess = Condition.TrueCondition;
             if (_process != null)
             {
@@ -98,10 +116,10 @@ namespace WiPFlash.Components
                 new AndCondition(ourWindow, ourProcess));
         }
 
-        private AutomationElement WindowOpened(string windowName)
+        private AutomationElement WindowOpened(Condition condition)
         {
             Monitor.Enter(_waitingRoom);
-            AutomationElement element = FindOpenWindow(windowName);
+            AutomationElement element = FindOpenWindow(condition);
             if (element != null)
             {
                 Monitor.Pulse(_waitingRoom);
