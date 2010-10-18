@@ -11,7 +11,7 @@ namespace WiPFlash.Examples.Framework
         public void ShouldDescribeAPropertyConditionWithConditionAndValue()
         {
             var condition = new PropertyCondition(AutomationElement.NameProperty, "Wibble");
-            const string expected = "AutomationElementIdentifiers.NameProperty='Wibble'";
+            const string expected = "Name='Wibble'";
 
             Assert.AreEqual(expected, new ConditionDescriber().Describe(condition));
         }
@@ -23,7 +23,7 @@ namespace WiPFlash.Examples.Framework
             var controlTypeCondition = new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window);
             var condition = new AndCondition(nameCondition, controlTypeCondition);
 
-            var expected = "(AutomationElementIdentifiers.NameProperty='Wobble' and AutomationElementIdentifiers.ControlTypeProperty='" + ControlType.Window.Id + "')";
+            var expected = "(Name='Wobble' and ControlType='" + ControlType.Window.Id + "')";
 
             Assert.AreEqual(expected, new ConditionDescriber().Describe(condition));
         }
@@ -35,7 +35,7 @@ namespace WiPFlash.Examples.Framework
             var controlTypeCondition = new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Window);
             var condition = new OrCondition(nameCondition, controlTypeCondition);
 
-            var expected = "(AutomationElementIdentifiers.NameProperty='Wubble' or AutomationElementIdentifiers.ControlTypeProperty='" + ControlType.Window.Id + "')";
+            var expected = "(Name='Wubble' or ControlType='" + ControlType.Window.Id + "')";
 
             Assert.AreEqual(expected, new ConditionDescriber().Describe(condition));
         }
@@ -44,7 +44,7 @@ namespace WiPFlash.Examples.Framework
         public void ShouldDescribeNegatedCompoundsUsingNot()
         {
             var nameCondition = new PropertyCondition(AutomationElement.NameProperty, "Wooble");
-            const string expected = "not AutomationElementIdentifiers.NameProperty='Wooble'";
+            const string expected = "not Name='Wooble'";
 
             Assert.AreEqual(expected, new ConditionDescriber().Describe(new NotCondition(nameCondition)));
         }

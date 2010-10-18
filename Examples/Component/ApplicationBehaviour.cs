@@ -50,13 +50,13 @@ namespace WiPFlash.Examples.Component
             TimeSpan longEnough = System.TimeSpan.Parse("00:00:10");
 
             
-            var started = System.DateTime.Now;
+            var started = DateTime.Now;
 
             Application application = new ApplicationLauncher(farFarTooLong).LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
             Window window = application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
 
 
-            var finished = System.DateTime.Now;
+            var finished = DateTime.Now;
             var timeBetween = finished.Subtract(started);
 
             Assert.LessOrEqual(timeBetween, longEnough);
@@ -93,7 +93,6 @@ namespace WiPFlash.Examples.Component
 
             Assert.IsTrue(windowDoesNotExist);
             Assert.LessOrEqual(timeBetween, longEnough.Add(aBitExtraForProcessing));
-
         }
     }
 }
