@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Threading;
 using System.Windows.Automation;
 using WiPFlash.Components;
 using WiPFlash.Framework;
@@ -15,6 +17,8 @@ namespace WiPFlash
     public class ApplicationLauncher
     {
         private delegate Application HandlerForNoMatchingProcesses(string message);
+        private delegate List<Process> ViableProcessFilter(IEnumerable<Process> processes);
+
         public delegate void FailureToLaunchHandler(string message);
 
         public ApplicationLauncher() : this(Window.DefaultTimeout) {}
@@ -43,7 +47,6 @@ namespace WiPFlash
             try
             {
                 Process process = Process.Start(new ProcessStartInfo(path));
-                process.WaitForInputIdle(100);
                 return new Application(process, Timeout);
             } catch (Win32Exception e)
             {
@@ -54,7 +57,7 @@ namespace WiPFlash
 
         public Application Recycle(string name, FailureToLaunchHandler failureToLaunchHandler)
         {
-            return RecycleOrHandleNone(name, 
+            return RecycleOrHandleNone(name, FilterForViableProcesses,
                 s => 
                 { 
                     failureToLaunchHandler(s);
@@ -65,14 +68,14 @@ namespace WiPFlash
 
         public Application LaunchOrRecycle(string name, string path, FailureToLaunchHandler failureToLaunchHandler)
         {
-            return RecycleOrHandleNone(name, s => Launch(path, failureToLaunchHandler), failureToLaunchHandler);
+            return RecycleOrHandleNone(name, FilterForViableProcesses, s => Launch(path, failureToLaunchHandler), failureToLaunchHandler);
         }
 
-        private Application RecycleOrHandleNone(string name, HandlerForNoMatchingProcesses handler, FailureToLaunchHandler failureToLaunchHandler)
+        private Application RecycleOrHandleNone(string name, ViableProcessFilter filter, HandlerForNoMatchingProcesses handler, FailureToLaunchHandler failureToLaunchHandler)
         {
             Process[] processes = Process.GetProcessesByName(name);
 
-            List<Process> viableProcesses = FilterForViableProcesses(processes);
+            List<Process> viableProcesses = filter(processes);
 
             if (viableProcesses.Count > 1)
             {
@@ -106,6 +109,24 @@ namespace WiPFlash
                 }
             }
             return viableProcesses;
+        }
+
+        public Application LaunchVia(string name, string path, FailureToLaunchHandler failureHandler)
+        {
+            DateTime started = DateTime.Now;
+            var existingProcesses = new List<Process>(Process.GetProcessesByName(name));
+            
+            Process.Start(new ProcessStartInfo(path));
+
+            while (DateTime.Now.Subtract(started).CompareTo(Timeout) < 0)
+            {
+                var newProcesses = new List<Process>(Process.GetProcessesByName(name));
+                newProcesses.RemoveAll(p => existingProcesses.Find(p2 => p2.Id == p.Id) != null);
+                if (newProcesses.Count > 0) { return new Application(newProcesses[0], Timeout); }
+                Thread.Sleep(100);
+            }
+            failureHandler(String.Format("Process {0} was not launched via {1}", name, path));
+            return null;
         }
     }
 }

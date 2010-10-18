@@ -68,6 +68,7 @@
     <Compile Include="Components\Container.cs" />
     <Compile Include="Components\EditableComboBox.cs" />
     <Compile Include="Components\IContainChildren.cs" />
+    <Compile Include="Components\WindowFinder.cs" />
     <Compile Include="Framework\ConditionBasedFinder.cs" />
     <Compile Include="Framework\ConditionDescriber.cs" />
     <Compile Include="Framework\IDescribeConditions.cs" />

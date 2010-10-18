@@ -61,7 +61,12 @@ namespace WiPFlash.Framework
 
         private void Describe(PropertyCondition condition, StringBuilder builder)
         {
-            builder.Append(String.Format("{0}='{1}'", condition.Property.ProgrammaticName, condition.Value));
+            builder.Append(String.Format("{0}='{1}'", ToSimplePropertyName(condition.Property.ProgrammaticName), condition.Value));
+        }
+
+        private string ToSimplePropertyName(string name)
+        {
+            return name.Replace("AutomationElementIdentifiers.", string.Empty).Replace("Property", string.Empty);
         }
     }
 }
