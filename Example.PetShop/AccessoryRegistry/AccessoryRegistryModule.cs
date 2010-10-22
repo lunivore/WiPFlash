@@ -13,21 +13,20 @@ namespace Example.PetShop.AccessoryRegistry
 {
     public class AccessoryRegistryModule : IModule
     {
-        private readonly IUnityContainer _container;
+        private readonly AccessoryRepository _accessoryRepository;
         private readonly IRegionManager _regionManager;
 
-        public AccessoryRegistryModule(IRegionManager regionManager, IUnityContainer container)
+        public AccessoryRegistryModule(IRegionManager regionManager, AccessoryRepository accessoryRepository)
         {
             _regionManager = regionManager;
-            _container = container;
+            _accessoryRepository = accessoryRepository;
         }
 
         #region IModule Members
 
         public void Initialize()
         {
-            var repository = _container.Resolve<AccessoryRepository>();
-            var viewModel = new AccessoryViewModel(repository);
+            var viewModel = new AccessoryViewModel(_accessoryRepository);
             var panel = new AccessoryRegistryPanel(viewModel);
             _regionManager.Regions["Sales"].Add(panel);
         }

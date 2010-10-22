@@ -41,5 +41,12 @@ namespace Example.PetShop.Scenarios
             ThenTheBasket.ShouldContain("Dog Collar (Large)", "10.00");
             ThenTheBasket.ShouldContain("Dog Collar (Small)", "9.00");
         }
+
+        [Test]
+        public void IAmAskedToConfirmBeforeClearingABasketOfGoods()
+        {
+            GivenThePetshop.IsRunning();
+            WhenTheBasket.IsAddedWith("Snowdrop");
+        }
     }
 }

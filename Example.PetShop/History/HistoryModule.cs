@@ -13,21 +13,20 @@ namespace Example.PetShop.History
 {
     public class HistoryModule : IModule
     {
-        private readonly IUnityContainer _container;
+        private readonly PetRepository _petRepository;
         private readonly IRegionManager _regionManager;
 
-        public HistoryModule(IRegionManager regionManager, IUnityContainer container)
+        public HistoryModule(IRegionManager regionManager, PetRepository petRepository)
         {
             _regionManager = regionManager;
-            _container = container;
+            _petRepository = petRepository;
         }
 
         #region IModule Members
 
         public void Initialize()
         {
-            var petRepository = _container.Resolve<PetRepository>();
-            var historyViewModel = new HistoryViewModel(petRepository);
+            var historyViewModel = new HistoryViewModel(_petRepository);
             _regionManager.Regions["Admin"].Add(new HistoryPanel(historyViewModel));
         }
 
