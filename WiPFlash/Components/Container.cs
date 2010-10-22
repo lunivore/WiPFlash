@@ -34,7 +34,7 @@ namespace WiPFlash.Components
             return Find<TC>(FindBy.UiAutomationId(componentName));
         }
 
-        public TC Find<TC>(PropertyCondition condition) where TC : AutomationElementWrapper
+        public TC Find<TC>(Condition condition) where TC : AutomationElementWrapper
         {
             TC find = _finder.Find<TC>(this, condition, HandlerForFailingToFind);
             if (find is IContainChildren)
@@ -56,7 +56,7 @@ namespace WiPFlash.Components
             return Contains(FindBy.UiAutomationId(name));
         }
 
-        public bool Contains(PropertyCondition condition)
+        public bool Contains(Condition condition)
         {
             return _finder.Contains(this, condition);
         }
