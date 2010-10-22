@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework.Events;
@@ -31,5 +32,9 @@ namespace WiPFlash.Components
 
         }
 
+        public void Click()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -113,6 +113,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\MessengerWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -124,6 +128,7 @@
       <DependentUpon>AccessoryRegistryPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="AccessoryRegistry\View\ListBoxHelper.cs" />
+    <Compile Include="Controls\MessengerWindowModel.cs" />
     <Compile Include="Domain\Accessory.cs" />
     <Compile Include="Domain\AccessoryRepository.cs" />
     <Compile Include="AccessoryRegistry\AccessoryRegistryModule.cs" />
@@ -172,8 +177,11 @@
     <Compile Include="PetRegistry\PetRegistryModule.cs" />
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="Utils\CollectionUtils.cs" />
-    <Compile Include="Utils\DelegateCommand.cs" />
     <Compile Include="Utils\IHaveATitle.cs" />
+    <Compile Include="Controls\Messenger.cs" />
+    <Compile Include="Controls\MessengerWindow.xaml.cs">
+      <DependentUpon>MessengerWindow.xaml</DependentUpon>
+    </Compile>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

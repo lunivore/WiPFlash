@@ -2,6 +2,7 @@
 
 using System.Windows;
 using Example.PetShop.Domain;
+using Example.PetShop.Utils;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.UnityExtensions;
 
@@ -19,6 +20,7 @@ namespace Example.PetShop
             Container.RegisterInstance(history);
             Container.RegisterInstance(petRepository);
             Container.RegisterInstance(accessoryRepository);
+            Container.RegisterInstance(new Messenger());
             Container.RegisterType(typeof(ShellViewModel));
             var shell = Container.Resolve<Shell>();
             shell.Show();

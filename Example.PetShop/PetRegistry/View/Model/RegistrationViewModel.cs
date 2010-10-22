@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
+using Microsoft.Practices.Composite.Presentation.Commands;
 
 #endregion
 
@@ -100,7 +101,7 @@ namespace Example.PetShop.PetRegistry.View.Model
 
         #region Nested type: SavePetCommand
 
-        public class SavePetCommand : DelegateCommand
+        public class SavePetCommand : DelegateCommand<object>
         {
             internal SavePetCommand(RegistrationViewModel model)
                 : base(o =>

@@ -46,7 +46,11 @@ namespace Example.PetShop.Scenarios
         public void IAmAskedToConfirmBeforeClearingABasketOfGoods()
         {
             GivenThePetshop.IsRunning();
-            WhenTheBasket.IsAddedWith("Snowdrop");
+            GivenTheBasket.IsAddedWith("Spot");
+            WhenTheBasket.IsReset();
+            ThenAMessageBox.ShouldAskUs("Are you sure you want to clear the contents of the basket?");
+            WhenTheMessageBox.IsDeclined();
+            ThenTheBasket.ShouldContain("Spot", "100.00");
         }
     }
 }
