@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using Example.PetShop.Scenarios.Utils;
 using NUnit.Framework;
@@ -66,6 +67,12 @@ namespace Example.PetShop.Scenarios.Steps
             _universe.Window.Find<Tab>(FindBy.WpfText("Basket")).Select();
             var basketContents = _universe.Window.Find<GridView>("basketOutput");
             Assert.True(basketContents.ContainsRow(name, price));
+        }
+
+        public void IsReset()
+        {
+            _universe.Window.Find<Tab>(FindBy.WpfText("Basket")).Select();
+            _universe.Window.Find<Button>("resetButton").Click();
         }
     }
 }

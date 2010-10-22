@@ -14,23 +14,25 @@ namespace Example.PetShop.Scenarios.Utils
         private readonly BasketSteps _basketSteps;
         private readonly AccessoryRegistrySteps _accessoryRegistrySteps;
         private readonly HistorySteps _historySteps;
+        private MessageBoxSteps _messageBoxSteps;
 
         protected PetShopScenario() : this(new Universe())
         {
             
         }
 
-        private PetShopScenario(Universe universe) : this(new PetShopSteps(universe), new PetRegistrySteps(universe), new HistorySteps(universe), new BasketSteps(universe), new AccessoryRegistrySteps(universe))
+        private PetShopScenario(Universe universe) : this(new PetShopSteps(universe), new PetRegistrySteps(universe), new HistorySteps(universe), new BasketSteps(universe), new AccessoryRegistrySteps(universe), new MessageBoxSteps(universe))
         {
         }
 
-        private PetShopScenario(PetShopSteps petShopSteps, PetRegistrySteps petRegistrySteps, HistorySteps historySteps, BasketSteps basketSteps, AccessoryRegistrySteps accessoryRegistrySteps)
+        private PetShopScenario(PetShopSteps petShopSteps, PetRegistrySteps petRegistrySteps, HistorySteps historySteps, BasketSteps basketSteps, AccessoryRegistrySteps accessoryRegistrySteps, MessageBoxSteps messageBoxSteps)
         {
             _petShopSteps = petShopSteps;
             _petRegistrySteps = petRegistrySteps;
             _historySteps = historySteps;
             _basketSteps = basketSteps;
             _accessoryRegistrySteps = accessoryRegistrySteps;
+            _messageBoxSteps = messageBoxSteps;
         }
 
         protected PetShopSteps GivenThePetshop
@@ -58,6 +60,11 @@ namespace Example.PetShop.Scenarios.Utils
             get { return _historySteps; }
         }
 
+        protected BasketSteps GivenTheBasket
+        {
+            get { return _basketSteps; }
+        }
+
         protected BasketSteps WhenTheBasket
         {
             get { return _basketSteps; }
@@ -71,6 +78,16 @@ namespace Example.PetShop.Scenarios.Utils
         protected AccessoryRegistrySteps WhenTheAccessories
         {
             get { return _accessoryRegistrySteps; }
+        }
+
+        protected MessageBoxSteps ThenAMessageBox
+        {
+            get { return _messageBoxSteps; }
+        }
+
+        protected MessageBoxSteps WhenTheMessageBox
+        {
+            get { return _messageBoxSteps; }
         }
 
         [TearDown]

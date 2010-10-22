@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows.Input;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
+using Microsoft.Practices.Composite.Presentation.Commands;
 
 #endregion
 
@@ -16,12 +17,17 @@ namespace Example.PetShop.Basket.View.Model
         private static List<Pet> _petBasket;
         private readonly PetRepository _petRepository;
         private readonly AccessoryRepository _accessoryRepository;
+        private readonly Messenger _messenger;
         private readonly List<Accessory> _accessoryBasket;
 
-        public BasketViewModel(PetRepository petRepository, AccessoryRepository accessoryRepository)
+        public BasketViewModel(
+            PetRepository petRepository, 
+            AccessoryRepository accessoryRepository,
+            Messenger messenger)
         {
             _petRepository = petRepository;
             _accessoryRepository = accessoryRepository;
+            _messenger = messenger;
             _petBasket = new List<Pet>();
             _accessoryBasket = new List<Accessory>();
             _petRepository.UnsoldPets.CollectionChanged += (o, e) => NotifyPropertyChanged("AllAvailablePets");
@@ -109,7 +115,7 @@ namespace Example.PetShop.Basket.View.Model
         {
             get
             {
-                return new DelegateCommand(
+                return new DelegateCommand<object>(
                     delegate
                         {
                             foreach (Pet pet in _petBasket)
@@ -118,6 +124,21 @@ namespace Example.PetShop.Basket.View.Model
                             }
                             _petBasket.Clear();
                             NotifyPropertyChanged("Basket", "HasItemsInBasket");
+                        });
+            }
+        }
+
+        public ICommand Reset
+        {
+            get
+            {
+                return new DelegateCommand<object>(
+                    delegate
+                        {
+                            if (_messenger.Show("Please confirm", "Are you sure you want to clear the contents of the basket?"))
+                            {
+                                _petBasket.Clear();    
+                            }                            
                         });
             }
         }

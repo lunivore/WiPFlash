@@ -45,6 +45,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
     <Reference Include="UIAutomationClient">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -57,6 +59,7 @@
     <Compile Include="Steps\BasketSteps.cs" />
     <Compile Include="Steps\HistorySteps.cs" />
     <Compile Include="PetRegistrationAndPurchase.cs" />
+    <Compile Include="Steps\MessageBoxSteps.cs" />
     <Compile Include="Steps\PetRegistrySteps.cs" />
     <Compile Include="Utils\PetShopScenario.cs" />
     <Compile Include="Steps\PetShopSteps.cs" />
