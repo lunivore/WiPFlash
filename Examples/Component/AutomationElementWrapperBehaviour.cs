@@ -15,6 +15,7 @@ using WiPFlash.Framework.Events;
 
 namespace WiPFlash.Examples.Component
 {
+    [TestFixture]
     public class AutomationElementWrapperBehaviour : UIBasedExamples
     {
         [Test]
@@ -22,7 +23,7 @@ namespace WiPFlash.Examples.Component
         {
             // Given an element and a waiter
             var waiter = new Mock<IWaitForEvents>();
-            var element = new StubAutomationElementWrapper(AutomationElement.RootElement, "Desktop");
+            var element = new StubAutomationElementWrapper(AutomationElement.RootElement, "Desktop", waiter.Object);
 
             // When we wait for an event successfully
             waiter.Setup(w => w.WaitFor(
@@ -72,6 +73,14 @@ namespace WiPFlash.Examples.Component
             var element = new StubAutomationElementWrapper(AutomationElement.RootElement, "nameOfElement");
             Assert.AreEqual("nameOfElement", element.Name);
         }       
+
+        [Test]
+        public void ShouldDetermineIfAnElementIsEnabled()
+        {
+            var window = LaunchPetShopWindow();
+            Assert.IsFalse(window.Find<Button>("resetButton").IsEnabled);
+            Assert.IsTrue(window.Find<Button>("petSaveButton").IsEnabled);
+        }
     }
 
     class StubAutomationElementWrapper : AutomationElementWrapper
