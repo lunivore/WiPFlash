@@ -7,7 +7,7 @@ using Example.PetShop.Utils;
 
 #endregion
 
-namespace Example.PetShop.History.View.Model
+namespace Example.PetShop.History
 {
     public class HistoryViewModel : INotifyPropertyChanged, IHaveATitle
     {

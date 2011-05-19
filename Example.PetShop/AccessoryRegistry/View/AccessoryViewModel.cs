@@ -6,7 +6,7 @@ using Example.PetShop.Utils;
 
 #endregion
 
-namespace Example.PetShop.AccessoryRegistry.View.Model
+namespace Example.PetShop.AccessoryRegistry.View
 {
     public class AccessoryViewModel : IHaveATitle
     {

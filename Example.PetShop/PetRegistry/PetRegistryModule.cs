@@ -1,8 +1,6 @@
 ﻿#region
 
 using Example.PetShop.Domain;
-using Example.PetShop.PetRegistry.View;
-using Example.PetShop.PetRegistry.View.Model;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.Regions;
 using Microsoft.Practices.Unity;

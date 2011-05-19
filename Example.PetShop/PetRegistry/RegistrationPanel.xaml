@@ -1,4 +1,4 @@
-<StackPanel x:Class="Example.PetShop.PetRegistry.View.RegistrationPanel"
+<StackPanel x:Class="Example.PetShop.PetRegistry.RegistrationPanel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             Orientation="Vertical">
