@@ -1,11 +1,10 @@
 ﻿#region
 
 using System.Windows.Controls;
-using Example.PetShop.Basket.View.Model;
 
 #endregion
 
-namespace Example.PetShop.Basket.View
+namespace Example.PetShop.Basket
 {
     /// <summary>
     /// Interaction logic for BasketPanel.xaml

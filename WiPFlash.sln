@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.PetShop.Scenarios",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.PetShop", "Example.PetShop\Example.PetShop.csproj", "{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.PetShop.Behavior", "Example.PetShop.Behavior\Example.PetShop.Behavior.csproj", "{8AF45247-EB9B-40E1-AA9A-5191DBCF6413}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -34,6 +36,10 @@ Global
 		{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8AF45247-EB9B-40E1-AA9A-5191DBCF6413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8AF45247-EB9B-40E1-AA9A-5191DBCF6413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8AF45247-EB9B-40E1-AA9A-5191DBCF6413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8AF45247-EB9B-40E1-AA9A-5191DBCF6413}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

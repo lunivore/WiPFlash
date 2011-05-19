@@ -10,7 +10,7 @@ using Microsoft.Practices.Composite.Presentation.Commands;
 
 #endregion
 
-namespace Example.PetShop.Basket.View.Model
+namespace Example.PetShop.Basket
 {
     public class BasketViewModel : INotifyPropertyChanged, IHaveATitle
     {

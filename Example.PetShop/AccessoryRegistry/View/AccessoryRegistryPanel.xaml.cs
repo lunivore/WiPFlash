@@ -1,7 +1,6 @@
 ﻿#region
 
 using System.Windows.Controls;
-using Example.PetShop.AccessoryRegistry.View.Model;
 
 #endregion
 

@@ -93,7 +93,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Basket\View\BasketPanel.xaml">
+    <Page Include="Basket\BasketPanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -105,11 +105,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="History\View\HistoryPanel.xaml">
+    <Page Include="History\HistoryPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="PetRegistry\View\RegistrationPanel.xaml">
+    <Page Include="PetRegistry\RegistrationPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -123,7 +123,7 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccessoryRegistry\View\Model\AccessoryViewModel.cs" />
+    <Compile Include="AccessoryRegistry\View\AccessoryViewModel.cs" />
     <Compile Include="AccessoryRegistry\View\AccessoryRegistryPanel.xaml.cs">
       <DependentUpon>AccessoryRegistryPanel.xaml</DependentUpon>
     </Compile>
@@ -133,10 +133,10 @@
     <Compile Include="Domain\AccessoryRepository.cs" />
     <Compile Include="AccessoryRegistry\AccessoryRegistryModule.cs" />
     <Compile Include="Basket\BasketModule.cs" />
-    <Compile Include="Basket\View\BasketPanel.xaml.cs">
+    <Compile Include="Basket\BasketPanel.xaml.cs">
       <DependentUpon>BasketPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Basket\View\Model\BasketViewModel.cs" />
+    <Compile Include="Basket\BasketViewModel.cs" />
     <Compile Include="BootStrapper.cs" />
     <Compile Include="Domain\PetFood.cs" />
     <Compile Include="Domain\PetType.cs" />
@@ -144,7 +144,7 @@
     <Compile Include="Domain\PetRepository.cs" />
     <Compile Include="Domain\History.cs" />
     <Compile Include="History\HistoryModule.cs" />
-    <Compile Include="History\View\Model\HistoryViewModel.cs" />
+    <Compile Include="History\HistoryViewModel.cs" />
     <Compile Include="Domain\Pet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -162,11 +162,11 @@
     <Compile Include="Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PetRegistry\View\Model\RegistrationViewModel.cs" />
-    <Compile Include="History\View\HistoryPanel.xaml.cs">
+    <Compile Include="PetRegistry\RegistrationViewModel.cs" />
+    <Compile Include="History\HistoryPanel.xaml.cs">
       <DependentUpon>HistoryPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="PetRegistry\View\RegistrationPanel.xaml.cs">
+    <Compile Include="PetRegistry\RegistrationPanel.xaml.cs">
       <DependentUpon>RegistrationPanel.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">

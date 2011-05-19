@@ -1,10 +1,10 @@
 #region
 
-using Example.PetShop.History.View.Model;
+
 
 #endregion
 
-namespace Example.PetShop.History.View
+namespace Example.PetShop.History
 {
     public partial class HistoryPanel
     {

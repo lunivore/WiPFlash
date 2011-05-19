@@ -10,7 +10,7 @@ using Microsoft.Practices.Composite.Presentation.Commands;
 
 #endregion
 
-namespace Example.PetShop.PetRegistry.View.Model
+namespace Example.PetShop.PetRegistry
 {
     public class RegistrationViewModel : INotifyPropertyChanged, IHaveATitle
     {

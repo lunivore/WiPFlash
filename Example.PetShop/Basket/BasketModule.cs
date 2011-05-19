@@ -1,7 +1,5 @@
 ﻿#region
 
-using Example.PetShop.Basket.View;
-using Example.PetShop.Basket.View.Model;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
 using Microsoft.Practices.Composite.Modularity;
