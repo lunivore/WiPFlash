@@ -50,6 +50,16 @@ namespace Example.PetShop.Scenarios
         }
 
         [Test]
+        public void ICanResetTheBasket()
+        {
+            GivenThePetshop.IsRunning();
+            WhenTheAccessories.AreSelected("Rubber bone", "Dog Collar (Large)", "Dog Collar (Small)");
+            WhenTheBasket.IsResetSuccessfully();
+            ThenTheBasket.ShouldBeEmpty();
+
+        }
+
+        [Test]
         public void IAmPreventedFromClearingCustomersBasketsAccidentally()
         {
             GivenThePetshop.IsRunning();

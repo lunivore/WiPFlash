@@ -40,7 +40,13 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void IsDeclined()
         {
-            _messageWindow.Find<Button>(FindBy.UiAutomationId("cancelButton")).Click();
+            MessageWindow.Find<Button>(FindBy.UiAutomationId("cancelButton")).Click();
+            _messageWindow = null;
+        }
+
+        public void IsConfirmed()
+        {
+            MessageWindow.Find<Button>(FindBy.UiAutomationId("confirmButton")).Click();
             _messageWindow = null;
         }
     }

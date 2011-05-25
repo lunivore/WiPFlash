@@ -118,6 +118,27 @@ namespace Example.PetShop.Behavior.Basket
         }
 
         [Test]
+        public void ShouldClearTheBasketOfAccessoriesWhenItsReset()
+        {
+            // Given the basket contains some accessories
+            _accessoriesSelected(this, new AccessoryEventArgs(
+                new List<Accessory> { new Accessory { Name = "Large Collar" } }));
+
+            // Given we want to deliberately reset the basket
+            _messenger.Setup(m => m.Show(It.IsAny<string>(), It.IsAny<string>())).Returns(true);
+
+            // When we reset the basket (and clear the properties changed)
+            _propertiesChanged.Clear();
+            _basketModel.Reset.Execute(null);
+
+            // Then it should be empty
+            Assert.IsEmpty(_basketModel.Basket);
+
+            // And we should tell the Gui that the basket's changed
+            Assert.Contains("Basket", _propertiesChanged);
+        }
+
+        [Test]
         public void ShouldStopUsFromClearingTheBasketByAccident()
         {
             // Given the basket has one of the available pets in
