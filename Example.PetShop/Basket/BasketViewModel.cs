@@ -139,7 +139,9 @@ namespace Example.PetShop.Basket
                         {
                             if (_messenger.Show("Please confirm", "Are you sure you want to clear the contents of the basket?"))
                             {
-                                _petBasket.Clear();    
+                                _petBasket.Clear();  
+                                _accessoryBasket.Clear();
+                                NotifyPropertyChanged("Basket");
                             }                            
                         });
             }

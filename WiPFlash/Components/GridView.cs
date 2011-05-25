@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Framework;
@@ -115,6 +116,11 @@ namespace WiPFlash.Components
         public ListView AsListView()
         {
             return new ListView(Element, Name);
+        }
+
+        public bool IsEmpty()
+        {
+            return _tablePattern.RowCount == 0;
         }
     }
 }

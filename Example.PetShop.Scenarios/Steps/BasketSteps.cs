@@ -74,5 +74,18 @@ namespace Example.PetShop.Scenarios.Steps
             _universe.Window.Find<Tab>(FindBy.WpfText("Basket")).Select();
             _universe.Window.Find<Button>("resetButton").Click();
         }
+
+        public void ShouldBeEmpty()
+        {
+            _universe.Window.Find<Tab>(FindBy.WpfText("Basket")).Select();
+            var basketContents = _universe.Window.Find<GridView>("basketOutput");
+            Assert.IsTrue(basketContents.IsEmpty());
+        }
+
+        public void IsResetSuccessfully()
+        {
+            IsReset();
+            _universe.MessageBoxSteps.IsConfirmed();
+        }
     }
 }

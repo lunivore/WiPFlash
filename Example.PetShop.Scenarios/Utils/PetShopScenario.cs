@@ -14,18 +14,19 @@ namespace Example.PetShop.Scenarios.Utils
         private readonly BasketSteps _basketSteps;
         private readonly AccessoryRegistrySteps _accessoryRegistrySteps;
         private readonly HistorySteps _historySteps;
-        private MessageBoxSteps _messageBoxSteps;
+        private readonly MessageBoxSteps _messageBoxSteps;
+        private readonly Universe _universe;
 
         protected PetShopScenario() : this(new Universe())
         {
             
         }
 
-        private PetShopScenario(Universe universe) : this(new PetShopSteps(universe), new PetRegistrySteps(universe), new HistorySteps(universe), new BasketSteps(universe), new AccessoryRegistrySteps(universe), new MessageBoxSteps(universe))
+        private PetShopScenario(Universe universe) : this(new PetShopSteps(universe), new PetRegistrySteps(universe), new HistorySteps(universe), new BasketSteps(universe), new AccessoryRegistrySteps(universe), new MessageBoxSteps(universe), universe)
         {
         }
 
-        private PetShopScenario(PetShopSteps petShopSteps, PetRegistrySteps petRegistrySteps, HistorySteps historySteps, BasketSteps basketSteps, AccessoryRegistrySteps accessoryRegistrySteps, MessageBoxSteps messageBoxSteps)
+        private PetShopScenario(PetShopSteps petShopSteps, PetRegistrySteps petRegistrySteps, HistorySteps historySteps, BasketSteps basketSteps, AccessoryRegistrySteps accessoryRegistrySteps, MessageBoxSteps messageBoxSteps, Universe universe)
         {
             _petShopSteps = petShopSteps;
             _petRegistrySteps = petRegistrySteps;
@@ -33,6 +34,8 @@ namespace Example.PetShop.Scenarios.Utils
             _basketSteps = basketSteps;
             _accessoryRegistrySteps = accessoryRegistrySteps;
             _messageBoxSteps = messageBoxSteps;
+            _universe = universe;
+            _universe.MessageBoxSteps = _messageBoxSteps;
         }
 
         protected PetShopSteps GivenThePetshop

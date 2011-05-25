@@ -78,5 +78,22 @@ namespace WiPFlash.Behavior.Component
             Assert.AreSame(gridView.Element, listView.Element);
             Assert.AreEqual(typeof (ListView), listView.GetType());
         }
+
+        [Test]
+        public void ShouldTellUsIfTheGridViewIsEmpty()
+        {
+            // Given the petshop window
+            _window = LaunchPetShopWindow();
+
+            // Then the history should not be empty
+            _window.Find<Tab>(FindBy.WpfTitle("History")).Select();
+            var gridView = _window.Find<GridView>("lastPetsOutput");
+            Assert.IsFalse(gridView.IsEmpty());
+
+            // But the basket should
+            _window.Find<Tab>(FindBy.WpfTitle("Basket")).Select();
+            gridView = _window.Find<GridView>("basketOutput");
+            Assert.IsTrue(gridView.IsEmpty());
+        }
     }
 }
