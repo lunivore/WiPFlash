@@ -8,7 +8,7 @@ using WiPFlash.Components;
 
 #endregion
 
-namespace WiPFlash.Examples.ExampleUtils
+namespace WiPFlash.Behavior.ExampleUtils
 {
     public abstract class UIBasedExamples
     {

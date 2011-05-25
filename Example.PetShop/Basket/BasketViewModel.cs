@@ -86,7 +86,7 @@ namespace Example.PetShop.Basket
                 if (value != null && !_petBasket.Contains(value))
                 {
                     _petBasket.Add(value);
-                    NotifyPropertyChanged("PetSelectedForPurchase", "Basket", "Total", "HasItemsInBasket");
+                    NotifyPropertyChanged("AllAvailablePets", "PetSelectedForPurchase", "Basket", "Total", "HasItemsInBasket");
                 }
             }
         }

@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using WiPFlash.Framework;
 
-namespace WiPFlash.Examples.Framework
+namespace WiPFlash.Behavior.Framework
 {
     [TestFixture]
     public class ConditionDescriberBehaviour

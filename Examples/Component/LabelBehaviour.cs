@@ -3,12 +3,12 @@
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class LabelBehaviour : UIBasedExamples

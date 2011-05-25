@@ -3,13 +3,13 @@
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class RichTextBoxBehaviour : UIBasedExamples
@@ -37,8 +37,8 @@ namespace WiPFlash.Examples.Component
                                box.Text = "Fred";
                            }).Start(null);
             Assert.True(box.WaitFor(
-                (src, e) => box.Text.Equals("Fred"),
-                src => Assert.Fail()));
+                            (src, e) => box.Text.Equals("Fred"),
+                            src => Assert.Fail()));
             
         }
     }

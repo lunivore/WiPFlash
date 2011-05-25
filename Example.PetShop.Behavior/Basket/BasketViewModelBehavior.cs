@@ -23,8 +23,9 @@ namespace Example.PetShop.Behavior.Basket
 
         private EventHandler<AccessoryEventArgs> _accessoriesSelected = delegate { };
         private EventHandler<AccessoryEventArgs> _accessoriesUnselected = delegate { };
+        private List<string> _propertiesChanged;
 
-            [SetUp]
+        [SetUp]
         public void CreateBasket()
         {
             // Given there are two pets available for sale
@@ -46,6 +47,9 @@ namespace Example.PetShop.Behavior.Basket
             // Given a basket model
             _basketModel = new BasketViewModel(_petRepository.Object, _accessoryRepository.Object, _messenger.Object);
 
+            // Given we're listening to the properties that change
+            _propertiesChanged = new List<string>();
+            _basketModel.PropertyChanged += (o, e) => _propertiesChanged.Add(e.PropertyName);
         }
 
         [Test]
@@ -53,7 +57,6 @@ namespace Example.PetShop.Behavior.Basket
         {
             // When we start
             // Then we should have all available pets
-
             Assert.AreEqual(new []{_blackie, _sandy}, _basketModel.AllAvailablePets);
 
             // When we purchase a pet
@@ -63,6 +66,10 @@ namespace Example.PetShop.Behavior.Basket
             Assert.AreEqual(1, _basketModel.Basket.Length);
             Assert.AreEqual(_sandy.Name, _basketModel.Basket[0].Item);
             Assert.AreEqual(new[]{_blackie}, _basketModel.AllAvailablePets);
+
+            // And the Gui should be told that the available pets and basket have changed
+            Assert.Contains("AllAvailablePets", _propertiesChanged);
+            Assert.Contains("Basket", _propertiesChanged);
         }
 
         [Test]

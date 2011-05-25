@@ -30,6 +30,7 @@ namespace Example.PetShop.Scenarios
         {
             GivenThePetshop.IsRunning();
             WhenTheBasket.IsAddedWith("Dancer");
+            ThenTheBasket.ShouldNotList("Dancer");
             ThenTheBasket.ShouldContain("Dancer", "54.00");
             ThenTheBasket.ShouldHaveTotal("54.00");
             WhenTheBasket.IsACardPayment()

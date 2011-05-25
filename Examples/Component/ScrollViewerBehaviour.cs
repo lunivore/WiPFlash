@@ -2,13 +2,13 @@
 
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class ScrollViewerBehaviour : UIBasedExamples

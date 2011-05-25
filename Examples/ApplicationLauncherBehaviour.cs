@@ -2,12 +2,12 @@
 
 using System;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 
 #endregion
 
-namespace WiPFlash.Examples
+namespace WiPFlash.Behavior
 {
     [TestFixture]
     public class ApplicationLauncherBehaviour : UIBasedExamples

@@ -3,12 +3,12 @@
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class ButtonBehaviour : UIBasedExamples
@@ -37,8 +37,8 @@ namespace WiPFlash.Examples.Component
             var button = window.Find<Button>("petSaveButton");
 
             new Thread(o => {
-                Thread.Sleep(100); 
-                petsToBuy.Select("Pet[Dancer]");
+                                Thread.Sleep(100); 
+                                petsToBuy.Select("Pet[Dancer]");
             }).Start(null);
 
             button.WaitFor((src, e) => button.IsEnabled, src => Assert.Fail());
