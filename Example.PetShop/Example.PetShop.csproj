@@ -128,8 +128,10 @@
       <DependentUpon>AccessoryRegistryPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="AccessoryRegistry\View\ListBoxHelper.cs" />
+    <Compile Include="Utils\IHandleMessages.cs" />
     <Compile Include="Controls\MessengerWindowModel.cs" />
     <Compile Include="Domain\Accessory.cs" />
+    <Compile Include="Domain\AccessoryEventArgs.cs" />
     <Compile Include="Domain\AccessoryRepository.cs" />
     <Compile Include="AccessoryRegistry\AccessoryRegistryModule.cs" />
     <Compile Include="Basket\BasketModule.cs" />
@@ -138,6 +140,8 @@
     </Compile>
     <Compile Include="Basket\BasketViewModel.cs" />
     <Compile Include="BootStrapper.cs" />
+    <Compile Include="Domain\ILookAfterAccessories.cs" />
+    <Compile Include="Domain\ILookAfterPets.cs" />
     <Compile Include="Domain\PetFood.cs" />
     <Compile Include="Domain\PetType.cs" />
     <Compile Include="Domain\Rule.cs" />

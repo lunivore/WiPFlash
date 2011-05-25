@@ -1,8 +1,8 @@
 ﻿#region
 
 using System.Windows;
+using Example.PetShop.Controls;
 using Example.PetShop.Domain;
-using Example.PetShop.Utils;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.UnityExtensions;
 

@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Example.PetShop.Controls;
+using Example.PetShop.Utils;
 
-namespace Example.PetShop.Utils
+namespace Example.PetShop.Controls
 {
-    public class Messenger
+    public class Messenger : IHandleMessages
     {
         public bool Show(string title, string message)
         {

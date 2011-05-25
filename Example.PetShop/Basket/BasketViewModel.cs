@@ -3,7 +3,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq.Expressions;
 using System.Windows.Input;
+using Example.PetShop.Controls;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
 using Microsoft.Practices.Composite.Presentation.Commands;
@@ -15,15 +17,15 @@ namespace Example.PetShop.Basket
     public class BasketViewModel : INotifyPropertyChanged, IHaveATitle
     {
         private static List<Pet> _petBasket;
-        private readonly PetRepository _petRepository;
-        private readonly AccessoryRepository _accessoryRepository;
-        private readonly Messenger _messenger;
+        private readonly ILookAfterPets _petRepository;
+        private readonly ILookAfterAccessories _accessoryRepository;
+        private readonly IHandleMessages _messenger;
         private readonly List<Accessory> _accessoryBasket;
 
         public BasketViewModel(
-            PetRepository petRepository, 
-            AccessoryRepository accessoryRepository,
-            Messenger messenger)
+            ILookAfterPets petRepository, 
+            ILookAfterAccessories accessoryRepository,
+            IHandleMessages messenger)
         {
             _petRepository = petRepository;
             _accessoryRepository = accessoryRepository;
@@ -31,7 +33,7 @@ namespace Example.PetShop.Basket
             _petBasket = new List<Pet>();
             _accessoryBasket = new List<Accessory>();
             _petRepository.UnsoldPets.CollectionChanged += (o, e) => NotifyPropertyChanged("AllAvailablePets");
-            _accessoryRepository.AccessoriesSelected += (o, e) =>
+            _accessoryRepository.OnAccessorySelected((o, e) =>
                                                             {
                                                                 foreach (var accessory in e.Accessories)
                                                                 {
@@ -41,13 +43,13 @@ namespace Example.PetShop.Basket
                                                                     }
                                                                 }
                                                                 NotifyPropertyChanged("Basket", "HasItemsInBasket");
-                                                            };
-            _accessoryRepository.AccessoriesUnselected += (o, e) =>
+                                                            });
+            _accessoryRepository.OnAccessoryUnselected((o, e) =>
                                                               {
                                                                   _accessoryBasket.RemoveAll(
                                                                       a => e.Accessories.Contains(a));
                                                                   NotifyPropertyChanged("Basket", "HasItemsInBasket");
-                                                              };                                  
+                                                              });                                  
         }
 
         private void NotifyPropertyChanged(params string[] properties)
@@ -76,7 +78,7 @@ namespace Example.PetShop.Basket
             }
         }
 
-        public Pet Purchase
+        public Pet PetSelectedForPurchase
         {
             get { return null; }
             set
@@ -84,7 +86,7 @@ namespace Example.PetShop.Basket
                 if (value != null && !_petBasket.Contains(value))
                 {
                     _petBasket.Add(value);
-                    NotifyPropertyChanged("Purchase", "Basket", "Total", "HasItemsInBasket");
+                    NotifyPropertyChanged("PetSelectedForPurchase", "Basket", "Total", "HasItemsInBasket");
                 }
             }
         }
@@ -120,7 +122,7 @@ namespace Example.PetShop.Basket
                         {
                             foreach (Pet pet in _petBasket)
                             {
-                                _petRepository.PetWasPutInBasket(pet);
+                                _petRepository.PetWasSold(pet);
                             }
                             _petBasket.Clear();
                             NotifyPropertyChanged("Basket", "HasItemsInBasket");
