@@ -11,7 +11,7 @@ namespace Example.PetShop.Scenarios
     public class PetRegistrationAndPurchase : PetShopScenario
     {
         [Test]
-        public void CustomersCanPurchaseAPet()
+        public void ICanRegisterNewPetsForSale()
         {
             GivenThePetshop.IsRunning();
             WhenAPetIsRegistered.WithName("Snowdrop")
@@ -22,14 +22,20 @@ namespace Example.PetShop.Scenarios
                 .AndSaved();
             ThenTheHistory.ShouldContain("Snowdrop the Rabbit registered at a price of £100.00. Food: Carnivorous");
             AndTheHistory.ShouldIncludeMostRecentPet("Snowdrop");
-            ThenTheBasket.ShouldList("Snowdrop");
-            WhenTheBasket.IsAddedWith("Snowdrop");
-            ThenTheBasket.ShouldContain("Snowdrop", "100.00");
-            ThenTheBasket.ShouldHaveTotal("100.00");
+            ThenTheBasket.ShouldList("Snowdrop");           
+        }
+
+        [Test]
+        public void CustomersCanPurchaseAPet()
+        {
+            GivenThePetshop.IsRunning();
+            WhenTheBasket.IsAddedWith("Dancer");
+            ThenTheBasket.ShouldContain("Dancer", "54.00");
+            ThenTheBasket.ShouldHaveTotal("54.00");
             WhenTheBasket.IsACardPayment()
                 .RequiresAVATReceipt()
                 .IsPurchased();
-            ThenTheBasket.ShouldNotList("Snowdrop");
+            ThenTheBasket.ShouldNotList("Dancer");
         }
 
         [Test]
