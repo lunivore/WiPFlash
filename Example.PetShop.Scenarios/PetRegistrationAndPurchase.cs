@@ -36,7 +36,7 @@ namespace Example.PetShop.Scenarios
             WhenTheBasket.IsACardPayment()
                 .RequiresAVATReceipt()
                 .IsPurchased();
-            ThenTheBasket.ShouldNotList("Dancer");
+            ThenTheBasket.ShouldBeEmpty();
         }
 
         [Test]
@@ -47,6 +47,8 @@ namespace Example.PetShop.Scenarios
             ThenTheBasket.ShouldContain("Rubber bone", "1.50");
             ThenTheBasket.ShouldContain("Dog Collar (Large)", "10.00");
             ThenTheBasket.ShouldContain("Dog Collar (Small)", "9.00");
+            WhenTheBasket.IsPurchased();
+            ThenTheBasket.ShouldBeEmpty();
         }
 
         [Test]
@@ -56,7 +58,6 @@ namespace Example.PetShop.Scenarios
             WhenTheAccessories.AreSelected("Rubber bone", "Dog Collar (Large)", "Dog Collar (Small)");
             WhenTheBasket.IsResetSuccessfully();
             ThenTheBasket.ShouldBeEmpty();
-
         }
 
         [Test]

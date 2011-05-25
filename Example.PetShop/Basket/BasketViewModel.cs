@@ -125,6 +125,7 @@ namespace Example.PetShop.Basket
                                 _petRepository.PetWasSold(pet);
                             }
                             _petBasket.Clear();
+                            _accessoryBasket.Clear();
                             NotifyPropertyChanged("Basket", "HasItemsInBasket");
                         });
             }
