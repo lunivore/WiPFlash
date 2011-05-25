@@ -3,14 +3,14 @@
 using System;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class ApplicationBehaviour : UIBasedExamples
@@ -28,7 +28,7 @@ namespace WiPFlash.Examples.Component
         {
             Application application = new ApplicationLauncher().LaunchOrRecycle(EXAMPLE_APP_NAME, EXAMPLE_APP_PATH, Assert.Fail);
             Window window = application.FindWindow(new AndCondition(
-                FindBy.WpfName("petShopWindow"), FindBy.ControlType(ControlType.Window)));
+                                                       FindBy.WpfName("petShopWindow"), FindBy.ControlType(ControlType.Window)));
             Assert.IsNotNull(window.Element);
         }
 
@@ -86,8 +86,8 @@ namespace WiPFlash.Examples.Component
             application.FindWindow(new AndCondition(new PropertyCondition(AutomationElement.NameProperty, "Wibble"),
                                                     new PropertyCondition(AutomationElement.ControlTypeProperty,
                                                                           ControlType.Window)),
-                                                                          longEnough,
-                                                                          message => windowDoesNotExist = true);
+                                   longEnough,
+                                   message => windowDoesNotExist = true);
             finished = DateTime.Now;
             timeBetween = finished.Subtract(started);
 

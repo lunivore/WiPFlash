@@ -6,7 +6,7 @@ using WiPFlash.Util;
 
 #endregion
 
-namespace WiPFlash.Examples.Util
+namespace WiPFlash.Behavior.Util
 {
     [TestFixture]
     public class CollectionUtilsBehaviour

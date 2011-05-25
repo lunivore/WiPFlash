@@ -3,12 +3,12 @@
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class RadioButtonBehaviour : UIBasedExamples
@@ -32,8 +32,8 @@ namespace WiPFlash.Examples.Component
                                radioButton.Select();;
                            }).Start(null);
             Assert.True(radioButton.WaitFor(
-                (src, e) => radioButton.Selected,
-                src => Assert.Fail()));
+                            (src, e) => radioButton.Selected,
+                            src => Assert.Fail()));
         }
     }
 }

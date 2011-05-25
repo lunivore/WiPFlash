@@ -4,14 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
 
 #endregion
 
-namespace WiPFlash.Examples.Framework
+namespace WiPFlash.Behavior.Framework
 {
     [TestFixture]
     public class WrapperFactoryBehaviour : UIBasedExamples

@@ -6,18 +6,18 @@ using System.Threading;
 using System.Windows.Automation;
 using Moq;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
 
-namespace WiPFlash.Examples.Framework
+namespace WiPFlash.Behavior.Framework
 {
     [TestFixture]
     public class WaiterBehaviour : UIBasedExamples
     {
         [Test]
-        public void shouldWaitForEventsToOccur()
+        public void ShouldWaitForEventsToOccur()
         {
             // Given an automation element
             _window = LaunchPetShopWindow();
@@ -25,42 +25,42 @@ namespace WiPFlash.Examples.Framework
 
             // When we cause a slow event on that element            
             new Thread(() =>
-            {
-                Thread.Sleep(200);
-                combo.Select("PetFood[Carnivorous]");
-            }).Start();
+                           {
+                               Thread.Sleep(200);
+                               combo.Select("PetFood[Carnivorous]");
+                           }).Start();
 
             // And we wait for the event
             var eventOccurred = false;
             new Waiter().WaitFor(combo, (src, e) =>
-                              {
-                                  eventOccurred = true;
-                                  return combo.Selection.Equals("PetFood[Carnivorous]");
-                              }, new TimeSpan(0, 0, 1),
-                          (src) => Assert.Fail(), new List<AutomationEventWrapper> {new StructureChangeEvent(TreeScope.Element)});
+                                            {
+                                                eventOccurred = true;
+                                                return combo.Selection.Equals("PetFood[Carnivorous]");
+                                            }, new TimeSpan(0, 0, 1),
+                                 (src) => Assert.Fail(), new List<AutomationEventWrapper> {new StructureChangeEvent(TreeScope.Element)});
 
             // Then we should be notified when the event occurs
             Assert.IsTrue(eventOccurred);
         }
 
         [Test]
-        public void shouldOnlyRunPotentiallyExpensiveChecksOnceIfSuccessful()
+        public void ShouldOnlyRunPotentiallyExpensiveChecksOnceIfSuccessful()
         {                     
             // When the waiter waits for a check which is already true
-            var checkProvider = new Mock<CheckProvider>();
+            var checkProvider = new Mock<IProvideChecks>();
             checkProvider.Setup(cp => cp.Check()).Returns(true);
 
             new Waiter().WaitFor(new Panel(AutomationElement.RootElement, "Desktop"),
-                (src, e) => checkProvider.Object.Check(),
-                new TimeSpan(0, 0, 5),
-                (src) => Assert.Fail("Could not handle guaranteed event"),
-                new List<AutomationEventWrapper>());
+                                 (src, e) => checkProvider.Object.Check(),
+                                 new TimeSpan(0, 0, 5),
+                                 (src) => Assert.Fail("Could not handle guaranteed event"),
+                                 new List<AutomationEventWrapper>());
 
             // Then it should only have run once
             checkProvider.Verify(cp => cp.Check(), Times.AtMostOnce());
         }
 
-        public interface CheckProvider
+        public interface IProvideChecks
         {
             bool Check();
         }

@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class ListBoxBehaviour : UIBasedExamples
@@ -60,8 +60,8 @@ namespace WiPFlash.Examples.Component
                            }).Start(null);
 
             Assert.True(listBox.WaitFor(
-                (src, e) => new List<string>(listBox.Selection).Contains("Rule[Dangerous]"),
-                src => Assert.Fail()));           
+                            (src, e) => new List<string>(listBox.Selection).Contains("Rule[Dangerous]"),
+                            src => Assert.Fail()));           
         }
     }
 }

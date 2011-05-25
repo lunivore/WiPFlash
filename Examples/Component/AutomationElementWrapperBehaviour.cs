@@ -6,14 +6,14 @@ using System.Threading;
 using System.Windows.Automation;
 using Moq;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class AutomationElementWrapperBehaviour : UIBasedExamples

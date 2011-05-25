@@ -4,13 +4,13 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 using WiPFlash.Exceptions;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public abstract class ComboBoxBehaviour : UIBasedExamples
@@ -58,14 +58,14 @@ namespace WiPFlash.Examples.Component
             var window = LaunchPetShopWindow();
             var nonEditableBox = window.Find<ComboBox>("petFoodInput");
             new Thread(o =>
-            {
-                Thread.Sleep(100);
-                nonEditableBox.Select("PetFood[Carnivorous]");
-            }).Start();
+                           {
+                               Thread.Sleep(100);
+                               nonEditableBox.Select("PetFood[Carnivorous]");
+                           }).Start();
 
             Assert.True(nonEditableBox.WaitFor(
-                (src, e) => nonEditableBox.Selection.Equals("PetFood[Carnivorous]"),
-                src => Assert.Fail()));
+                            (src, e) => nonEditableBox.Selection.Equals("PetFood[Carnivorous]"),
+                            src => Assert.Fail()));
         }
     }
 }

@@ -3,12 +3,12 @@
 using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
+using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
-using WiPFlash.Examples.ExampleUtils;
 
 #endregion
 
-namespace WiPFlash.Examples.Component
+namespace WiPFlash.Behavior.Component
 {
     [TestFixture]
     public class TextBoxBehaviour : UIBasedExamples
@@ -33,7 +33,7 @@ namespace WiPFlash.Examples.Component
             }).Start(null);
 
             Assert.IsTrue(box.WaitFor((src, e) => box.Text.Equals("Fred"), 
-                src => Assert.Fail()));
+                                      src => Assert.Fail()));
         }
     }
 }
