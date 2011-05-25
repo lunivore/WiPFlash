@@ -5,7 +5,7 @@
     <StackPanel.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="../Styles/LabelledFieldStyles.xaml" />
+                <ResourceDictionary Source="Styles/LabelledFieldStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </StackPanel.Resources>

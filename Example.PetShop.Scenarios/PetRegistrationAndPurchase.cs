@@ -11,7 +11,7 @@ namespace Example.PetShop.Scenarios
     public class PetRegistrationAndPurchase : PetShopScenario
     {
         [Test]
-        public void ICanRegisterAPet()
+        public void CustomersCanPurchaseAPet()
         {
             GivenThePetshop.IsRunning();
             WhenAPetIsRegistered.WithName("Snowdrop")
@@ -33,7 +33,7 @@ namespace Example.PetShop.Scenarios
         }
 
         [Test]
-        public void ICanBrowseAccessories()
+        public void CustomersCanPurchaseAccessories()
         {
             GivenThePetshop.IsRunning();
             WhenTheAccessories.AreSelected("Rubber bone", "Dog Collar (Large)", "Dog Collar (Small)");
@@ -43,7 +43,7 @@ namespace Example.PetShop.Scenarios
         }
 
         [Test]
-        public void IAmAskedToConfirmBeforeClearingABasketOfGoods()
+        public void IAmPreventedFromClearingCustomersBasketsAccidentally()
         {
             GivenThePetshop.IsRunning();
             GivenTheBasket.IsAddedWith("Spot");

@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Example.PetShop.Utils;
 
@@ -9,12 +8,12 @@ using Example.PetShop.Utils;
 
 namespace Example.PetShop.Domain
 {
-    public class AccessoryRepository
+    public class AccessoryRepository : ILookAfterAccessories
     {
         private readonly ObservableCollection<Accessory> _selectedAccessories;
 
-        public EventHandler<AccessoryEventArgs> AccessoriesSelected = delegate { };
-        public EventHandler<AccessoryEventArgs> AccessoriesUnselected = delegate { };
+        private EventHandler<AccessoryEventArgs> _accessoriesSelected = delegate { };
+        private EventHandler<AccessoryEventArgs> _accessoriesUnselected = delegate { };
 
         public AccessoryRepository()
         {
@@ -23,11 +22,11 @@ namespace Example.PetShop.Domain
                                                           {
                                                               if (e.NewItems != null && e.NewItems.Count > 0)
                                                               {
-                                                                  AccessoriesSelected(this, new AccessoryEventArgs(CollectionUtils.Convert(e.NewItems, o => (Accessory)o)));
+                                                                  _accessoriesSelected(this, new AccessoryEventArgs(CollectionUtils.Convert(e.NewItems, o => (Accessory)o)));
                                                               }
                                                               if (e.OldItems != null && e.OldItems.Count > 0)
                                                               {
-                                                                  AccessoriesUnselected(this, new AccessoryEventArgs(CollectionUtils.Convert(e.OldItems, o => (Accessory)o)));
+                                                                  _accessoriesUnselected(this, new AccessoryEventArgs(CollectionUtils.Convert(e.OldItems, o => (Accessory)o)));
                                                               }
                                                           };
         }
@@ -81,20 +80,15 @@ namespace Example.PetShop.Domain
         {
             get { return _selectedAccessories; }
         }
-    }
 
-    public class AccessoryEventArgs : EventArgs
-    {
-        private readonly List<Accessory> _accessories;
-
-        public AccessoryEventArgs(List<Accessory> accessories)
+        public void OnAccessorySelected(EventHandler<AccessoryEventArgs> eventHandler)
         {
-            _accessories = accessories;
+            _accessoriesSelected += eventHandler;
         }
 
-        public IList<Accessory> Accessories
+        public void OnAccessoryUnselected(EventHandler<AccessoryEventArgs> eventHandler)
         {
-            get { return _accessories; }
+            _accessoriesUnselected += eventHandler;
         }
     }
 }

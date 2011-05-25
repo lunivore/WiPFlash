@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace Example.PetShop.Domain
 {
-    public class PetRepository : INotifyPropertyChanged
+    public class PetRepository : ILookAfterPets
     {
         private readonly History _history;
         private readonly ObservableCollection<Pet> _unsoldPets;
@@ -51,7 +51,7 @@ namespace Example.PetShop.Domain
             get { return _history; }
         }
 
-        public ObservableCollection<Pet> UnsoldPets
+        public virtual ObservableCollection<Pet> UnsoldPets
         {
             get
             {
@@ -82,7 +82,7 @@ namespace Example.PetShop.Domain
                            }).Start();
         }
 
-        public void PetWasPutInBasket(Pet pet)
+        public void PetWasSold(Pet pet)
         {
             pet.Sold = true;
             _unsoldPets.Remove(pet);
