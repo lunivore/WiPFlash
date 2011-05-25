@@ -139,6 +139,25 @@ namespace Example.PetShop.Behavior.Basket
         }
 
         [Test]
+        public void ShouldClearTheBasketOfAccessoriesWhenTheyArePurchased()
+        {
+            // Given the basket contains some accessories
+            _accessoriesSelected(this, new AccessoryEventArgs(
+                new List<Accessory> { new Accessory { Name = "Large Collar" } }));
+
+            // When we purchase the accessories
+            _propertiesChanged.Clear();
+            _basketModel.Pay.Execute(null);
+
+            // Then it should be empty
+            Assert.IsEmpty(_basketModel.Basket);
+
+            // And we should tell the Gui that the basket's changed
+            Assert.Contains("Basket", _propertiesChanged);
+
+        }
+
+        [Test]
         public void ShouldStopUsFromClearingTheBasketByAccident()
         {
             // Given the basket has one of the available pets in
