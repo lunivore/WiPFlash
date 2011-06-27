@@ -1,0 +1,19 @@
+﻿<UserControl x:Class="Example.PetShop.AccessoryRegistry.View.AccessoryRegistryPanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Example.PetShop.AccessoryRegistry.View"
+    Height="300" Width="300">
+    <ListBox ItemsSource="{Binding Accessories}" 
+             SelectionMode="Multiple" 
+             local:ListBoxHelper.SelectedItems="{Binding SelectedAccessories}"  
+             Name="accessoriesOutput">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="{Binding Name}" />
+                    <Label Content="{Binding Price}" />
+                </StackPanel>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</UserControl>

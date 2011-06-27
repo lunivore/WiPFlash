@@ -1,0 +1,16 @@
+﻿<Window x:Class="Example.PetShop.Controls.MessengerWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="{Binding Title}" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock x:Name="messageOutput" Text="{Binding Message}" Grid.Row="0" MinWidth="240" MinHeight="23" Margin="10, 10, 10, 10"/>
+        <WrapPanel Grid.Row="1" Margin="10, 10, 10, 10" HorizontalAlignment="Right">
+            <Button x:Name="confirmButton" Command="{Binding Close}" CommandParameter="true" Width="80">OK</Button>
+            <Button x:Name="cancelButton" Command="{Binding Close}" CommandParameter="false" Margin="10, 0, 0, 0" Width="80">Cancel</Button>
+        </WrapPanel>
+    </Grid>
+</Window>
