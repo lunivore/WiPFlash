@@ -126,7 +126,7 @@ namespace Example.PetShop.Basket
                             }
                             _petBasket.Clear();
                             _accessoryBasket.Clear();
-                            NotifyPropertyChanged("Basket", "HasItemsInBasket");
+                            NotifyPropertyChanged("Basket", "HasItemsInBasket", "Total");
                         });
             }
         }
@@ -142,7 +142,7 @@ namespace Example.PetShop.Basket
                             {
                                 _petBasket.Clear();  
                                 _accessoryBasket.Clear();
-                                NotifyPropertyChanged("Basket");
+                                NotifyPropertyChanged("Basket", "Total");
                             }                            
                         });
             }

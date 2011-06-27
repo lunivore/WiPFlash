@@ -1,5 +1,6 @@
 #region
 
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;

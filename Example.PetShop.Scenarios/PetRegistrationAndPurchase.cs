@@ -37,6 +37,7 @@ namespace Example.PetShop.Scenarios
                 .RequiresAVATReceipt()
                 .IsPurchased();
             ThenTheBasket.ShouldBeEmpty();
+            ThenTheBasket.ShouldHaveTotal("0.00");
         }
 
         [Test]

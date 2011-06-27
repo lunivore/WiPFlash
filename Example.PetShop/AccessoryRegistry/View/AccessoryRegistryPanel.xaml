@@ -3,7 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Example.PetShop.AccessoryRegistry.View"
     Height="300" Width="300">
-    <ListBox ItemsSource="{Binding Accessories}" SelectionMode="Multiple" local:ListBoxHelper.SelectedItems="{Binding SelectedAccessories}"  Name="accessoriesOutput">
+    <ListBox ItemsSource="{Binding Accessories}" 
+             SelectionMode="Multiple" 
+             local:ListBoxHelper.SelectedItems="{Binding SelectedAccessories}"  
+             Name="accessoriesOutput">
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <StackPanel Orientation="Horizontal">

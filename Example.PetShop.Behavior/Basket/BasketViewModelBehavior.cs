@@ -94,8 +94,9 @@ namespace Example.PetShop.Behavior.Basket
             // When we sell the pet
             _basketModel.Pay.Execute(null);
 
-            // Then we should have an empty basket
+            // Then we should have an empty basket and total
             Assert.AreEqual(0, _basketModel.Basket.Length);
+            Assert.AreEqual("0.00", _basketModel.Total);
         }
 
         [Test]
@@ -131,11 +132,13 @@ namespace Example.PetShop.Behavior.Basket
             _propertiesChanged.Clear();
             _basketModel.Reset.Execute(null);
 
-            // Then it should be empty
+            // Then we should have an empty basket and total
             Assert.IsEmpty(_basketModel.Basket);
+            Assert.AreEqual("0.00", _basketModel.Total);
 
-            // And we should tell the Gui that the basket's changed
+            // And we should tell the Gui that the basket and total have changed
             Assert.Contains("Basket", _propertiesChanged);
+            Assert.Contains("Total", _propertiesChanged);
         }
 
         [Test]
@@ -149,11 +152,13 @@ namespace Example.PetShop.Behavior.Basket
             _propertiesChanged.Clear();
             _basketModel.Pay.Execute(null);
 
-            // Then it should be empty
+            // Then we should have an empty basket and total
             Assert.IsEmpty(_basketModel.Basket);
+            Assert.AreEqual("0.00", _basketModel.Total);
 
-            // And we should tell the Gui that the basket's changed
+            // And we should tell the Gui that the basket and total have changed
             Assert.Contains("Basket", _propertiesChanged);
+            Assert.Contains("Total", _propertiesChanged);
 
         }
 
@@ -192,6 +197,7 @@ namespace Example.PetShop.Behavior.Basket
 
             // Then the basket should be empty again
             Assert.AreEqual(0, _basketModel.Basket.Length);
+            Assert.AreEqual("0.00", _basketModel.Total);
         }
     }
 }
