@@ -13,9 +13,14 @@ namespace Example.PetShop.Domain
             get; set;
         }
 
-        public string Price
+        public int PriceInPence
         {
             get; set;
+        }
+
+        public string Price
+        {
+            get { return (PriceInPence/100.00).ToString("0.00"); }
         }
 
         public override string ToString()

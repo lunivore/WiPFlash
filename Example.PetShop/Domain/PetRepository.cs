@@ -26,21 +26,21 @@ namespace Example.PetShop.Domain
                                     Name = "Spot",
                                     Type = PetType.ALL[2],
                                     FoodType = PetFood.ALL[1],
-                                    Price = "100.00"
+                                    PriceInPence = 10000
                                 },
                             new Pet
                                 {
                                     Name = "Cinnamon",
                                     Type = PetType.ALL[1],
                                     FoodType = PetFood.ALL[0],
-                                    Price = "4.50"
+                                    PriceInPence = 450
                                 },
                             new Pet
                                 {
                                     Name = "Dancer",
                                     Type = PetType.ALL[2],
                                     FoodType = PetFood.ALL[2],
-                                    Price = "54.00"
+                                    PriceInPence = 5400
                                 },
                         };
             _unsoldPets = new ObservableCollection<Pet>(_pets);
