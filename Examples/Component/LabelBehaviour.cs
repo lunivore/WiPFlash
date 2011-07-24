@@ -17,7 +17,7 @@ namespace WiPFlash.Behavior.Component
         public void ShouldAllowTextToBeRetrievedFromBlock()
         {
             var label = LaunchPetShopWindow().Find<Label>("totalOutput");
-            Assert.AreEqual("0.00", label.Text);
+            Assert.AreEqual(0.ToString("0.00"), label.Text);
         }
 
         [Test]
@@ -30,8 +30,8 @@ namespace WiPFlash.Behavior.Component
                                Thread.Sleep(200);
                                window.Find<ComboBox>("basketPetInput").Select("Pet[Cinnamon]");
                            }).Start();
-            label.WaitFor((l, e) => ((Label)l).Text.Equals("4.50"), e => Assert.Fail("Should have waited for label to be 4.50"));
-            Assert.AreEqual("4.50", label.Text);
+            label.WaitFor((l, e) => ((Label)l).Text.Equals(4.50.ToString("0.00")), e => Assert.Fail("Should have waited for label to be " + 4.50.ToString("0.00")));
+            Assert.AreEqual(4.50.ToString("0.00"), label.Text);
         }
     }
 }

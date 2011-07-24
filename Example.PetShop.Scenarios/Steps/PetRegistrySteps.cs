@@ -44,9 +44,9 @@ namespace Example.PetShop.Scenarios.Steps
         }
 
 
-        public PetRegistrySteps AtAPrice(string price)
+        public PetRegistrySteps AtAPrice(double price)
         {
-            _universe.Window.Find<TextBox>("petPriceInput").Text = price;
+            _universe.Window.Find<TextBox>("petPriceInput").Text = price.ToString("0.00");
             return this;
         }
 

@@ -38,8 +38,8 @@ namespace WiPFlash.Behavior.Component
             _window = LaunchPetShopWindow();
             _window.Find<Tab>(FindBy.WpfText("History")).Select();
             var gridView = _window.Find<GridView>("lastPetsOutput");
-            Assert.IsTrue(gridView.ContainsRow("Dancer", "Rabbit", "54.00", "False"));
-            Assert.IsFalse(gridView.ContainsRow("Prancer", "Reindeer", "30.00", "False"));
+            Assert.IsTrue(gridView.ContainsRow("Dancer", "Rabbit", 54.00.ToString("0.00"), "False"));
+            Assert.IsFalse(gridView.ContainsRow("Prancer", "Reindeer", 30.00.ToString("0.00"), "False"));
         }
         
         [Test]
@@ -67,7 +67,7 @@ namespace WiPFlash.Behavior.Component
             _window.Find<Tab>(FindBy.WpfText("History")).Select();
             var gridView = _window.Find<GridView>("lastPetsOutput");
             var cell = gridView.FindReferencedElement<Label>("Name", FindBy.WpfText("Dancer"), "Price");
-            Assert.AreEqual("54.00", cell.Text );
+            Assert.AreEqual(54.00.ToString("0.00"), cell.Text );
         }
 
         [Test]

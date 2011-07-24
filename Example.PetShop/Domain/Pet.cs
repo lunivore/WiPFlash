@@ -13,11 +13,15 @@ namespace Example.PetShop.Domain
 
         public string Name { get; set; }
 
-        public string Price { get; set; }
-
         public int PriceInPence
+        { 
+            get;
+            set;
+        }
+
+        public string Price
         {
-            get { return int.Parse((double.Parse(Price)*100.00).ToString()); }
+            get { return (PriceInPence / 100.00).ToString("0.00"); }
         }
 
         public List<Rule> Rules { get; set; }
