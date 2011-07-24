@@ -66,7 +66,7 @@ namespace WiPFlash.Behavior.Component
         public void ShouldBeAbleToTellWhetherAWindowExistsOrNotWithinTheSpecifiedAmountOfTime()
         {
             TimeSpan farFarTooLong = TimeSpan.Parse("00:01:00");
-            TimeSpan longEnough = TimeSpan.Parse("00:00:01");
+            TimeSpan longEnough = TimeSpan.Parse("00:00:05");
             TimeSpan aBitExtraForProcessing = TimeSpan.Parse("00:00:01");
 
             var started = DateTime.Now;
