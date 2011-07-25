@@ -71,5 +71,17 @@ namespace Example.PetShop.Scenarios
             WhenTheMessageBox.IsDeclined();
             ThenTheBasket.ShouldContain("Spot", "100.00");
         }
+
+        [Test]
+        public void ICanCopyAnExistingPetsDetails()
+        {
+            GivenThePetshop.IsRunning();
+            WhenAPetIsRegistered.WithName("Fluffy")
+                .ByCopying("Spot")
+                .AndSaved();
+            ThenTheBasket.ShouldList("Fluffy");
+            WhenTheBasket.IsAddedWith("Fluffy");
+            ThenTheBasket.ShouldContain("Fluffy", "100.00");
+        }
     }
 }

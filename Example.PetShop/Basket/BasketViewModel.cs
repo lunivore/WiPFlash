@@ -32,7 +32,7 @@ namespace Example.PetShop.Basket
             _messenger = messenger;
             _petBasket = new List<Pet>();
             _accessoryBasket = new List<Accessory>();
-            _petRepository.UnsoldPets.CollectionChanged += (o, e) => NotifyPropertyChanged("AllAvailablePets");
+            _petRepository.PropertyChanged += (o, e) => NotifyPropertyChanged("AllAvailablePets");
             _accessoryRepository.OnAccessorySelected((o, e) =>
                                                             {
                                                                 foreach (var accessory in e.Accessories)
