@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -14,13 +15,18 @@ namespace Example.PetShop.PetRegistry
 {
     public class RegistrationViewModel : INotifyPropertyChanged, IHaveATitle
     {
-        private readonly PetRepository _petRepository;
+        private readonly ILookAfterPets _petRepository;
         private Pet _pet;
 
-        public RegistrationViewModel(PetRepository petRepository)
+        public RegistrationViewModel(ILookAfterPets petRepository)
         {
             _petRepository = petRepository;
             _pet = new Pet();
+        }
+
+        public IList<Pet> Pets
+        {
+            get { return _petRepository.UnsoldPets; }
         }
 
         public string Title
@@ -85,6 +91,11 @@ namespace Example.PetShop.PetRegistry
             get { return new SavePetCommand(this); }
         }
 
+        public ICommand CopyCommand
+        {
+            get { return new CopyPetCommand(this); }
+        }
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };
@@ -115,5 +126,22 @@ namespace Example.PetShop.PetRegistry
         }
 
         #endregion
+
+        #region Nested type: CopyPetCommand
+
+        public class CopyPetCommand : DelegateCommand<object>
+        {
+            internal CopyPetCommand(RegistrationViewModel model)
+                : base(o =>
+                {
+                    var pet = (Pet) o;
+                    model._pet = pet.CopyDetailsWithName(model._pet.Name);
+                    model.NotifyPropertyChanged("Name", "Price", "PetType", "FoodType", "Rules");
+                })
+            {
+            }
+        }
+
+        #endregion       
     }
 }

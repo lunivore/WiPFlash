@@ -13,13 +13,13 @@ namespace Example.PetShop.Domain
     public class PetRepository : ILookAfterPets
     {
         private readonly History _history;
-        private readonly ObservableCollection<Pet> _unsoldPets;
-        private readonly ObservableCollection<Pet> _pets;
+        private readonly List<Pet> _unsoldPets;
+        private readonly List<Pet> _pets;
 
         public PetRepository(History history)
         {
             _history = history;
-            _pets = new ObservableCollection<Pet>
+            _pets = new List<Pet>
                         {
                             new Pet
                                 {
@@ -43,7 +43,7 @@ namespace Example.PetShop.Domain
                                     Price = "54.00"
                                 },
                         };
-            _unsoldPets = new ObservableCollection<Pet>(_pets);
+            _unsoldPets = new List<Pet>(_pets);
         }
 
         public History History
@@ -51,12 +51,17 @@ namespace Example.PetShop.Domain
             get { return _history; }
         }
 
-        public virtual ObservableCollection<Pet> UnsoldPets
+        public virtual IList<Pet> UnsoldPets
         {
             get
             {
                 return _unsoldPets;
             }
+        }
+
+        public IList<Pet> Pets
+        {
+            get { return _pets; }
         }
 
         #region INotifyPropertyChanged Members
@@ -71,11 +76,10 @@ namespace Example.PetShop.Domain
             string petFood = (pet.FoodType == null) ? string.Empty : pet.FoodType.Text;
             _history.AddText(string.Format("{0} the {1} registered at a price of £{2}. Food: {3}", pet.Name, petType,
                                            pet.Price, petFood));
+
             new Thread(() =>
                            {
-                               // Mimics talking to a real repository
                                Thread.Sleep(400);
-                               Console.WriteLine("Got a new pet in the repository");
                                _pets.Add(pet);
                                _unsoldPets.Add(pet);
                                PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
