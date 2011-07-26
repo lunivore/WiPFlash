@@ -18,9 +18,9 @@ namespace Example.PetShop.Scenarios
                 .WithType("Rabbit")
                 .WhoEats("Carnivorous")
                 .WhoHasRules("Dangerous", "No Children")
-                .AtAPrice("100.00")
+                .AtAPrice(100.00)
                 .AndSaved();
-            ThenTheHistory.ShouldContain("Snowdrop the Rabbit registered at a price of £100.00. Food: Carnivorous");
+            ThenTheHistory.ShouldContain(100.00, "Snowdrop", "Rabbit", "Carnivorous");
             AndTheHistory.ShouldIncludeMostRecentPet("Snowdrop");
             ThenTheBasket.ShouldList("Snowdrop");           
         }
@@ -31,8 +31,8 @@ namespace Example.PetShop.Scenarios
             GivenThePetshop.IsRunning();
             WhenTheBasket.IsAddedWith("Dancer");
             ThenTheBasket.ShouldNotList("Dancer");
-            ThenTheBasket.ShouldContain("Dancer", "54.00");
-            ThenTheBasket.ShouldHaveTotal("54.00");
+            ThenTheBasket.ShouldContain("Dancer", 54.00);
+            ThenTheBasket.ShouldHaveTotal(54.00);
             WhenTheBasket.IsACardPayment()
                 .RequiresAVATReceipt()
                 .IsPurchased();
@@ -45,9 +45,9 @@ namespace Example.PetShop.Scenarios
         {
             GivenThePetshop.IsRunning();
             WhenTheAccessories.AreSelected("Rubber bone", "Dog Collar (Large)", "Dog Collar (Small)");
-            ThenTheBasket.ShouldContain("Rubber bone", "1.50");
-            ThenTheBasket.ShouldContain("Dog Collar (Large)", "10.00");
-            ThenTheBasket.ShouldContain("Dog Collar (Small)", "9.00");
+            ThenTheBasket.ShouldContain("Rubber bone", 1.50);
+            ThenTheBasket.ShouldContain("Dog Collar (Large)", 10.00);
+            ThenTheBasket.ShouldContain("Dog Collar (Small)", 9.00);
             WhenTheBasket.IsPurchased();
             ThenTheBasket.ShouldBeEmpty();
         }
@@ -69,7 +69,7 @@ namespace Example.PetShop.Scenarios
             WhenTheBasket.IsReset();
             ThenAMessageBox.ShouldAskUs("Are you sure you want to clear the contents of the basket?");
             WhenTheMessageBox.IsDeclined();
-            ThenTheBasket.ShouldContain("Spot", "100.00");
+            ThenTheBasket.ShouldContain("Spot", 100.00);
         }
 
         [Test]

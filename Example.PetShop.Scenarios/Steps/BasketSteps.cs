@@ -32,10 +32,11 @@ namespace Example.PetShop.Scenarios.Steps
             _universe.Window.Find<ComboBox>("basketPetInput").Select("Pet[" + name + "]");
         }
 
-        public void ShouldHaveTotal(string expectedTotal)
+        public void ShouldHaveTotal(double expectedTotal)
         {
+            string expectedTotalAsString = expectedTotal.ToString("0.00");
             string actualTotal = _universe.Window.Find<Label>("totalOutput").Text;
-            Assert.AreEqual(expectedTotal, actualTotal);
+            Assert.AreEqual(expectedTotalAsString, actualTotal);
         }
 
         public BasketSteps IsACardPayment()
@@ -62,11 +63,11 @@ namespace Example.PetShop.Scenarios.Steps
             Assert.False(new List<string>(goodsAvailable).Contains("Pet[" + name + "]"));
         }
 
-        public void ShouldContain(string name, string price)
+        public void ShouldContain(string name, double price)
         {
             _universe.Window.Find<Tab>(FindBy.WpfText("Basket")).Select();
             var basketContents = _universe.Window.Find<GridView>("basketOutput");
-            Assert.True(basketContents.ContainsRow(name, price));
+            Assert.True(basketContents.ContainsRow(name, price.ToString("0.00")));
         }
 
         public void IsReset()

@@ -71,6 +71,7 @@
     <Compile Include="Components\IContainChildren.cs" />
     <Compile Include="Components\Devices\Mouse.cs" />
     <Compile Include="Components\WindowFinder.cs" />
+    <Compile Include="Exceptions\FailureToSetTextException.cs" />
     <Compile Include="Framework\ConditionBasedFinder.cs" />
     <Compile Include="Framework\ConditionDescriber.cs" />
     <Compile Include="Framework\IDescribeConditions.cs" />

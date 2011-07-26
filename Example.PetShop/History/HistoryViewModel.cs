@@ -39,6 +39,7 @@ namespace Example.PetShop.History
         public string HistorySoFar
         {
             get { return _history.Text; }
+            set { _history.Text = value; }
         }
 
         #region INotifyPropertyChanged Members
