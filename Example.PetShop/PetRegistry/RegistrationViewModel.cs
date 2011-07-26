@@ -58,7 +58,7 @@ namespace Example.PetShop.PetRegistry
         public string Price
         {
             get { return _pet.Price; }
-            set { _pet.Price = value; }
+            set { _pet.PriceInPence = (int)(double.Parse(value)*100); }
         }
 
         public PetType PetType

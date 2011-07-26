@@ -20,8 +20,8 @@ namespace WiPFlash.Behavior.Component
         {
             Window window = LaunchPetShopWindow();
             window.Find<Tab>(FindBy.WpfText("History")).Select();
-            var block = window.Find<TextBlock>("historyOutput");
-            Assert.AreEqual("History so far:" + Environment.NewLine, block.Text);
+            var block = window.Find<TextBlock>("historyDescription");
+            Assert.AreEqual("A short summary of what has already happened:", block.Text);
         }
 
         [Test]
