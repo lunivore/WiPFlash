@@ -171,13 +171,13 @@ namespace Example.PetShop.Basket
         public bool Cheque
         {
             set { SetPaymentMethod(PaymentMethod.Cheque); }
-            get { return _paymentMethod == PaymentMethod.Cash; }
+            get { return _paymentMethod == PaymentMethod.Cheque; }
         }
 
         public bool Card
         {
             set { SetPaymentMethod(PaymentMethod.Card); }
-            get { return _paymentMethod == PaymentMethod.Cash; }
+            get { return _paymentMethod == PaymentMethod.Card; }
         }
 
         private void SetPaymentMethod(PaymentMethod method)
