@@ -89,10 +89,6 @@
     <AppDesigner Include="Properties\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Examples\WiPFlash.Behavior.csproj">
-      <Project>{B45E10DF-598D-4659-A0B1-40BE2D61DBDC}</Project>
-      <Name>WiPFlash.Behavior</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Example.PetShop\Example.PetShop.csproj">
       <Project>{2F0CEBB3-A042-4C4D-A5A6-23B83928F0DE}</Project>
       <Name>Example.PetShop</Name>

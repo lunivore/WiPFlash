@@ -37,6 +37,7 @@ namespace Example.PetShop.Scenarios
                 .RequiresAVATReceipt()
                 .IsPurchased();
             ThenTheBasket.ShouldBeEmpty();
+            ThenTheBasket.ShouldHaveTotal(0.00);
         }
 
         [Test]
@@ -69,6 +70,18 @@ namespace Example.PetShop.Scenarios
             ThenAMessageBox.ShouldAskUs("Are you sure you want to clear the contents of the basket?");
             WhenTheMessageBox.IsDeclined();
             ThenTheBasket.ShouldContain("Spot", 100.00);
+        }
+
+        [Test]
+        public void ICanCopyAnExistingPetsDetails()
+        {
+            GivenThePetshop.IsRunning();
+            WhenAPetIsRegistered.WithName("Fluffy")
+                .ByCopying("Spot")
+                .AndSaved();
+            ThenTheBasket.ShouldList("Fluffy");
+            WhenTheBasket.IsAddedWith("Fluffy");
+            ThenTheBasket.ShouldContain("Fluffy", 100.00);
         }
     }
 }
