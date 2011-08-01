@@ -1,5 +1,6 @@
 #region
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
@@ -49,6 +50,19 @@ namespace Example.PetShop.Domain
         public override string ToString()
         {
             return "Pet[" + Name + "]";
+        }
+
+        public Pet CopyDetailsWithName(string name)
+        {
+            return new Pet
+                       {
+                           Name = name,
+                           _sold = false,
+                           FoodType = FoodType,
+                           PriceInPence = PriceInPence,
+                           Rules = Rules,
+                           Type = Type
+                       };
         }
     }
 }

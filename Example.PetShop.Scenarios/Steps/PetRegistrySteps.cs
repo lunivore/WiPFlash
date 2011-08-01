@@ -1,7 +1,10 @@
 #region
 
+using System;
+using System.Windows.Automation;
 using Example.PetShop.Scenarios.Utils;
 using WiPFlash.Components;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -53,6 +56,18 @@ namespace Example.PetShop.Scenarios.Steps
         public void AndSaved()
         {
             _universe.Window.Find<Button>("petSaveButton").Click();
+        }
+
+        public PetRegistrySteps ByCopying(string name)
+        {
+            // Need to click *off* the current text box to save the details
+            // This is a Microsoft WPF thing, not a WiPFlash thing.
+            _universe.Window.Find<TextBox>("petPriceInput").Element.SetFocus();
+            _universe.Window.Find<TextBox>("petNameInput").Element.SetFocus();
+            _universe.Window.Find<Label>("copyPetContextTarget")
+                .InvokeContextMenu(FindBy.WpfName("copyPetMenu"))
+                .Select("Pet[" + name + "]");
+            return this;
         }
     }
 }

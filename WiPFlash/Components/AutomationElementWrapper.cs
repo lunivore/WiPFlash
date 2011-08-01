@@ -2,10 +2,17 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading;
+using System.Windows;
 using System.Windows.Automation;
+using System.Windows.Controls;
+using WiPFlash.Components.Devices;
+using WiPFlash.Exceptions;
 using WiPFlash.Framework;
 using WiPFlash.Framework.Events;
+using WiPFlash.Framework.Patterns;
+using Condition=System.Windows.Automation.Condition;
 
 #endregion
 
@@ -69,6 +76,14 @@ namespace WiPFlash.Components
         }
 
         protected abstract IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor { get; }
+
+        public Menu InvokeContextMenu(Condition condition)
+        {
+            var mouse = new Mouse();
+            mouse.RightClick(this);
+
+            return new Window(AutomationElement.RootElement, "Desktop").Find<Menu>(condition);
+        }
 
     }
 }

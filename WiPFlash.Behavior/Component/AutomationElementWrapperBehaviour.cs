@@ -81,6 +81,16 @@ namespace WiPFlash.Behavior.Component
             Assert.IsFalse(window.Find<Button>("resetButton").IsEnabled);
             Assert.IsTrue(window.Find<Button>("petSaveButton").IsEnabled);
         }
+
+        [Test]
+        public void ShouldProvideAContextMenuIfItExists()
+        {
+            var window = LaunchPetShopWindow();
+            var label = window.Find<Label>("copyPetContextTarget");
+            var contextMenu = label
+                .InvokeContextMenu(FindBy.WpfName("copyPetMenu"));
+            contextMenu.Select(contextMenu.Items[0]);
+        }
     }
 
     class StubAutomationElementWrapper : AutomationElementWrapper

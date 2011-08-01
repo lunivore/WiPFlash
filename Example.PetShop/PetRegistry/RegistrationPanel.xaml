@@ -1,15 +1,36 @@
 <StackPanel x:Class="Example.PetShop.PetRegistry.RegistrationPanel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            Orientation="Vertical">
+	xmlns:PetRegistry="clr-namespace:Example.PetShop.PetRegistry"
+            Orientation="Vertical" Name="registrationPanel">
     <StackPanel.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles/LabelledFieldStyles.xaml" />
+                <ResourceDictionary>
+                    <Style TargetType="{x:Type MenuItem}" x:Key="ContextMenuItemStyle">
+                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type PetRegistry:RegistrationPanel}},Path=DataContext.CopyCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding}" />
+                    </Style>
+                </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </StackPanel.Resources>
-
+    <Label Name="copyPetContextTarget" 
+           Content="(Right-click here to copy an existing pet's details)" Width="Auto"
+           MouseRightButtonDown="copyPetContextTarget_MouseRightButtonDown">
+        <Label.ContextMenu>
+            <ContextMenu Name="copyPetMenu" ItemsSource="{Binding Pets}"
+                        ItemContainerStyle="{StaticResource ContextMenuItemStyle}"
+                        Visibility="Visible">
+                <ContextMenu.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </ContextMenu.ItemTemplate>
+            </ContextMenu>
+        </Label.ContextMenu>
+    </Label>
     <StackPanel Orientation="Horizontal">
         <Label>Name:</Label>
         <TextBox Name="petNameInput" Text="{Binding Path=Name}" />

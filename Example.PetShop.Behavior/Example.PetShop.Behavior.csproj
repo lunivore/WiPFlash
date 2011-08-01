@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Basket\BasketViewModelBehavior.cs" />
+    <Compile Include="PetRegistry\RegistrationViewModelBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

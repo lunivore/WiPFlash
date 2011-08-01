@@ -6,7 +6,8 @@ namespace Example.PetShop.Domain
 {
     public interface ILookAfterPets : INotifyPropertyChanged
     {
-        ObservableCollection<Pet> UnsoldPets { get; }
+        IList<Pet> UnsoldPets { get; }
+        IList<Pet> Pets { get; }
         void Save(Pet pet);
         void PetWasSold(Pet pet);
         List<Pet> LastPets(int number);
