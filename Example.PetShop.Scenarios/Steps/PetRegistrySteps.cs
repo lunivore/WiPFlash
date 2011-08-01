@@ -1,0 +1,58 @@
+#region
+
+using Example.PetShop.Scenarios.Utils;
+using WiPFlash.Components;
+
+#endregion
+
+namespace Example.PetShop.Scenarios.Steps
+{
+    public class PetRegistrySteps
+    {
+        private readonly Universe _universe;
+
+        public PetRegistrySteps(Universe universe)
+        {
+            _universe = universe;
+        }
+
+        public PetRegistrySteps WithName(string name)
+        {
+            _universe.Window.Find<TextBox>("petNameInput").Text = name;
+            return this;
+        }
+
+        public PetRegistrySteps WithType(string petType)
+        {
+            _universe.Window.Find<ComboBox>("petTypeInput").Select("PetType[" + petType + "]");
+            return this;
+        }
+
+        public PetRegistrySteps WhoEats(string food)
+        {
+            _universe.Window.Find<ComboBox>("petFoodInput").Select("PetFood[" + food + "]");
+            return this;
+        }
+
+        public PetRegistrySteps WhoHasRules(params string[] rules)
+        {
+            foreach (var rule in rules)
+            {
+                _universe.Window.Find<ListBox>("petRulesInput").Select("Rule[" + rule + "]");
+            }
+            return this;
+        }
+
+
+        public PetRegistrySteps AtAPrice(double price)
+        {
+            _universe.Window.Find<TextBox>("petPriceInput").Text = price.ToString("0.00");
+            return this;
+        }
+
+        public void AndSaved()
+        {
+            _universe.Window.Find<Button>("petSaveButton").Click();
+        }
+    }
+}
