@@ -67,6 +67,12 @@ namespace Example.PetShop.PetRegistry
             set { _pet.Type = value; }
         }
 
+        public string NewPetType
+        {
+            get { return _pet.Type.Name; }
+            set { _pet.Type = new PetType(value); }
+        }
+
         public PetFood FoodType
         {
             get { return _pet.FoodType; }

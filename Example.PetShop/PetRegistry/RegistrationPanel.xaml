@@ -37,7 +37,9 @@
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Type:</Label>
-        <ComboBox IsEditable="True" Name="petTypeInput" SelectedItem="{Binding Path=PetType}" ItemsSource="{Binding Path=PetTypes}" SelectedValuePath="Name" DisplayMemberPath="Name"/>
+        <ComboBox IsEditable="True" Name="petTypeInput" SelectedItem="{Binding PetType}" 
+                  ItemsSource="{Binding PetTypes}" SelectedValuePath="Name" DisplayMemberPath="Name"
+                  Text="{Binding NewPetType}"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal">
         <Label>Eats:</Label>
