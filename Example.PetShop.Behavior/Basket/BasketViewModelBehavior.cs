@@ -193,5 +193,25 @@ namespace Example.PetShop.Behavior.Basket
             // Then the basket should be empty again
             Assert.AreEqual(0, _basketModel.Basket.Length);
         }
+
+        [Test]
+        public void ShouldNotAllowPurchaseUntilItemAddedAndPaymentMethodSelected()
+        {
+            // Given an empty basket with an item
+            // Then purchasing should not be allowed
+            Assert.IsFalse(_basketModel.PurchaseAllowed);
+
+            // When an item is added
+            _basketModel.PetSelectedForPurchase = _blackie;
+
+            // Then it should still not be allowed
+            Assert.IsFalse(_basketModel.PurchaseAllowed);
+
+            // When a payment method is selected
+            _basketModel.Cash = true;
+
+            // Then purchasing should be allowed
+            Assert.IsTrue(_basketModel.PurchaseAllowed);
+        }
     }
 }

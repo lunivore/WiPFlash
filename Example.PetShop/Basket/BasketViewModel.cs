@@ -21,6 +21,7 @@ namespace Example.PetShop.Basket
         private readonly ILookAfterAccessories _accessoryRepository;
         private readonly IHandleMessages _messenger;
         private readonly List<Accessory> _accessoryBasket;
+        private PaymentMethod _paymentMethod = PaymentMethod.NoPaymentMethodSelected;
 
         public BasketViewModel(
             ILookAfterPets petRepository, 
@@ -42,13 +43,13 @@ namespace Example.PetShop.Basket
                                                                         _accessoryBasket.Add(accessory);
                                                                     }
                                                                 }
-                                                                NotifyPropertyChanged("Basket", "HasItemsInBasket");
+                                                                NotifyPropertyChanged("Basket", "HasItemsInBasket", "PurchaseAllowed");
                                                             });
             _accessoryRepository.OnAccessoryUnselected((o, e) =>
                                                               {
                                                                   _accessoryBasket.RemoveAll(
                                                                       a => e.Accessories.Contains(a));
-                                                                  NotifyPropertyChanged("Basket", "HasItemsInBasket");
+                                                                  NotifyPropertyChanged("Basket", "HasItemsInBasket", "PurchaseAllowed");
                                                               });                                  
         }
 
@@ -161,10 +162,40 @@ namespace Example.PetShop.Basket
             }
         }
 
-        public bool Cash{ set; get; }
-        public bool Cheque { set; get; }
-        public bool Card { set; get; }
+        public bool Cash
+        {
+            set { SetPaymentMethod(PaymentMethod.Cash); }
+            get { return _paymentMethod == PaymentMethod.Cash; }
+        }
+
+        public bool Cheque
+        {
+            set { SetPaymentMethod(PaymentMethod.Cheque); }
+            get { return _paymentMethod == PaymentMethod.Cash; }
+        }
+
+        public bool Card
+        {
+            set { SetPaymentMethod(PaymentMethod.Card); }
+            get { return _paymentMethod == PaymentMethod.Cash; }
+        }
+
+        private void SetPaymentMethod(PaymentMethod method)
+        {
+            _paymentMethod = method;
+            NotifyPropertyChanged("Cash", "Cheque", "Card", "PurchaseAllowed");
+        }
+
         public bool VatReceipt { set; get; }
+
+        public bool PurchaseAllowed
+        {
+            get
+            {
+                var paymentSelected = _paymentMethod.IsValid;
+                return paymentSelected && HasItemsInBasket;
+            }
+        }
 
         #region INotifyPropertyChanged Members
 
