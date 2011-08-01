@@ -21,7 +21,7 @@ namespace Example.PetShop.PetRegistry
         public RegistrationViewModel(ILookAfterPets petRepository)
         {
             _petRepository = petRepository;
-            _pet = new Pet();
+            _pet = new Pet { Type = new PetType("") };
         }
 
         public IList<Pet> Pets
