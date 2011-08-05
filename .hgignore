@@ -1,0 +1,7 @@
+syntax: regexp
+.*/obj/.*
+.*_ReSharper.*
+.*/bin/.*
+.*\.resharper\.user
+.*\.suo$
+.*\.csproj\.user

@@ -1,0 +1,41 @@
+﻿<Window x:Class="Example.PetShop.Shell"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:cal="http://www.codeplex.com/CompositeWPF"
+    Title="WiPFlash"
+    SizeToContent="WidthAndHeight"
+    Name="petShopWindow">
+    <Window.Resources>
+        <Style TargetType="{x:Type TabItem}" x:Key="TabItemRegionStyle">
+            <Setter Property="Header" Value="{Binding RelativeSource={RelativeSource Self}, Path=Content.DataContext.Title}" />
+        </Style>
+        <Style TargetType="{x:Type MenuItem}" x:Key="TabMenuItemStyle">
+            <Setter Property="Command" Value="{Binding Path=TabTo}" />
+            <Setter Property="CommandParameter" Value="{Binding Name}" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Menu IsMainMenu="True" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" x:Name="mainMenu">
+            <MenuItem Header="Tab" ItemsSource="{Binding Tabs}" x:Name="tabMenu"
+                ItemContainerStyle="{StaticResource TabMenuItemStyle}">
+                <MenuItem.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Name}"/>
+                    </DataTemplate>
+                </MenuItem.ItemTemplate>
+            </MenuItem>
+        </Menu>
+        <TabControl Margin="10, 10, 10, 10" cal:RegionManager.RegionName="Admin"  ItemContainerStyle="{StaticResource TabItemRegionStyle}" 
+                    Grid.Row="1" Grid.Column="0" />
+        <TabControl Margin="10, 10, 10, 10" cal:RegionManager.RegionName="Sales"  ItemContainerStyle="{StaticResource TabItemRegionStyle}" 
+                    Grid.Row="1" Grid.Column="1" />
+    </Grid>
+</Window>
