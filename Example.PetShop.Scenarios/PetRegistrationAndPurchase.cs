@@ -37,7 +37,7 @@ namespace Example.PetShop.Scenarios
                 .RequiresAVATReceipt()
                 .IsPurchased();
             ThenTheBasket.ShouldBeEmpty();
-            ThenTheBasket.ShouldHaveTotal("0.00");
+            ThenTheBasket.ShouldHaveTotal(0.00);
         }
 
         [Test]
@@ -81,7 +81,7 @@ namespace Example.PetShop.Scenarios
                 .AndSaved();
             ThenTheBasket.ShouldList("Fluffy");
             WhenTheBasket.IsAddedWith("Fluffy");
-            ThenTheBasket.ShouldContain("Fluffy", "100.00");
+            ThenTheBasket.ShouldContain("Fluffy", 100.00);
         }
     }
 }

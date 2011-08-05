@@ -37,7 +37,7 @@ namespace WiPFlash.Behavior.Framework
                                                 eventOccurred = true;
                                                 return combo.Selection.Equals("PetFood[Carnivorous]");
                                             }, new TimeSpan(0, 0, 1),
-                                 (src) => Assert.Fail(), new List<AutomationEventWrapper> {new StructureChangeEvent(TreeScope.Element)});
+                                 (ex) => Assert.Fail(), new List<AutomationEventWrapper> {new StructureChangeEvent(TreeScope.Element)});
 
             // Then we should be notified when the event occurs
             Assert.IsTrue(eventOccurred);
@@ -53,7 +53,7 @@ namespace WiPFlash.Behavior.Framework
             new Waiter().WaitFor(new Panel(AutomationElement.RootElement, "Desktop"),
                                  (src, e) => checkProvider.Object.Check(),
                                  new TimeSpan(0, 0, 5),
-                                 (src) => Assert.Fail("Could not handle guaranteed event"),
+                                 (ex) => Assert.Fail("Could not handle guaranteed event"),
                                  new List<AutomationEventWrapper>());
 
             // Then it should only have run once

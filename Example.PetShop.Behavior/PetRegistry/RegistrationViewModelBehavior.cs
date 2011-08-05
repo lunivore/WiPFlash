@@ -22,7 +22,7 @@ namespace Example.PetShop.Behavior.PetRegistry
                           {
                               Name = "Goldie",
                               FoodType = PetFood.ALL[3],
-                              Price = "100.00",
+                              PriceInPence = 10000,
                               Rules = new List<Rule>{Rule.SELL_IN_PAIRS},
                               Sold = true,
                               Type = new PetType("Carp")
@@ -35,10 +35,15 @@ namespace Example.PetShop.Behavior.PetRegistry
         [Test]
         public void ShouldCopyTheDetailsButNotNameOfAnExistingPet()
         {
+            // Given an existing pet
             var model = new RegistrationViewModel(_petRepository.Object);
             model.Name = "Nemo";
+
+            // When I copy that pet
             model.CopyCommand.Execute(_goldie);
 
+            // Then it should copy all the details
+            // but not the name
             Assert.AreEqual("100.00", model.Price);
             Assert.Contains(Rule.SELL_IN_PAIRS, model.Rules);
             Assert.AreEqual(_goldie.FoodType, model.FoodType);

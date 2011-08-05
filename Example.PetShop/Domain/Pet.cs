@@ -59,7 +59,7 @@ namespace Example.PetShop.Domain
                            Name = name,
                            _sold = false,
                            FoodType = FoodType,
-                           Price = Price,
+                           PriceInPence = PriceInPence,
                            Rules = Rules,
                            Type = Type
                        };
