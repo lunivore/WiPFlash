@@ -76,6 +76,11 @@ namespace Example.PetShop.Scenarios
             ThenTheBasket.ShouldList("Fluffy");
             WhenTheBasket.IsAddedWith("Fluffy");
             ThenTheBasket.ShouldContain("Fluffy", 100.00);
+
+            WhenAPetIsRegistered.WithName("Nutmeg")
+                .ByCopying("Fluffy")
+                .AndSaved();
+            ThenTheBasket.ShouldList("Nutmeg");
         }
     }
 }

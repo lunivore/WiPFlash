@@ -4,10 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
+using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
+using Microsoft.Practices.Composite.Presentation.Events;
 
 #endregion
 
@@ -17,16 +20,25 @@ namespace Example.PetShop.PetRegistry
     {
         private readonly ILookAfterPets _petRepository;
         private Pet _pet;
+        private readonly ObservableCollection<CopiablePet> _copiablePets;
 
-        public RegistrationViewModel(ILookAfterPets petRepository)
+        public RegistrationViewModel(ILookAfterPets petRepository, IEventAggregator events)
         {
             _petRepository = petRepository;
             _pet = new Pet();
+            _copiablePets = new ObservableCollection<CopiablePet>(petRepository.Pets.ToList().ConvertAll(pet => ToCopiablePet(pet)));
+
+            events.GetEvent<NewPetEvent>().Subscribe(pet => _copiablePets.Add(ToCopiablePet(pet)), ThreadOption.UIThread);
         }
 
-        public IList<Pet> Pets
+        private CopiablePet ToCopiablePet(Pet pet)
         {
-            get { return _petRepository.UnsoldPets; }
+            return new CopiablePet(pet, new CopyPetCommand(this));
+        }
+
+        public ObservableCollection<CopiablePet> CopiablePets
+        {
+            get { return _copiablePets; }
         }
 
         public string Title
@@ -91,7 +103,7 @@ namespace Example.PetShop.PetRegistry
             get { return new SavePetCommand(this); }
         }
 
-        public ICommand CopyCommand
+        private ICommand CopyCommand
         {
             get { return new CopyPetCommand(this); }
         }
@@ -143,5 +155,32 @@ namespace Example.PetShop.PetRegistry
         }
 
         #endregion       
+    }
+
+    public class CopiablePet
+    {
+        private readonly Pet _pet;
+        private readonly ICommand _copyCommand;
+
+        public CopiablePet(Pet pet, ICommand copyCommand)
+        {
+            _pet = pet;
+            _copyCommand = copyCommand;
+        }
+
+        public ICommand CopyCommand
+        {
+            get { return _copyCommand; }
+        }
+
+        public Pet Pet
+        {
+            get { return _pet; }
+        }
+
+        public override string ToString()
+        {
+            return _pet.ToString();
+        }
     }
 }
