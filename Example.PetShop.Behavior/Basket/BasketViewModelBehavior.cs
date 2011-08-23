@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using Example.PetShop.Basket;
+using Example.PetShop.Behavior.ExampleUtils;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
 using Moq;
@@ -24,6 +25,7 @@ namespace Example.PetShop.Behavior.Basket
         private EventHandler<AccessoryEventArgs> _accessoriesSelected = delegate { };
         private EventHandler<AccessoryEventArgs> _accessoriesUnselected = delegate { };
         private List<string> _propertiesChanged;
+        private StubEventAggregator _events;
 
         [SetUp]
         public void CreateBasket()
@@ -43,9 +45,12 @@ namespace Example.PetShop.Behavior.Basket
 
             // Given we can respond to messages
             _messenger = new Mock<IHandleMessages>();
-                
+
+            // Given we can publish events
+            _events = new StubEventAggregator();
+
             // Given a basket model
-            _basketModel = new BasketViewModel(_petRepository.Object, _accessoryRepository.Object, _messenger.Object);
+            _basketModel = new BasketViewModel(_petRepository.Object, _accessoryRepository.Object, _messenger.Object, _events);
 
             // Given we're listening to the properties that change
             _propertiesChanged = new List<string>();
@@ -198,6 +203,35 @@ namespace Example.PetShop.Behavior.Basket
             // Then the basket should be empty again
             Assert.AreEqual(0, _basketModel.Basket.Length);
             Assert.AreEqual("0.00", _basketModel.Total);
+        }
+
+        [Test]
+        public void ShouldCorrectlyTotalUpTheContentsOfTheBasket()
+        {
+            // Given an accessory and a pet
+            var collar = new Accessory {Name = "Large Collar", PriceInPence = 1000};
+            var horse = new Pet {Name = "Whinny", PriceInPence = 1999};
+
+            _petRepository.SetupGet(p => p.UnsoldPets).Returns(new ObservableCollection<Pet> { horse });
+
+            // When we select an accessory
+            _accessoriesSelected(this, new AccessoryEventArgs(new List<Accessory> { collar }));
+
+            // Then the basket should show the appropriate total
+            Assert.AreEqual(10.00.ToString("0.00"), _basketModel.Total);
+
+            // And the basket should have told the Gui
+            Assert.Contains("Total", _propertiesChanged);
+
+            // When we select a pet
+            _propertiesChanged.Clear();
+            _basketModel.PetSelectedForPurchase = horse;
+
+            // Then the basket should show the appropriate total
+            Assert.AreEqual("29.99", _basketModel.Total);
+
+            // And the basket should have told the Gui again
+            Assert.Contains("Total", _propertiesChanged);
         }
     }
 }
