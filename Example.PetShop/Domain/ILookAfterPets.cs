@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Example.PetShop.Domain
 {
-    public interface ILookAfterPets : INotifyPropertyChanged
+    public interface ILookAfterPets
     {
         IList<Pet> UnsoldPets { get; }
         IList<Pet> Pets { get; }

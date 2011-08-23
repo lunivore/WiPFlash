@@ -3,6 +3,7 @@
 using System.Windows;
 using Example.PetShop.Controls;
 using Example.PetShop.Domain;
+using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Modularity;
 using Microsoft.Practices.Composite.UnityExtensions;
 
@@ -14,8 +15,9 @@ namespace Example.PetShop
     {
         protected override DependencyObject CreateShell()
         {
+            var events = Container.Resolve<IEventAggregator>();
             var history = new Domain.History();
-            var petRepository = new PetRepository(history);
+            var petRepository = new PetRepository(history, events);
             var accessoryRepository = new AccessoryRepository();
             Container.RegisterInstance(history);
             Container.RegisterInstance(petRepository);
