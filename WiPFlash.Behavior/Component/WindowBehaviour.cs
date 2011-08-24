@@ -22,10 +22,10 @@ namespace WiPFlash.Behavior.Component
             var window = new Window(anElement, finder.Object);
 
             finder.Setup(x => x.Contains(window, It.IsAny<PropertyCondition>())).Returns(true);
-            Assert.IsTrue(window.Contains("here"));
+            Assert.IsTrue(window.Contains("pretended.to.find.this"));
             
             finder.Setup(x => x.Contains(window, It.IsAny<PropertyCondition>())).Returns(false);
-            Assert.IsFalse(window.Contains("not.here"));
+            Assert.IsFalse(window.Contains("pretended.not.to.find.this"));
 
         }
 
@@ -38,7 +38,7 @@ namespace WiPFlash.Behavior.Component
             int processId = int.Parse(window.Element.GetCurrentPropertyValue(AutomationElement.ProcessIdProperty).ToString());
             window.Close();
 
-            var windows = AutomationElement.RootElement.FindAll(TreeScope.Descendants,
+            var windows = AutomationElement.RootElement.FindAll(TreeScope.Children,
                                                                 new AndCondition(
                                                                     new PropertyCondition(AutomationElement.AutomationIdProperty,
                                                                                           EXAMPLE_APP_WINDOW_NAME),

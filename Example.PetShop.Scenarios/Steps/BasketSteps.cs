@@ -42,7 +42,6 @@ namespace Example.PetShop.Scenarios.Steps
         public BasketSteps IsACardPayment()
         {
             _universe.Window.Find<RadioButton>("cardPaymentInput").Select();
-
             return this;
         }
 
@@ -54,6 +53,14 @@ namespace Example.PetShop.Scenarios.Steps
 
         public void IsPurchased()
         {
+            var cardButton = _universe.Window.Find<RadioButton>("cardPaymentInput");
+            var cardPayment = cardButton.Selected;
+            var cashPayment = _universe.Window.Find<RadioButton>("cashPaymentInput").Selected;
+            var chequePayment = _universe.Window.Find<RadioButton>("chequePaymentInput").Selected;
+
+            var validPaymentTypeSelected = cardPayment || cashPayment || chequePayment;
+            if (!validPaymentTypeSelected) { cardButton.Select();}
+
             _universe.Window.Find<Button>("purchaseButton").Click();
         }
 

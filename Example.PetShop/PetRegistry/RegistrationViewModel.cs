@@ -25,7 +25,7 @@ namespace Example.PetShop.PetRegistry
         public RegistrationViewModel(ILookAfterPets petRepository, IEventAggregator events)
         {
             _petRepository = petRepository;
-            _pet = new Pet();
+            _pet = new Pet { Type = new PetType("") };
             _copiablePets = new ObservableCollection<CopiablePet>(petRepository.Pets.ToList().ConvertAll(pet => ToCopiablePet(pet)));
 
             events.GetEvent<NewPetEvent>().Subscribe(pet => _copiablePets.Add(ToCopiablePet(pet)), ThreadOption.UIThread);
@@ -77,6 +77,12 @@ namespace Example.PetShop.PetRegistry
         {
             get { return _pet.Type; }
             set { _pet.Type = value; }
+        }
+
+        public string NewPetType
+        {
+            get { return _pet.Type.Name; }
+            set { _pet.Type = new PetType(value); }
         }
 
         public PetFood FoodType

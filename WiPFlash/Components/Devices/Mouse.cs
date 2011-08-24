@@ -43,7 +43,8 @@ namespace WiPFlash.Components.Devices
                                 MouseData = 0,
                                 DwFlags = mouseButtonAction,
                                 Time = 0,
-                                DwType = InputMouse
+                                DwType = InputMouse,
+                                MouseExtraInfo = new IntPtr()
                             };
             return input;
         }

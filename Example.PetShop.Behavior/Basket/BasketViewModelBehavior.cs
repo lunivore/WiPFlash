@@ -209,9 +209,8 @@ namespace Example.PetShop.Behavior.Basket
         public void ShouldCorrectlyTotalUpTheContentsOfTheBasket()
         {
             // Given an accessory and a pet
-            var collar = new Accessory {Name = "Large Collar", PriceInPence = 1000};
-            var horse = new Pet {Name = "Whinny", PriceInPence = 1999};
-
+            var collar = new Accessory { Name = "Large Collar", PriceInPence = 1000 };
+            var horse = new Pet { Name = "Whinny", PriceInPence = 1999 };
             _petRepository.SetupGet(p => p.UnsoldPets).Returns(new ObservableCollection<Pet> { horse });
 
             // When we select an accessory
@@ -232,6 +231,26 @@ namespace Example.PetShop.Behavior.Basket
 
             // And the basket should have told the Gui again
             Assert.Contains("Total", _propertiesChanged);
+
+        }
+
+        public void ShouldNotAllowPurchaseUntilItemAddedAndPaymentMethodSelected()
+        {
+            // Given an empty basket with an item
+            // Then purchasing should not be allowed
+            Assert.IsFalse(_basketModel.PurchaseAllowed);
+
+            // When an item is added
+            _basketModel.PetSelectedForPurchase = _blackie;
+
+            // Then it should still not be allowed
+            Assert.IsFalse(_basketModel.PurchaseAllowed);
+
+            // When a payment method is selected
+            _basketModel.Cash = true;
+
+            // Then purchasing should be allowed
+            Assert.IsTrue(_basketModel.PurchaseAllowed);
         }
     }
 }

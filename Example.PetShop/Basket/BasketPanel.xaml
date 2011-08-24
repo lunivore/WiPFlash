@@ -20,7 +20,7 @@
         <ListView ItemsSource="{Binding Basket}" Name="basketOutput">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Item}"/>
+                    <GridViewColumn Header="Item" DisplayMemberBinding="{Binding Item}" Width="200"/>
                     <GridViewColumn Header="Price" DisplayMemberBinding="{Binding Price}"/>
                 </GridView>
             </ListView.View>
@@ -39,7 +39,7 @@
     <DockPanel Width="300">
         <CheckBox Name="vatReceiptInput" IsChecked="{Binding VatReceipt}" DockPanel.Dock="Left">VAT Receipt</CheckBox>
         <WrapPanel FlowDirection="RightToLeft" DockPanel.Dock="Right">
-            <Button Name="purchaseButton" Command="{Binding Pay}" IsEnabled="{Binding HasItemsInBasket}">Purchase</Button>
+            <Button Name="purchaseButton" Command="{Binding Pay}" IsEnabled="{Binding PurchaseAllowed}">Purchase</Button>
             <Button Name="resetButton" Command="{Binding Reset}" IsEnabled="{Binding HasItemsInBasket}" Margin="5, 0, 0, 0">Reset</Button>
         </WrapPanel>
     </DockPanel>
