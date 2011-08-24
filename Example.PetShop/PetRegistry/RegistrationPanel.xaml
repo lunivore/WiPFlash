@@ -1,7 +1,6 @@
 <StackPanel x:Class="Example.PetShop.PetRegistry.RegistrationPanel"
 	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-	xmlns:PetRegistry="clr-namespace:Example.PetShop.PetRegistry"
             Orientation="Vertical" Name="registrationPanel">
     <StackPanel.Resources>
         <ResourceDictionary>
@@ -9,23 +8,22 @@
                 <ResourceDictionary Source="Styles/LabelledFieldStyles.xaml" />
                 <ResourceDictionary>
                     <Style TargetType="{x:Type MenuItem}" x:Key="ContextMenuItemStyle">
-                        <Setter Property="Command" Value="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type PetRegistry:RegistrationPanel}},Path=DataContext.CopyCommand}" />
-                        <Setter Property="CommandParameter" Value="{Binding}" />
+                        <Setter Property="Command" Value="{Binding CopyCommand}" />
+                        <Setter Property="CommandParameter" Value="{Binding Pet}" />
                     </Style>
                 </ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </StackPanel.Resources>
     <Label Name="copyPetContextTarget" 
-           Content="(Right-click here to copy an existing pet's details)" Width="Auto"
-           MouseRightButtonDown="copyPetContextTarget_MouseRightButtonDown">
+           Content="(Right-click here to copy an existing pet's details)" Width="Auto" >
         <Label.ContextMenu>
-            <ContextMenu Name="copyPetMenu" ItemsSource="{Binding Pets}"
+            <ContextMenu Name="copyPetMenu" ItemsSource="{Binding CopiablePets}"
                         ItemContainerStyle="{StaticResource ContextMenuItemStyle}"
                         Visibility="Visible">
                 <ContextMenu.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding Name}"/>
+                        <TextBlock Text="{Binding Pet.Name}" />
                     </DataTemplate>
                 </ContextMenu.ItemTemplate>
             </ContextMenu>

@@ -128,6 +128,8 @@
       <DependentUpon>AccessoryRegistryPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="AccessoryRegistry\View\ListBoxHelper.cs" />
+    <Compile Include="Domain\NewPetEvent.cs" />
+    <Compile Include="Domain\SoldPetEvent.cs" />
     <Compile Include="Domain\PaymentMethod.cs" />
     <Compile Include="Utils\IHandleMessages.cs" />
     <Compile Include="Controls\MessengerWindowModel.cs" />

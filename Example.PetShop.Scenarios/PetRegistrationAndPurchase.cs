@@ -26,30 +26,24 @@ namespace Example.PetShop.Scenarios
         }
 
         [Test]
-        public void CustomersCanPurchaseAPet()
+        public void CustomersCanPurchasePetsAndAccessories()
         {
             GivenThePetshop.IsRunning();
             WhenTheBasket.IsAddedWith("Dancer");
             ThenTheBasket.ShouldNotList("Dancer");
             ThenTheBasket.ShouldContain("Dancer", 54.00);
             ThenTheBasket.ShouldHaveTotal(54.00);
-            WhenTheBasket.IsACardPayment()
-                .RequiresAVATReceipt()
-                .IsPurchased();
-            ThenTheBasket.ShouldBeEmpty();
-            ThenTheBasket.ShouldHaveTotal(0.00);
-        }
 
-        [Test]
-        public void CustomersCanPurchaseAccessories()
-        {
-            GivenThePetshop.IsRunning();
             WhenTheAccessories.AreSelected("Rubber bone", "Dog Collar (Large)", "Dog Collar (Small)");
             ThenTheBasket.ShouldContain("Rubber bone", 1.50);
             ThenTheBasket.ShouldContain("Dog Collar (Large)", 10.00);
             ThenTheBasket.ShouldContain("Dog Collar (Small)", 9.00);
-            WhenTheBasket.IsPurchased();
+            ThenTheBasket.ShouldHaveTotal(74.50);
+
+            WhenTheBasket.RequiresAVATReceipt()
+                .IsPurchased();
             ThenTheBasket.ShouldBeEmpty();
+            ThenTheBasket.ShouldHaveTotal(0.00);
         }
 
         [Test]
@@ -82,6 +76,11 @@ namespace Example.PetShop.Scenarios
             ThenTheBasket.ShouldList("Fluffy");
             WhenTheBasket.IsAddedWith("Fluffy");
             ThenTheBasket.ShouldContain("Fluffy", 100.00);
+
+            WhenAPetIsRegistered.WithName("Nutmeg")
+                .ByCopying("Fluffy")
+                .AndSaved();
+            ThenTheBasket.ShouldList("Nutmeg");
         }
     }
 }

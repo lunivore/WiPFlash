@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Threading;
+using Microsoft.Practices.Composite.Events;
 
 #endregion
 
@@ -13,12 +14,14 @@ namespace Example.PetShop.Domain
     public class PetRepository : ILookAfterPets
     {
         private readonly History _history;
+        private readonly IEventAggregator _events;
         private readonly List<Pet> _unsoldPets;
         private readonly List<Pet> _pets;
 
-        public PetRepository(History history)
+        public PetRepository(History history, IEventAggregator events)
         {
             _history = history;
+            _events = events;
             _pets = new List<Pet>
                         {
                             new Pet
@@ -64,12 +67,6 @@ namespace Example.PetShop.Domain
             get { return _pets; }
         }
 
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged = delegate { };
-
-        #endregion
-
         public void Save(Pet pet)
         {
             string petType = (pet.Type == null) ? string.Empty : pet.Type.Name;
@@ -77,20 +74,26 @@ namespace Example.PetShop.Domain
             _history.AddText(string.Format("{0} the {1} registered at a price of £{2}. Food: {3}", pet.Name, petType,
                                            pet.Price, petFood));
 
+            // Mimics adding to a real database
             new Thread(() =>
                            {
                                Thread.Sleep(400);
                                _pets.Add(pet);
                                _unsoldPets.Add(pet);
-                               PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
+                               _events.GetEvent<NewPetEvent>().Publish(pet);
                            }).Start();
         }
 
         public void PetWasSold(Pet pet)
         {
-            pet.Sold = true;
-            _unsoldPets.Remove(pet);
-            PropertyChanged(this, new PropertyChangedEventArgs("Pets"));
+            // Mimics adding to a real database
+            new Thread(() =>
+            {
+                Thread.Sleep(400);
+                pet.Sold = true;
+                _unsoldPets.Remove(pet);
+                _events.GetEvent<SoldPetEvent>().Publish(pet);
+            }).Start();
         }
 
         public List<Pet> LastPets(int number)

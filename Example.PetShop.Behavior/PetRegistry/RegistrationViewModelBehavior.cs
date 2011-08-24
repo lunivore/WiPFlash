@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Example.PetShop.Behavior.ExampleUtils;
 using Example.PetShop.Domain;
 using Example.PetShop.PetRegistry;
 using Moq;
@@ -35,10 +36,15 @@ namespace Example.PetShop.Behavior.PetRegistry
         [Test]
         public void ShouldCopyTheDetailsButNotNameOfAnExistingPet()
         {
-            var model = new RegistrationViewModel(_petRepository.Object);
+            // Given an existing pet
+            var model = new RegistrationViewModel(_petRepository.Object, new StubEventAggregator());
             model.Name = "Nemo";
-            model.CopyCommand.Execute(_goldie);
 
+            // When I copy that pet
+            model.CopiablePets[0].CopyCommand.Execute(_goldie);
+
+            // Then it should copy all the details
+            // but not the name
             Assert.AreEqual("100.00", model.Price);
             Assert.Contains(Rule.SELL_IN_PAIRS, model.Rules);
             Assert.AreEqual(_goldie.FoodType, model.FoodType);

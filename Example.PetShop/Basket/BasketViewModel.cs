@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Example.PetShop.Controls;
 using Example.PetShop.Domain;
 using Example.PetShop.Utils;
+using Microsoft.Practices.Composite.Events;
 using Microsoft.Practices.Composite.Presentation.Commands;
 
 #endregion
@@ -26,14 +27,16 @@ namespace Example.PetShop.Basket
         public BasketViewModel(
             ILookAfterPets petRepository, 
             ILookAfterAccessories accessoryRepository,
-            IHandleMessages messenger)
+            IHandleMessages messenger,
+            IEventAggregator events)
         {
             _petRepository = petRepository;
             _accessoryRepository = accessoryRepository;
             _messenger = messenger;
             _petBasket = new List<Pet>();
             _accessoryBasket = new List<Accessory>();
-            _petRepository.PropertyChanged += (o, e) => NotifyPropertyChanged("AllAvailablePets");
+            events.GetEvent<NewPetEvent>().Subscribe(pet => NotifyPropertyChanged("AllAvailablePets"));
+            events.GetEvent<SoldPetEvent>().Subscribe(pet => NotifyPropertyChanged("AllAvailablePets"));
             _accessoryRepository.OnAccessorySelected((o, e) =>
                                                             {
                                                                 foreach (var accessory in e.Accessories)
@@ -43,13 +46,13 @@ namespace Example.PetShop.Basket
                                                                         _accessoryBasket.Add(accessory);
                                                                     }
                                                                 }
-                                                                NotifyPropertyChanged("Basket", "HasItemsInBasket", "PurchaseAllowed");
+                                                                NotifyPropertyChanged("Basket", "HasItemsInBasket", "Total", "PurchaseAllowed");
                                                             });
             _accessoryRepository.OnAccessoryUnselected((o, e) =>
                                                               {
                                                                   _accessoryBasket.RemoveAll(
                                                                       a => e.Accessories.Contains(a));
-                                                                  NotifyPropertyChanged("Basket", "HasItemsInBasket", "PurchaseAllowed");
+                                                                  NotifyPropertyChanged("Basket", "HasItemsInBasket", "Total", "PurchaseAllowed");
                                                               });                                  
         }
 
@@ -157,6 +160,10 @@ namespace Example.PetShop.Basket
                 foreach (Pet pet in _petBasket)
                 {
                     total += pet.PriceInPence;
+                }
+                foreach (var accessory in _accessoryBasket)
+                {
+                    total += accessory.PriceInPence;
                 }
                 return (total/100.00).ToString("0.00");
             }
