@@ -36,28 +36,43 @@ namespace WiPFlash.Components.Devices
 
         private static Input InputFor(uint mouseButtonAction, int x, int y)
         {
-            var input = new Input
+            var mouseInput = new MouseInput
                             {
                                 Dx = x,
                                 Dy = y,
                                 MouseData = 0,
                                 DwFlags = mouseButtonAction,
                                 Time = 0,
-                                DwType = InputMouse,
                                 MouseExtraInfo = new IntPtr()
+                            };
+
+            var input = new Input()
+                            {
+                                u = new InputUnion { mi = mouseInput }
                             };
             return input;
         }
 
-        internal struct Input
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct MouseInput
         {
-            public int DwType;
             public int Dx;
             public int Dy;
             public uint MouseData;
             public uint DwFlags;
             public uint Time;
             public IntPtr MouseExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        internal struct InputUnion {
+            [FieldOffset(0)] internal MouseInput mi;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        internal struct Input {
+            int Type;
+            internal InputUnion u;
         }
     }
 }

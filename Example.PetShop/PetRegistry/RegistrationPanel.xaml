@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </StackPanel.Resources>
     <Label Name="copyPetContextTarget" 
-           Content="(Right-click here to copy an existing pet's details)" Width="Auto"
+           Content="(Right-click here to copy an existing pet's details)" Width="Auto" Height="Auto"
            MouseRightButtonDown="copyPetContextTarget_MouseRightButtonDown">
         <Label.ContextMenu>
             <ContextMenu Name="copyPetMenu" ItemsSource="{Binding Pets}"

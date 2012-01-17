@@ -86,7 +86,7 @@ namespace WiPFlash.Behavior.Component
         public void ShouldProvideAContextMenuIfItExists()
         {
             var window = LaunchPetShopWindow();
-            var label = window.Find<Label>("copyPetContextTarget");
+            var label = window.Find<Label>(FindBy.WpfText("(Right-click here to copy an existing pet's details)"));
             var contextMenu = label
                 .InvokeContextMenu(FindBy.WpfName("copyPetMenu"));
             contextMenu.Select(contextMenu.Items[0]);

@@ -2,6 +2,6 @@ syntax: regexp
 .*/obj/.*
 .*_ReSharper.*
 .*/bin/.*
-.*\.resharper\.user
+.*\.user
 .*\.suo$
-.*\.csproj\.user
+
