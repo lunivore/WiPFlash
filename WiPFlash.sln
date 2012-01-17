@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 10.00
-# Visual Studio 2008
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiPFlash", "WiPFlash\WiPFlash.csproj", "{61FB3011-0DAA-48DD-9FF3-9944E6FF5E79}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example.PetShop.Scenarios", "Example.PetShop.Scenarios\Example.PetShop.Scenarios.csproj", "{A1EFE966-DCCC-467E-AE23-9FF30A444EF0}"
