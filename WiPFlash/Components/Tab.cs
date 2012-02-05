@@ -36,6 +36,11 @@ namespace WiPFlash.Components
             }
         }
 
+        public string Title
+        {
+            get { return Element.GetCurrentPropertyValue(AutomationElement.NameProperty).ToString(); }
+        }
+
         public bool IsSelected()
         {
             return _selectionItemPattern.IsSelected();

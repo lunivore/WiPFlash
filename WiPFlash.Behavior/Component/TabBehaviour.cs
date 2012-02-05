@@ -26,6 +26,13 @@ namespace WiPFlash.Behavior.Component
         }
 
         [Test]
+        public void ShouldProvideItsTitle()
+        {
+            var tab = LaunchPetShopWindow().Find<Tab>(FindBy.WpfText("History"));
+            Assert.AreEqual("History", tab.Title);
+        }
+
+        [Test]
         public void ShouldWaitForTabToBeSelected()
         {
 

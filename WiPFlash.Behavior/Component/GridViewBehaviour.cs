@@ -71,6 +71,16 @@ namespace WiPFlash.Behavior.Component
         }
 
         [Test]
+        public void ShouldBeAbleToRetrieveTheElementReferencedByColumnAndRow()
+        {
+            _window = LaunchPetShopWindow();
+            _window.Find<Tab>(FindBy.WpfText("History")).Select();
+            var gridView = _window.Find<GridView>("lastPetsOutput");
+            var cell = gridView.ElementAt<Label>(0, 2);
+            Assert.AreEqual("Dancer", cell.Text);
+        }
+
+        [Test]
         public void ShouldExposeItselfAsAListView()
         {
             var gridView = new GridView(AutomationElement.RootElement, "Fake grid");

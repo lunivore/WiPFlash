@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Automation;
 using WiPFlash.Exceptions;
 using WiPFlash.Framework;
@@ -42,6 +43,16 @@ namespace WiPFlash.Components
                 ((IContainChildren) find).HandlerForFailingToFind = HandlerForFailingToFind;
             }
             return find;
+        }
+
+        public IEnumerable<TC> FindAll<TC>(Condition condition) where TC : AutomationElementWrapper
+        {
+            var result = _finder.FindAll<TC>(this, condition, HandlerForFailingToFind);
+            foreach (var element in result.Where(r => r is IContainChildren))
+            {
+                ((IContainChildren) element).HandlerForFailingToFind =HandlerForFailingToFind;
+            }
+            return result;
         }
 
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
