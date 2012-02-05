@@ -93,5 +93,21 @@ namespace WiPFlash.Behavior
                     EXAMPLE_APP_NAME, "LauncherToOpenAWindowBeforeTheOneWeWant.bat", Assert.Fail);
             application.FindWindow(EXAMPLE_APP_WINDOW_NAME);
         }
+
+        [Test]
+        public void ShouldFindOurWindowWithLauncherEvenIfAnotherIsOpen()
+        {
+            var launcher = new ApplicationLauncher(TimeSpan.Parse("00:00:10"));
+
+            var originalApp = launcher.LaunchVia(
+                    EXAMPLE_APP_NAME, "LauncherToOpenAWindowBeforeTheOneWeWant.bat", Assert.Fail);
+            originalApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+
+            var newApp = launcher.LaunchVia(
+                    EXAMPLE_APP_NAME, "LauncherToOpenAWindowBeforeTheOneWeWant.bat", Assert.Fail);
+            newApp.FindWindow(EXAMPLE_APP_WINDOW_NAME);
+
+            Assert.AreNotEqual(newApp.Process.Id, originalApp.Process.Id);
+        }
     }
 }
