@@ -1,10 +1,12 @@
 #region
 
+using System.Linq;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Behavior.ExampleUtils;
 using WiPFlash.Components;
 using WiPFlash.Exceptions;
+using WiPFlash.Framework;
 
 #endregion
 
@@ -34,6 +36,19 @@ namespace WiPFlash.Behavior.Component
             container.Find<ComboBox>("Wibble");
             
             Assert.True(complained, "Should have handled failure to find using the given handler");
+        }
+
+        [Test]
+        public void ShouldFindAllMatchingItemsIfRequested()
+        {
+            var window = LaunchPetShopWindow();
+            var tabs = window.FindAll<Tab>(FindBy.ControlType(ControlType.TabItem));
+            var tabTitles = tabs.Select(t => t.Title).ToList();
+
+            Assert.Contains("Registration", tabTitles);
+            Assert.Contains("History", tabTitles);
+            Assert.Contains("Basket", tabTitles);
+            Assert.Contains("Accessories", tabTitles);
         }
     }
 

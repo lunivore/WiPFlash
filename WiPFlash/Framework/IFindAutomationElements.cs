@@ -1,5 +1,6 @@
 #region
 
+using System.Collections.Generic;
 using System.Windows.Automation;
 using WiPFlash.Components;
 
@@ -15,5 +16,8 @@ namespace WiPFlash.Framework
             where T : AutomationElementWrapper;
 
         bool Contains(Container root, Condition condition);
+
+        IEnumerable<T> FindAll<T>(Container container, Condition condition, FailureToFindHandler handlerForFailingToFind)
+            where T : AutomationElementWrapper;
     }
 }

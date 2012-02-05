@@ -122,5 +122,10 @@ namespace WiPFlash.Components
         {
             return _tablePattern.RowCount == 0;
         }
+
+        public T ElementAt<T>(int column, int row) where T : AutomationElementWrapper
+        {
+            return _wrapperFactory.Wrap<T>(_tablePattern.ElementAt(row, column), string.Format("{0}[{1},{2}]", this.Name, column, row));
+        }
     }
 }

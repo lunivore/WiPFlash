@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Automation;
 using WiPFlash.Components;
 using WiPFlash.Framework.Events;
@@ -42,6 +43,28 @@ namespace WiPFlash.Framework
         public bool Contains(Container root, Condition condition)
         {
             return Find<ContainedElement>(root, condition, s => { }) != null;
+        }
+
+        public IEnumerable<T> FindAll<T>(Container root, Condition condition, FailureToFindHandler failureToFindHandler) where T : AutomationElementWrapper
+        {
+            AutomationElementCollection elements = root.Element.FindAll(
+                TreeScope.Descendants,
+                condition);
+
+            if (elements.Count < 1)
+            {
+                failureToFindHandler(string.Format(
+                     "Could not find an element: {0} " + Environment.NewLine + " from within element: {1} ",
+                     _conditionDescriber.Describe(condition),
+                     root.Name));
+                return new List<T>();
+            }
+            var list = new List<T>();
+            foreach (AutomationElement element in elements)
+            {
+                list.Add(_wrapper.Wrap<T>(element, _conditionDescriber.Describe(condition)));
+            }
+            return list;
         }
 
         private class ContainedElement : AutomationElementWrapper

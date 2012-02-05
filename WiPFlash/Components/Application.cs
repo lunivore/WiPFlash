@@ -65,6 +65,5 @@ namespace WiPFlash.Components
             }
             return new WindowFinder().FindWindow(allConditions, timeout, handler);
         }
-
     }
 }
