@@ -1,6 +1,7 @@
 #region
 
 using System.Linq;
+using System.Threading;
 using System.Windows.Automation;
 using NUnit.Framework;
 using WiPFlash.Behavior.ExampleUtils;
@@ -49,6 +50,26 @@ namespace WiPFlash.Behavior.Component
             Assert.Contains("History", tabTitles);
             Assert.Contains("Basket", tabTitles);
             Assert.Contains("Accessories", tabTitles);
+        }
+
+        [Test]
+        public void ShouldBeAbleToWaitForAChildElementToAppear()
+        {
+            var window = LaunchPetShopWindow();
+
+            new Thread(() =>
+                           {
+                               Thread.Sleep(100);
+                               window.Find<Tab>(FindBy.WpfTitle("Accessories")).Select();
+                           }).Start();
+
+            var scrollViewer = window.WaitForElement<ScrollViewer>(new AndCondition(
+                new PropertyCondition(AutomationElement.IsScrollPatternAvailableProperty, true),
+                new PropertyCondition(ScrollPatternIdentifiers.VerticallyScrollableProperty, true)),
+                e => Assert.Fail("Could not find the scroll viewer"));
+            bool scrolledABit = false;
+            scrollViewer.ScrollDown(s => scrolledABit, s => { scrolledABit = true; });
+
         }
     }
 

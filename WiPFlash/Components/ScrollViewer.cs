@@ -21,7 +21,6 @@ namespace WiPFlash.Components
         public ScrollViewer(AutomationElement element, string name) : base(element, name)
         {
             _scrollPattern = new ScrollPatternWrapper(element);
-
         }
 
         public ScrollViewer(AutomationElement element, string name, IFindAutomationElements finder) : base(element, name, finder)
@@ -61,9 +60,5 @@ namespace WiPFlash.Components
             }
             return !check(this);
         }
-    }
-
-    public class ScrollDirection
-    {
     }
 }

@@ -55,6 +55,18 @@ namespace WiPFlash.Components
             return result;
         }
 
+        public T WaitForElement<T>(Condition condition, FailureToHappenHandler handler) where T : AutomationElementWrapper
+        {
+            T element = null;
+            WaitFor((s, ev) =>
+                        {
+                            element = _finder.Find<T>(this, condition, ex => { });
+                            return element != null;
+                        },
+                    handler);
+            return element;
+        }
+
         protected override IEnumerable<AutomationEventWrapper> SensibleEventsToWaitFor
         {
             get {
